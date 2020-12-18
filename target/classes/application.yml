@@ -1,0 +1,9 @@
+spring.jpa.hibernate.ddl-auto: update
+spring.datasource.url: jdbc:hsqldb:file:addon-db # Use a file-based backing store for HSQL
+
+addon:
+  key: com-idealfed-forms
+  base-url: https://www.idealfed.com/dev
+
+logging.level.com.atlassian.connect.spring: DEBUG
+logging.level.com.idealfed.forms.DataController: DEBUG

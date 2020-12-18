@@ -1,0 +1,210 @@
+.x-toolbar-footer
+{
+	background-color: transparent !important;	
+}
+
+
+.x-form-file-wrap {
+    position: relative;
+    height: 22px;
+}
+.x-form-file-wrap .x-form-file {
+    position: absolute;
+    right: 0;
+    -moz-opacity: 0;
+    filter:alpha(opacity: 0);
+    opacity: 0;
+    z-index: 2;
+    height: 22px;
+}
+.x-form-file-wrap .x-form-file-btn {
+    position: absolute;
+    right: 0;
+    z-index: 1;
+}
+.x-form-file-wrap .x-form-file-text {
+    position: absolute;
+    left: 0;
+    z-index: 3;
+    color: #777;
+}
+
+.x-tree-node .x-tree-selected {
+    background-color: #0066cc;
+}
+
+.x-touch .x-tree-elbow-img {
+    height : 18px;
+}
+
+.x-panel-body-default
+{
+   border-color: transparent !important;
+}
+
+.ijf-header{
+}
+.ijf-content{
+}
+.ijf-footer{
+}
+.ijf-cell{
+    width: auto;
+}
+.ijfAdmin-cell{
+    width: auto;
+    background-color: lightcoral;
+    border-left:solid lightcoral 1px;
+    border-right:solid lightcoral 1px;
+    border-top:solid lightcoral 1px;
+    border-bottom:solid lightcoral 1px;
+}
+.ijf-dirty{
+    background-color: pink;
+}
+
+a.x-simplelink-default,
+a.x-simplelink-default:visited {
+    color:#00e;
+    text-decoration:none;
+}
+a.x-simplelink-default:hover {
+    text-decoration:underline;
+}
+
+.x-tab-bar-default{
+    background:transparent;
+}
+
+#ijfProgessBarWinId
+{
+	height:40px !important;
+}
+#ijfProgessBarWinId-body
+{
+	height:22px !important;
+}
+.x-progress-text{
+	visibility: hidden;
+}
+
+
+/*ATTACHMENT FIELD*/
+	.ijfAttachList{
+		border-top:solid #21527d 1px;
+		border-right:solid #21527d 1px;
+		border-bottom:solid #21527d 1px;
+		border-left:solid #21527d 1px;
+		background: #21527d;
+		border-spacing: 0;
+		width:100%;
+		max-height:200px;
+		overflow-y:auto;
+	}
+	.ijfAttachListHead{
+		display: table-row;
+		color: #fff;
+		background:#21527d;
+		width:100%;
+	}
+	.ijfAttachListHeadName{
+		display: table-cell;
+		text-align:center;
+		width:calc(100%-260px);
+		padding: 5px;
+	}
+	.ijfAttachListHeadAuthor{
+		display: table-cell;
+		text-align:center;
+		width:130px;
+	}
+	.ijfAttachListHeadDate{
+		display: table-cell;
+		text-align:center;
+		width:130px;
+	}
+	.ijfAttachListRow{
+		display: table-row;
+		width:100%;
+		background: #fff;
+	}
+	.ijfAttachListRow:nth-child(odd) {
+		background: #e8e8e8;
+	}
+	.ijfAttachListName{
+		display: table-cell;
+		text-align:left;
+		vertical-align: middle;
+		width:calc(100%-260px);
+	}
+	.ijfAttachListAuthor{
+		display: table-cell;
+		text-align:left;
+		width:130px;
+		padding: 5px;
+	}
+	.ijfAttachListDate{
+		display: table-cell;
+		text-align:left;
+		width:130px;
+		padding: 5px;
+	}
+	
+.ijfCommentList{    
+		border-top:solid #21527d 1px;
+		border-right:solid #21527d 1px;
+		border-bottom:solid #21527d 1px;
+		border-left:solid #21527d 1px;
+		background: #21527d;
+		border-spacing: 1;
+		width:100%;
+		max-height:100%;
+		overflow-y:auto;    
+}
+.ijfCommentListHead{
+    display: table-row;
+		color: #fff;
+		background:#21527d;    
+    width:100%;
+}
+.ijfCommentListHeadName{
+    display: table-cell;
+    text-align:center;
+    width:70%;
+}
+.ijfCommentListHeadAuthor{
+    display: table-cell;
+    text-align:center;
+    width:15%;
+}
+.ijfCommentListHeadDate{
+    display: table-cell;
+    text-align:center;
+    width:15%
+}
+.ijfCommentListRow{
+    background: #fff;
+    display: table-row;
+    width:100%;
+}
+.ijfCommentListRow:nth-child(odd) {
+    background: #e0e0e0;
+}
+.ijfCommentListName{
+    display: table-cell;
+    text-align:left;
+   padding: 5px 5px 5px 5px;
+    width:70%;
+}
+.ijfCommentListAuthor{
+    display: table-cell;
+    text-align:left;
+   padding: 5px 5px 5px 5px;
+    width:15%;
+}
+.ijfCommentListDate{
+    display: table-cell;
+    text-align:left;
+   padding: 5px 5px 5px 5px;
+    width:150px;
+}

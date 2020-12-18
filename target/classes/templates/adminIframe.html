@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>adminIframe</title>
+    <meta charset="UTF-8"/>
+    <script th:src="@{${atlassianConnectAllJsUrl}}" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
+
+    <meta name="token" th:content="${atlassianConnectToken}"/>
+    <script>
+        $(document).ready(function(){
+            $("#ijfGetHostId").click(function(){
+                $.ajax({
+                    url: "host",
+                    beforeSend: function (request) {
+                        var token = $('meta[name="token"]').attr("content");
+                        request.setRequestHeader("Authorization", "JWT " + token);
+                    }
+                }).done(function(data) {
+                    //alert(JSON.stringify(data, null, '\t'));
+                    document.getElementById("ijfContentId").innerHTML="<pre>" + JSON.stringify(data, null, 4) + "</pre>";
+
+                });
+                $("#ijfGetUserId").click(function(){
+
+                    $.ajax({
+                        url: "user",
+                        beforeSend: function (request) {
+                            var token = $('meta[name="token"]').attr("content");
+                            request.setRequestHeader("Authorization", "JWT " + token);
+                        }
+                    }).done(function(data) {
+                        //alert(JSON.stringify(data, null, '\t'));
+                        document.getElementById("ijfContentId").innerHTML="<pre>" + JSON.stringify(data, null, 4) + "</pre>";
+
+                    });
+                });
+                $("#ijfGetHwId").click(function(){
+
+                    $.ajax({
+                        url: "helloworld",
+                        beforeSend: function (request) {
+                            var token = $('meta[name="token"]').attr("content");
+                            request.setRequestHeader("Authorization", "JWT " + token);
+                        }
+                    }).done(function(data) {
+                        //alert(JSON.stringify(data, null, '\t'));
+                        document.getElementById("ijfContentId").innerHTML="<pre>" + data + "</pre>";
+
+                    });
+                });
+                $("#ijfAddId").click(function(){
+
+                    $.ajax({
+                        url: "add",
+                        beforeSend: function (request) {
+                            var token = $('meta[name="token"]').attr("content");
+                            request.setRequestHeader("Authorization", "JWT " + token);
+                        }
+                    }).done(function(data) {
+                        //alert(JSON.stringify(data, null, '\t'));
+                        document.getElementById("ijfContentId").innerHTML="<pre>" + JSON.stringify(data, null, 4) + "</pre>";
+
+                    });
+                });
+                $("#ijfListId").click(function(){
+
+                    $.ajax({
+                        url: "list",
+                        beforeSend: function (request) {
+                            var token = $('meta[name="token"]').attr("content");
+                            request.setRequestHeader("Authorization", "JWT " + token);
+                        }
+                    }).done(function(data) {
+                        //alert(JSON.stringify(data, null, '\t'));
+                        document.getElementById("ijfContentId").innerHTML="<pre>" + JSON.stringify(data, null, 4) + "</pre>";
+
+                    });
+                });
+                $("#ijfClearId").click(function(){
+
+                    $.ajax({
+                        url: "clear",
+                        beforeSend: function (request) {
+                            var token = $('meta[name="token"]').attr("content");
+                            request.setRequestHeader("Authorization", "JWT " + token);
+                        }
+                    }).done(function(data) {
+                        //alert(JSON.stringify(data, null, '\t'));
+                        document.getElementById("ijfContentId").innerHTML="<pre>" + JSON.stringify(data, null, 4) + "</pre>";
+
+                    });
+                });
+                $("#ijfGetIssueId").click(function(){
+
+                    $.ajax({
+                        url: "getIssue",
+                        beforeSend: function (request) {
+                            var token = $('meta[name="token"]').attr("content");
+                            request.setRequestHeader("Authorization", "JWT " + token);
+                        }
+                    }).done(function(data) {
+                        //alert(JSON.stringify(data, null, '\t'));
+                        document.getElementById("ijfContentId").innerHTML="<pre>" + JSON.stringify(data, null, 4) + "</pre>";
+
+
+                    });
+                });
+            });
+        });
+    </script>
+</head>
+<body style="background-color: tan">
+<div class="ac-content">
+    <button id="ijfGetHostId">Get Host</button>
+    <a th:href="@{/dev/host(jwt=${atlassianConnectToken})}">Hello link!</a>
+    <br /><button id="ijfGetUserId">Get User</button>
+    <br /><button id="ijfGetHwId">Get Hello World</button>
+    <br /><button id="ijfAddId">Test Add Row</button>
+    <br /><button id="ijfListId">Test List Data</button>
+    <br /><button id="ijfClearId">Test Clear Data</button>
+    <br /><button id="ijfGetIssueId">Get Issue FTP1</button>
+    <div id="ijfContentId"></div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>End
+</div>
+</body>
+</html>

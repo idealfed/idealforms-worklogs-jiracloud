@@ -1,0 +1,36 @@
+{
+  "key": "${addon.key}",
+  "baseUrl": "${addon.base-url}",
+  "name": "Com Idealfed Forms",
+  "authentication": {
+    "type": "jwt"
+  },
+  "lifecycle": {
+    "installed": "/installed",
+    "uninstalled": "/uninstalled"
+  },
+  "scopes": [
+    "READ",
+    "WRITE",
+    "DELETE",
+    "ADMIN",
+    "ACT_AS_USER"
+  ],
+  "modules": {
+    "generalPages": [
+      {
+        "key": "ijf-page",
+        "location": "system.top.navigation.bar",
+        "name": {
+          "value": "IJF Testing"
+        },
+        "url": "/iframe",
+        "conditions": [
+          {
+            "condition": "user_is_logged_in"
+          }
+        ]
+      }
+    ]
+  }
+}
