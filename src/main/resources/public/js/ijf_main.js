@@ -73,13 +73,15 @@ function init(inConfigVersion)
 
 	ijf.main.itemId= g_itemId;
 	ijf.main.debug = g_debug;
-
+	//ijf.main.debug = "true";
+	//g_debug="true";
 	//var configUrl = '/plugins/servlet/iforms?ijfAction=getFormConfig&formId='+g_formId;
     //if(g_formId=="") configUrl = '/plugins/servlet/iforms?ijfAction=getConfig&version='+inConfigVersion;
 	//if(g_formId=="")  configUrl = '/config?version='+inConfigVersion;
 
 	var configUrl = '/plugins/servlet/iforms?ijfAction=getFormConfig&formId='+g_formId;
 	if(g_formId=="") configUrl = '/plugins/servlet/iforms?ijfAction=getConfig&version='+inConfigVersion;
+
 
 
     ijfUtils.footLog("Calling load configuration...");
@@ -159,7 +161,7 @@ function init(inConfigVersion)
 				}
 			}
 
-	  	    jQuery.ajax(g_root + '/rest/api/2/project', {
+	  	    jQuery.ajax(g_root + '/rest/api/3/project', {
         		success: function(data) {
 					try
 					{
@@ -233,7 +235,7 @@ function processSetup(inContainerId)
 		else if(window.location.search.indexOf("mode=library")>-1)
 		{
 		   var tElement = document.getElementById("ijfContent");
-		   tElement.innerHTML='<iframe src="https://www.idealfed.com/formsLibrary/" style="margin-left: -5px;width: 1010px; height: 600px; border: 0"></iframe>';
+		   tElement.innerHTML='<iframe src="https://www.idealfed.com/formsLibrary/" style="margin-left:-5px;width: 1010px; height: 600px; border: 0"></iframe>';
 		}
 		else
 		{
@@ -296,7 +298,7 @@ function loadItem(inContainerId)
     if((ijf.main.outerForm.hasOwnProperty("formProxy"))&&(ijf.main.outerForm.formProxy=="true"))
     {
 		//proxy auth
-	    var tItem = ijfUtils.getProxyApiCallSync("/rest/api/2/issue/"+ijf.main.itemId,ijf.main.outerForm.formSet.id);
+	    var tItem = ijfUtils.getProxyApiCallSync("/rest/api/3/issue/"+ijf.main.itemId,ijf.main.outerForm.formSet.id);
 	    ijfUtils.footLog('Item aquired with proxy auth');
 	}
 	else
@@ -473,7 +475,7 @@ function renderForm(inContainerId, inFormId, isNested, item, afterRender)
 					if(thisForm.formProxy=="true")
 					{
 						//proxy auth
-						ijf.jiraEditMeta[item.key] = ijfUtils.getProxyApiCallSync('/rest/api/2/issue/'+item.key+'/editmeta',thisForm.formSet.id);
+						ijf.jiraEditMeta[item.key] = ijfUtils.getProxyApiCallSync('/rest/api/3/issue/'+item.key+'/editmeta',thisForm.formSet.id);
 
 						//5/31/18 - adding concept of null meta data to allow 'read only' issues.  result will be a null set of meta data...
 						if(Object.keys(ijf.jiraEditMeta[item.key].fields).length==0)
@@ -564,7 +566,7 @@ function renderForm(inContainerId, inFormId, isNested, item, afterRender)
 					if(thisForm.formProxy=="true")
 					{
 						//proxy auth
-						ijf.jiraEditMeta[subFormItem.key] = ijfUtils.getProxyApiCallSync('/rest/api/2/issue/'+subFormItem.key+'/editmeta',thisForm.formSet.id);
+						ijf.jiraEditMeta[subFormItem.key] = ijfUtils.getProxyApiCallSync('/rest/api/3/issue/'+subFormItem.key+'/editmeta',thisForm.formSet.id);
 						ijfUtils.footLog('Item edit meta aquired with proxy auth');
 					}
 					else
@@ -1006,7 +1008,7 @@ function saveBatch(onSuccess,inFields,inForm, item)
 		transOk = false;
 		putObj = {"transition":transition};
 		jData = JSON.stringify(putObj);
-		tApi = "/rest/api/2/issue/"+item.key + "/transitions";
+		tApi = "/rest/api/3/issue/"+item.key + "/transitions";
 
 		saveRes = ijfUtils.jiraApiSync("POST",tApi,jData);
 		if((!saveRes) || (saveRes=="OK"))
@@ -1038,7 +1040,7 @@ function saveBatch(onSuccess,inFields,inForm, item)
 		relations.forEach(function(rIssue)
 		{
 			jsonString.outwardIssue.key=rIssue.key;
-			var saveRelRes = ijfUtils.jiraApiSync("POST","/rest/api/2/issueLink",JSON.stringify(jsonString));
+			var saveRelRes = ijfUtils.jiraApiSync("POST","/rest/api/3/issueLink",JSON.stringify(jsonString));
 			if(saveRelRes!="OK")
 			{
 				relationsOk=false;
@@ -1085,7 +1087,7 @@ function saveBatch(onSuccess,inFields,inForm, item)
 
 				//fd.append("CustomField", "This is some extra data");
 				jQuery.ajax({
-					url: g_root + "/rest/api/2/issue/"+item.key+"/attachments",
+					url: g_root + "/rest/api/3/issue/"+item.key+"/attachments",
 					type: 'POST',
 					async: false,
 					headers: {"X-Atlassian-Token": "no-check"},

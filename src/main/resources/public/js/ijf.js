@@ -1,10 +1,3 @@
-/**
- * Created with JetBrains RubyMine.
- * User: mp3531
- * Date: 2/24/15
- * Time: 11:24 AM
- * To change this template use File | Settings | File Templates.
- */
 var pWin;
 var dWin;
 var dWinVal=false;
@@ -22,34 +15,14 @@ document.onreadystatechange = function () {
         if(exerciseId=="")
         {
             $('#mwfContent').html("<div style='text-align: center; color: royalblue'>" +
-                "Sorry but no exercise id was included in your call.<br>" +
-                "Please make your url include ?exerciseId=[myexerciseid]<br>");
+                "Sorry but no valid query was included in your call.<br>");
         }
         else
         {
-            //init messaging
-//            if (typeof window.postMessage !== undefined)
-//            {
-//                footLog("postMessage API is initialized!");
-//                window.addEventListener("message", mwfUtils_messageHandler, true);
-//            }
-//            else
-//            {
-//                footLog("postMessage API is NOT supported!");
-//            }
-
-
-            $.receiveMessage(mwfUtils_messageHandler);
-
             showProgress();
             mwf_init();
-
         }
-
         window.onbeforeunload=null;
-
-
-
     }
 }
 //$(document).ready(function(){

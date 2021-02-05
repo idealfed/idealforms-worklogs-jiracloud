@@ -11,6 +11,7 @@
 
 
     <meta name="token" th:content="${atlassianConnectToken}"/>
+    <meta name="ijfRoot" th:content="${addon.ijfRoot}"/>
     <script>
         $(document).ready(function(){
             $("#ijfGetHostId").click(function(){
@@ -54,6 +55,8 @@
                     });
                 });
                 $("#ijfAddId").click(function(){
+                    alert('disabled');
+                    return;
 
                     $.ajax({
                         url: "add",
@@ -82,7 +85,8 @@
                     });
                 });
                 $("#ijfClearId").click(function(){
-
+alert('disabled');
+return;
                     $.ajax({
                         url: "clear",
                         beforeSend: function (request) {
@@ -118,8 +122,9 @@
 <div class="ac-content">
     <button id="ijfGetHostId">Get Host</button>
     &nbsp;&nbsp;&nbsp;<a th:href="@{/dev5/host(jwt=${atlassianConnectToken})}">Hello link!</a>
-    &nbsp;&nbsp;&nbsp;<a th:href="@{/dev5/admin(jwt=${atlassianConnectToken})}">Admin in same frame</a>
-    &nbsp;&nbsp;&nbsp;<a target="_blank" th:href="@{/dev5/admin(jwt=${atlassianConnectToken})}">Admin in new frame</a>
+    <br />&nbsp;&nbsp;&nbsp;<a th:href="@{/dev5/admin(jwt=${atlassianConnectToken})}">Admin in same frame</a>
+    <br />&nbsp;&nbsp;&nbsp;<a th:href="@{/dev5/splash(jwt=${atlassianConnectToken})}">Splash in same frame</a>
+    <br />&nbsp;&nbsp;&nbsp;<a target="_blank" th:href="@{/dev5/admin(jwt=${atlassianConnectToken})}">Admin in new frame</a>
     <br /><button id="ijfGetUserId">Get User</button>
     <br /><button id="ijfGetHwId">Get Hello World</button>
     <br /><button id="ijfAddId">Test Add Row</button>
@@ -127,24 +132,40 @@
     <br /><button id="ijfClearId">Test Clear Data</button>
     <br /><button id="ijfGetIssueId">Get Issue FTP1</button>
     <div id="ijfContentId"></div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>End
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+
 </div>
 </body>
 </html>

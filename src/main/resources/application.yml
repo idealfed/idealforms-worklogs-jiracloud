@@ -1,11 +1,25 @@
 spring.jpa.hibernate.ddl-auto: update
-spring.datasource.url: jdbc:hsqldb:file:ijfdb_6 # Use a file-based backing store for HSQL
+spring.datasource.url: jdbc:hsqldb:file:ijfdb_10 # Use a file-based backing store for HSQL
 spring.datasource.password: dogland
 spring.datasource.username: SA
 
+server:
+  port : 8080
+
+#logging:
+#  path: /var/log
+#logging:
+#  file: ijf.log
+
+spring:
+  thymeleaf:
+    prefix: classpath:/templates
+
 addon:
-  key: com-idealfed-forms3
-  base-url: https://www.idealfed.com/dev5
+  key: com-idealfed-forms10
+  base-url: https://www.idealfed.com/dev10
+
+ijfRoot: /dev10
 
 #atlassian.connect.allow-reinstall-missing-host: true
 

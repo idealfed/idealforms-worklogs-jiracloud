@@ -14,6 +14,8 @@ public class Version {
 
     private Date date;
     private String author;
+    @Lob
+    @Column(length=20971520)
     private String config;
 
     public Version(){}

@@ -2,9 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>adminIframe</title>
+
     <meta charset="UTF-8"/>
+
+
     <script th:src="@{${atlassianConnectAllJsUrl}}" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
+
 
     <meta name="token" th:content="${atlassianConnectToken}"/>
     <script>
@@ -113,7 +117,9 @@
 <body style="background-color: tan">
 <div class="ac-content">
     <button id="ijfGetHostId">Get Host</button>
-    <a th:href="@{/dev/host(jwt=${atlassianConnectToken})}">Hello link!</a>
+    &nbsp;&nbsp;&nbsp;<a th:href="@{/dev5/host(jwt=${atlassianConnectToken})}">Hello link!</a>
+    &nbsp;&nbsp;&nbsp;<a th:href="@{/dev5/admin(jwt=${atlassianConnectToken})}">Admin in same frame</a>
+    &nbsp;&nbsp;&nbsp;<a target="_blank" th:href="@{/dev5/admin(jwt=${atlassianConnectToken})}">Admin in new frame</a>
     <br /><button id="ijfGetUserId">Get User</button>
     <br /><button id="ijfGetHwId">Get Hello World</button>
     <br /><button id="ijfAddId">Test Add Row</button>

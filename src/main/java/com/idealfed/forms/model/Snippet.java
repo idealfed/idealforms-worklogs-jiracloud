@@ -12,6 +12,11 @@ public class Snippet {
     private Long id;
 
     private String name;
+    @Lob
+    @Column(length=20971520)
+    private String settings;
+    @Lob
+    @Column(length=20971520)
     private String snippet;
     private String comment;
 

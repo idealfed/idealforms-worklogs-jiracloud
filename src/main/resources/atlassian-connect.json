@@ -17,20 +17,50 @@
     "ACT_AS_USER"
   ],
   "modules": {
+    "jiraSearchRequestViews": [
+      {
+        "url": "/run?formId=Worklog%20Report",
+        "conditions": [
+          {
+            "condition": "user_is_logged_in"
+          }
+        ],
+        "weight": 100,
+        "name": {
+          "value": "Ideal Worklogs"
+        },
+        "key": "ideal-worklogs-search"
+      }
+    ],
     "generalPages": [
       {
         "key": "ijf-page",
         "location": "system.top.navigation.bar",
         "name": {
-          "value": "IJF Testing"
+          "value": "Ideal Forms"
         },
-        "url": "/iframe",
+        "url": "/splash",
         "conditions": [
           {
             "condition": "user_is_logged_in"
           }
         ]
+      },
+      {
+        "url": "/run?formId=Worklog%20Report",
+        "conditions": [
+          {
+            "condition": "user_is_logged_in"
+          }
+        ],
+        "weight": 100,
+        "name": {
+          "value": "Ideal Work"
+        },
+        "key": "ideal-worklogs-general"
       }
     ]
   }
 }
+
+

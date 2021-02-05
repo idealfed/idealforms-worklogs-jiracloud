@@ -15,6 +15,8 @@ public class CustomType {
     private String description;
     private String fieldName;
     private String customType;
+    @Lob
+    @Column(length=20971520)
     private String settings;
 
 
@@ -25,9 +27,12 @@ public class CustomType {
         this.description=description;
         this.fieldName=fieldName;
         this.customType=customType;
+
         this.settings=settings;
     }
-
+    public CustomType(String name){
+        this.name=name;
+    }
 
     public Long getId(){
         return this.id;
@@ -51,7 +56,7 @@ public class CustomType {
     public String getFieldName(){
         return this.fieldName;
     };
-    public void getfieldName(String fieldName){
+    public void setFieldName(String fieldName){
         this.fieldName=fieldName;
     };
 

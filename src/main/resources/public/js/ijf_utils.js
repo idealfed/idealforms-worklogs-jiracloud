@@ -470,7 +470,9 @@ var ijfUtils = {
              error: function(e) {
 				 if((e.status==201) || (e.status==200)) //  && (e.statusText=="Created"))
                  {
-					 retVal="OK";
+                 	 if(this.type=="GET") retVal=e.responseText;
+                 	 else
+						 retVal="OK";
 				 }
 				 else if(e.statusText=="OK")
                  {
@@ -1652,7 +1654,7 @@ showSaveHistory:function()
 {
 	var tDiv = document.getElementById('ijfJsonUpload');
 	var saveHistory = ijfUtils.jiraApiSync("GET","/plugins/servlet/iforms","ijfAction=getVersions");
-	var saveData = JSON.parse(saveHistory);
+	var saveData = saveHistory; //JSON.parse(saveHistory);
 	var TblStart = "<table><tr><td>User</td><td>Date</td><td>Click to Apply</td></tr>";
 	var outStr = saveData.resultSet.reduce(function(bStr, s){
 		if(!s.author) return bStr;
@@ -3289,7 +3291,8 @@ replaceWordChars:function(text) {
 			case "user":
 				//ijfUtils.footLog("User Field: " + JSON.stringify(inField));
 				if(forDisplay) if(inField) return inField.displayName;
-				return inField.key;//inField.name;
+				//Cloud, to acccountId
+				return inField.accountId;//inField.name;
 				break;
 			case "group":
 				return inField.name;
@@ -3707,7 +3710,7 @@ CSVtoArray:function (strData, strDelimiter ){
 
 		    if(!thisT.fileDetail)
 		    {
-				var fileDetailRaw = ijfUtils.jiraApiSync('GET',g_root + '/plugins/servlet/iforms?ijfAction=getCustomType&customTypeId='+thisT.id, null);
+				var fileDetailRaw = ijfUtils.jiraApiSync('GET','/plugins/servlet/iforms?ijfAction=getCustomType&customTypeId='+thisT.id, null);
 
 				var cleanDoubleDouble = fileDetailRaw.replace(/\"\"/g,"\"");
 				cleanDoubleDouble = cleanDoubleDouble.replace(/~pct~/g,"%");
@@ -3855,7 +3858,7 @@ CSVtoArray:function (strData, strDelimiter ){
 			   var typeIndex = ijf.fw.CustomTypes.indexOf(thisT);
 
 				//load the settings...
-               var fullTypeRaw = ijfUtils.jiraApiSync('GET',g_root + '/plugins/servlet/iforms?ijfAction=getCustomType&customTypeId='+thisT.id, null);
+               var fullTypeRaw = ijfUtils.jiraApiSync('GET','/plugins/servlet/iforms?ijfAction=getCustomType&customTypeId='+thisT.id, null);
 			   var cleanDoubleDouble = fullTypeRaw.replace(/\"\"/g,"\"");
 			   cleanDoubleDouble = cleanDoubleDouble.replace(/~pct~/g,"%");
 			   cleanDoubleDouble = cleanDoubleDouble.replace("\"~\"","\"\"");
@@ -4002,7 +4005,7 @@ CSVtoArray:function (strData, strDelimiter ){
 			   var typeIndex = ijf.fw.CustomTypes.indexOf(thisT);
 
 				//load the settings...
-               var fullTypeRaw = ijfUtils.jiraApiSync('GET',g_root + '/plugins/servlet/iforms?ijfAction=getCustomType&customTypeId='+thisT.id, null);
+               var fullTypeRaw = ijfUtils.jiraApiSync('GET','/plugins/servlet/iforms?ijfAction=getCustomType&customTypeId='+thisT.id, null);
 			   var cleanDoubleDouble = fullTypeRaw.replace(/\"\"/g,"\"");
 			   cleanDoubleDouble = cleanDoubleDouble.replace(/~pct~/g,"%");
 			   cleanDoubleDouble = cleanDoubleDouble.replace("\"~\"","\"\"");

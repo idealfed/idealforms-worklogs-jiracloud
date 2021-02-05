@@ -13,6 +13,7 @@ import com.idealfed.forms.repositories.FormsetRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,8 @@ import java.util.Optional;
 public class IframeController {
     private static final Logger log = LoggerFactory.getLogger(DataController.class);
 
+    private static final String gRoot = AddonApplication.appRoot;
+
     @Autowired
     ServletContext servletContext;
     @Autowired
@@ -41,13 +44,23 @@ public class IframeController {
 
 
     @RequestMapping(value = "/iframe", method = RequestMethod.GET)
-    public String getIframe() {
-        return "adminIframe";
+    public String getIframe(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) {
+        model.addAttribute("ijfRoot",gRoot);
+        return "/adminIframe";
+    }  //adminIframe
+
+    @RequestMapping(value = "/splash", method = RequestMethod.GET)
+    public String getSplashTemplate(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) {
+
+        model.addAttribute("ijfRoot",gRoot);
+        return "/splash";
     }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String getAdminTemplate(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) //(HttpServletRequest request, HttpServletResponse response)
     {
+        log.debug("Working admin template");
+
         Map<String, String[]> parameters = request.getParameterMap();
         String debug = "";
         if(parameters.containsKey("debug")) debug = request.getParameter("debug");
@@ -58,7 +71,7 @@ public class IframeController {
 
         //look for request params...populate the context model
         model.addAttribute("test","Hello from Thyme");
-        model.addAttribute("pathRoot","/dev5");
+        model.addAttribute("pathRoot",gRoot);
         model.addAttribute("ijfHtmlReferences","<!-- Html refs -->");
         model.addAttribute("ijfSnippetPub","");
         model.addAttribute("ijfStyle","");
@@ -69,9 +82,9 @@ public class IframeController {
         model.addAttribute("ijfFormId","");
         model.addAttribute("ijfItemId","");
         model.addAttribute("ijfDebug",debug);
-        model.addAttribute("ijfRoot","/dev5");
+        model.addAttribute("ijfRoot",gRoot);
         model.addAttribute("ijfCraft",craft);
-        return "admin";
+        return "/admin";
     }
     @RequestMapping(value = "/run", method = RequestMethod.GET)
     public String getRuntimeTemplate(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) //(HttpServletRequest request, HttpServletResponse response)
@@ -152,7 +165,7 @@ public class IframeController {
         //load html ref...
 
         //look for request params...populate the context model
-        model.addAttribute("pathRoot","/dev5");
+        model.addAttribute("pathRoot",gRoot);
         model.addAttribute("ijfHtmlReferences",vInj);
         model.addAttribute("ijfSnippetPub",snippetPub);
         model.addAttribute("ijfScript",snippets);
@@ -164,9 +177,9 @@ public class IframeController {
         model.addAttribute("ijfFormId",formId);
         model.addAttribute("ijfItemId",itemId);
         model.addAttribute("ijfDebug",debug);
-        model.addAttribute("ijfRoot","/dev5");
+        model.addAttribute("ijfRoot",gRoot);
         model.addAttribute("ijfCraft",craft);
-        return "runtime";
+        return "/runtime";
     }
     private String getVelocityInjections(JsonParser jsonParser)
     {

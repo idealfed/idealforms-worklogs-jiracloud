@@ -585,7 +585,7 @@ itemControl.prototype.prepForSave=function(saveQueueBatch)
 				var sc = {};
 				var newUser = this.control.items.items[0].getValue();
 				if(newUser)
-					var tv = {"name":newUser};
+					var tv = {"accountId":newUser};
 				else
 					var tv = null;
 
@@ -672,7 +672,7 @@ itemControl.prototype.prepForSave=function(saveQueueBatch)
 
 					   var sc = this.control.items.items[0].getValue();
 					   if(sc)
-						   var tv = sc.map(function(av){ return {"name":av};});
+						   var tv = sc.map(function(av){ return {"accountId":av};});
 					   else
 					   		var tv = null;
 

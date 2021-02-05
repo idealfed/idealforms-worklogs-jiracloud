@@ -1363,7 +1363,7 @@ renderAttachmentListTree:function(inFormKey,item, inField, inContainer)
 			   var typeIndex = ijf.fw.CustomTypes.indexOf(thisT);
 
 				//load the settings...
-               var fullTypeRaw = ijfUtils.jiraApiSync('GET',g_root + '/plugins/servlet/iforms?ijfAction=getCustomType&customTypeId='+thisT.id, null);
+               var fullTypeRaw = ijfUtils.jiraApiSync('GET','/plugins/servlet/iforms?ijfAction=getCustomType&customTypeId='+thisT.id, null);
 			   var cleanDoubleDouble = fullTypeRaw.replace(/\"\"/g,"\"");
 			   cleanDoubleDouble = cleanDoubleDouble.replace(/~pct~/g,"%");
 			   cleanDoubleDouble = cleanDoubleDouble.replace("\"~\"","\"\"");
@@ -2181,7 +2181,7 @@ renderAttachmentSPTree:function(inFormKey,item, inField, inContainer)
 			   var typeIndex = ijf.fw.CustomTypes.indexOf(thisT);
 
 				//load the settings...
-               var fullTypeRaw = ijfUtils.jiraApiSync('GET',g_root + '/plugins/servlet/iforms?ijfAction=getCustomType&customTypeId='+thisT.id, null);
+               var fullTypeRaw = ijfUtils.jiraApiSync('GET','/plugins/servlet/iforms?ijfAction=getCustomType&customTypeId='+thisT.id, null);
 			   var cleanDoubleDouble = fullTypeRaw.replace(/\"\"/g,"\"");
 			   cleanDoubleDouble = cleanDoubleDouble.replace(/~pct~/g,"%");
 			   cleanDoubleDouble = cleanDoubleDouble.replace("\"~\"","\"\"");
@@ -6021,21 +6021,21 @@ renderUserPicker:function(inFormKey,item, inField, inContainer)
             break;
         default:
 
-			var apiUrl = "/rest/api/2/user/picker";
+			var apiUrl = "/rest/api/3/user/picker";
 			var	fParam = "query";
 			var xtrParam = null;
 			var uRoot = 'users';
             if(inField.dataSource=="Assignee")
             {
-	            apiUrl = "/rest/api/2/user/assignable/search";
-	            fParam = "username";
+	            apiUrl = "/rest/api/3/user/assignable/search";
+	            fParam = "query";
 	            xtrParam={project:inField.form.formSet.projectId};
 	            uRoot = '';
 			}
 
      		Ext.define('JiraUserModel', {
 			        extend: 'Ext.data.Model',
-			        fields: [{name:'name', type: 'string'},
+			        fields: [{name:'accountId', type: 'string'},
 			                 {name: 'displayName', type: 'string'}]
     		});
 			var lookup = Ext.create('Ext.data.Store', {
@@ -6063,11 +6063,11 @@ renderUserPicker:function(inFormKey,item, inField, inContainer)
 			{
 				if(jf.displayName)
 				{
-					lookup.loadData([{"name":jf.key, "displayName":jf.displayName}]);
+					lookup.loadData([{"accountId":jf.accountId, "displayName":jf.displayName}]);
 				}
 				else
 				{
-					lookup.loadData([{"name":jf.key, "displayName":jf.key}]);
+					lookup.loadData([{"name":jf.accountId, "displayName":jf.accountId}]);
 				}
 			}
      		break;
@@ -6146,7 +6146,7 @@ renderUserPicker:function(inFormKey,item, inField, inContainer)
         items:[{xtype: 'combobox',
             store: lookup,
             displayField: 'displayName',
-            valueField: 'name',
+            valueField: 'accountId',
 			labelAlign: 'left',
 			labelStyle: l_labelStyle,
 			style: l_panelStyle,
@@ -6242,14 +6242,14 @@ renderUserMultiselect:function(inFormKey,item, inField, inContainer)
             break;
         default:
 
-            var apiUrl = "/rest/api/2/user/picker";
+            var apiUrl = "/rest/api/3/user/picker";
 			var	fParam = "query";
 			var xtrParam = null;
 			var uRoot = 'users';
 
      		Ext.define('JiraUserMultiModel', {
 			        extend: 'Ext.data.Model',
-			        fields: [{name:'name', type: 'string'},
+			        fields: [{name:'accountId', type: 'string'},
 			                 {name: 'displayName', type: 'string'}]
     		});
 			var lookup = Ext.create('Ext.data.Store', {
@@ -6277,8 +6277,8 @@ renderUserMultiselect:function(inFormKey,item, inField, inContainer)
 			{
 				if(data)
 				{
-					cValue = data.map(function(cv){return cv.name;});
-					lookup.loadData(data.map(function(cv){return {name:cv.name, displayName:cv.displayName};}));
+					cValue = data.map(function(cv){return cv.accountId;});
+					lookup.loadData(data.map(function(cv){return {accountId:cv.accountId, displayName:cv.displayName};}));
 				}
 			}
 			catch(e)
@@ -6372,7 +6372,7 @@ renderUserMultiselect:function(inFormKey,item, inField, inContainer)
 			hideLabel: hideLabel,
 			allowBlank: lAllowBlank,
 			readOnly: rOnly,
-			valueField: 'name',
+			valueField: 'accountId',
 			displayField: 'displayName',
 			value: cValue,
 			triggerAction: 'all',
@@ -9512,7 +9512,7 @@ renderItemList:function(inFormKey,item, inField, inContainer)
 					"url": encodeURI(aUrl.replace(/ /g,"%20")),
 					"formSetId":inField.form.formSet.id
 				}
-				aUrl=g_root + "/plugins/servlet/iforms";
+				aUrl="/plugins/servlet/iforms";
 				//?ijfAction=proxyApiCall&formSetId="+inField.form.formSet.id+"&url="+encodeURI(aUrl);
 			}
 
@@ -9521,7 +9521,7 @@ renderItemList:function(inFormKey,item, inField, inContainer)
 				pageSize: itemsPerPage,
 				proxy: {
 						type: 'ajax',
-						url: aUrl,
+						url: g_root + aUrl,
 						extraParams: xtraParams,
 						reader: {
 							type: 'json',
@@ -12826,7 +12826,7 @@ renderGridHtml:function(inFormKey,item, inField, inContainer)
 			   var typeIndex = ijf.fw.CustomTypes.indexOf(thisT);
 
 				//load the settings...
-               var fullTypeRaw = ijfUtils.jiraApiSync('GET',g_root + '/plugins/servlet/iforms?ijfAction=getCustomType&customTypeId='+thisT.id, null);
+               var fullTypeRaw = ijfUtils.jiraApiSync('GET','/plugins/servlet/iforms?ijfAction=getCustomType&customTypeId='+thisT.id, null);
 			   var cleanDoubleDouble = fullTypeRaw.replace(/\"\"/g,"\"");
 			   cleanDoubleDouble = cleanDoubleDouble.replace(/~pct~/g,"%");
 			   cleanDoubleDouble = cleanDoubleDouble.replace("\"~\"","\"\"");
@@ -13130,7 +13130,7 @@ renderGridPanel:function(inFormKey,item, inField, inContainer)
 			   var typeIndex = ijf.fw.CustomTypes.indexOf(thisT);
 
 				//load the settings...
-               var fullTypeRaw = ijfUtils.jiraApiSync('GET',g_root + '/plugins/servlet/iforms?ijfAction=getCustomType&customTypeId='+thisT.id, null);
+               var fullTypeRaw = ijfUtils.jiraApiSync('GET','/plugins/servlet/iforms?ijfAction=getCustomType&customTypeId='+thisT.id, null);
 			   var cleanDoubleDouble = fullTypeRaw.replace(/\"\"/g,"\"");
 			   cleanDoubleDouble = cleanDoubleDouble.replace(/~pct~/g,"%");
 			   cleanDoubleDouble = cleanDoubleDouble.replace("\"~\"","\"\"");

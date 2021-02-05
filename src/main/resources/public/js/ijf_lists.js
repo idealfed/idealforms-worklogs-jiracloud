@@ -127,8 +127,7 @@ openForm:function()
 			if(thisF.formSet.settings["decorator"]=="true") decorator = "&decorator=general";
 
 	//todo:  add switch for cloud vs server
-			var token = $('meta[name="token"]').attr("content");
-			var cloudToken =  "&jwt=" +token;
+			var cloudToken =  "&jwt=" +getJwtToken();
 			if(thisF.testIssue)
 			{
 				var tUrl = g_root + '/run?itemId='+thisF.testIssue+'&formId='+thisF.name + decorator + cloudToken;
@@ -178,10 +177,9 @@ renderReport_noforms:function(inContainerId)
 	}
 	else
 	{
-		var token = $('meta[name="token"]').attr("content");
-		var cloudToken =  "&jwt=" +token;
+		var cloudToken =  "&jwt=" +getJwtToken();
 		//need to load into memory now...
-		var fileDetailRaw = ijfUtils.jiraApiSync('GET',g_root + '/run?ijfAction=getCustomType&customTypeId='+thisType.id + cloudToken, null);
+		var fileDetailRaw = ijfUtils.jiraApiSync('GET','/plugins/servlet/iforms?ijfAction=getCustomType&customTypeId='+thisType.id + cloudToken, null);
 		var cleanDoubleDouble = fileDetailRaw.replace(/\"\"/g,"\"");
 		cleanDoubleDouble = cleanDoubleDouble.replace(/~pct~/g,"%");
 		cleanDoubleDouble = cleanDoubleDouble.replace("\"~\"","\"\"");
@@ -949,7 +947,9 @@ renderUserList_Borderlayout:function(inContainerId)
    {
         var totalUsers = 0;
         var totalActive = 0;
-	    var users = ijfUtils.jiraApiSync("GET","/rest/api/2/user/search?username=.&includeInactive=true&maxResults=1000",null);
+	    //var users = ijfUtils.jiraApiSync("GET","/rest/api/2/user/search?username=.&includeInactive=true&maxResults=1000",null);
+	    //for Cloud
+	    var users = ijfUtils.jiraApiSync("GET","/rest/api/3/user/search?query=.&includeInactive=true&maxResults=1000",null);
 
 		var cts = new Array();
 
@@ -1317,8 +1317,7 @@ renderItemList_Borderlayout:function(inContainerId)
 					//var tUrl = g_root + '/plugins/servlet/iforms?debug=true&craft=true&itemId='+thisF.testIssue+'&formId='+thisF.name;
 
 //todo:  add switch for cloud vs server
-					var token = $('meta[name="token"]').attr("content");
-					var tUrl = g_root + '/run?debug=true&craft=true&itemId='+thisF.testIssue+'&formId='+thisF.name + "&jwt=" +token;
+					var tUrl = g_root + '/run?debug=true&craft=true&itemId='+thisF.testIssue+'&formId='+thisF.name + "&jwt=" + getJwtToken();
 
 
 					window.open(tUrl);
@@ -2228,9 +2227,11 @@ deleteFormSet: function(inFrmId)
 			if(!thisFs.name){ ijfUtils.modalDialogMessage("Error","Sorry, undable to find the requested form group for: " + inFrmId); return;}
         }
 
-		var fcount = thisFs.forms.reduce(function(fcnt,f){if(f.name) fcnt++; return fcnt;},0);
+
+//TODO:  commenting this out in cloud
+		//var fcount = thisFs.forms.reduce(function(fcnt,f){if(f.name) fcnt++; return fcnt;},0);
 		//check for children
-		if(fcount){ ijfUtils.modalDialogMessage("Error","Sorry, you must delete or remove all forms from this group before deleting."); return;}
+		//if(fcount){ ijfUtils.modalDialogMessage("Error","Sorry, you must delete or remove all forms from this group before deleting."); return;}
 
 
         var dFunc = function()
@@ -3239,10 +3240,10 @@ addEditCustomFileReference:function (inTypeId,isReportView)
 		if(!thisT.name){ ijfUtils.modalDialogMessage("Error","Sorry, undable to find the requested type for: " + inTypeId); return;}
 		ijf.lists.thisTypeSpec=thisT;
     }
-	var token = $('meta[name="token"]').attr("content");
-	var cloudToken =  "&jwt=" +token;
+
+	var cloudToken =  "&jwt=" + getJwtToken();
     //need to call the API and get the actual file setting...
-    var fileDetailRaw = ijfUtils.jiraApiSync('GET',g_root + '/run?ijfAction=getCustomType&customTypeId='+thisT.id + cloudToken, null);
+    var fileDetailRaw = ijfUtils.jiraApiSync('GET','/plugins/servlet/iforms?ijfAction=getCustomType&customTypeId='+thisT.id + cloudToken, null);
 
     var cleanDoubleDouble = fileDetailRaw.replace(/\"\"/g,"\"");
 	cleanDoubleDouble = cleanDoubleDouble.replace(/~pct~/g,"%");
@@ -3831,8 +3832,7 @@ addEditCustomFileReference:function (inTypeId,isReportView)
 							text: 'Report URLs',
 							margin: '4 0 0 20',
 							handler: function(){
-								var token = $('meta[name="token"]').attr("content");
-								var cloudToken =  "&jwt=" +token;
+								var cloudToken =  "&jwt=" +getJwtToken();
 							var urlWin = new Ext.Window({
 										layout: 'vbox',
 										title: "Report Links",
