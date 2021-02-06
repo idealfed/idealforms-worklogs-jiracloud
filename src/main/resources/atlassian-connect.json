@@ -27,7 +27,7 @@
         ],
         "weight": 100,
         "name": {
-          "value": "Ideal Worklogs"
+          "value": "Ideal Worklogs 20"
         },
         "key": "ideal-worklogs-search"
       }
@@ -37,7 +37,7 @@
         "key": "ijf-page",
         "location": "system.top.navigation.bar",
         "name": {
-          "value": "Ideal Forms"
+          "value": "Ideal Forms 20"
         },
         "url": "/splash",
         "conditions": [
@@ -55,7 +55,7 @@
         ],
         "weight": 100,
         "name": {
-          "value": "Ideal Work"
+          "value": "Ideal Work 20"
         },
         "key": "ideal-worklogs-general"
       }

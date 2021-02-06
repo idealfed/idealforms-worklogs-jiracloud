@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class AddonApplication {
 
     //@Value("${ijfRoot}")
-    public static final String appRoot = "/dev10";
+    public static final String appRoot = "/dev20";
 
     public static void main(String[] args) throws Exception {
         new SpringApplication(AddonApplication.class).run(args);
