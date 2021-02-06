@@ -1,7 +1,7 @@
 {
   "key": "${addon.key}",
   "baseUrl": "${addon.base-url}",
-  "name": "Com Idealfed Forms",
+  "name": "Com Idealfed Forms JDH Branch",
   "authentication": {
     "type": "jwt"
   },

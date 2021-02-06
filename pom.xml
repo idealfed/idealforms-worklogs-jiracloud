@@ -9,7 +9,7 @@
     </parent>
 
     <groupId>com.idealfed.forms</groupId>
-    <artifactId>com-idealfed-forms10</artifactId>
+    <artifactId>com-idealfed-forms20</artifactId>
     <version>1.0-STABLE</version>
 
     <properties>
