@@ -11,14 +11,16 @@ public class LifeCycleController {
     private static final Logger log = LoggerFactory.getLogger(LifeCycleController.class);
 
     @RequestMapping(value="/installed", method = RequestMethod.POST)
-    public static void installApp(@RequestBody String payload, HttpServletResponse response) {
+    public static String installApp(@RequestBody String payload, HttpServletResponse response) {
         log.info("Installing app.  Payload: " + payload);
         response.setStatus(200);
+        return "OK";
     }
 
     @RequestMapping(value="/uninstalled", method = RequestMethod.POST)
-    public static void uninstallApp(@RequestBody String payload, HttpServletResponse response) {
+    public static String uninstallApp(@RequestBody String payload, HttpServletResponse response) {
         log.info("Uninstalling app.  Payload: " + payload);
         response.setStatus(200);
+        return "OK";
     }
 }
