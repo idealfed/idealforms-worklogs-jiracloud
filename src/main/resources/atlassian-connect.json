@@ -14,7 +14,8 @@
     "WRITE",
     "DELETE",
     "ADMIN",
-    "ACT_AS_USER"
+    "ACT_AS_USER",
+    "ACCESS_EMAIL_ADDRESSES"
   ],
   "modules": {
     "jiraSearchRequestViews": [

@@ -27,6 +27,9 @@ logging.level.com.atlassian.connect.spring: DEBUG
 
 logging.level.com.idealfed.forms.DataController: DEBUG
 
+atlassian:
+  connect:
+    jwt-expiration-time: 86400
 
 
 

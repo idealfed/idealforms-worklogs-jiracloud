@@ -29,7 +29,7 @@ import java.util.Optional;
 
 @Controller
 public class IframeController {
-    private static final Logger log = LoggerFactory.getLogger(DataController.class);
+    private static final Logger log = LoggerFactory.getLogger(IframeController.class);
 
     private static final String gRoot = AddonApplication.appRoot;
 
