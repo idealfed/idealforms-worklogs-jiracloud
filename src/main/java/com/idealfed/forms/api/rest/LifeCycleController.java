@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 public class LifeCycleController {
     private static final Logger log = LoggerFactory.getLogger(LifeCycleController.class);
 
-    @RequestMapping(value="/installed", method = RequestMethod.POST)
+    @RequestMapping(value="/installed2", method = RequestMethod.POST)
     public static String installApp(@RequestBody String payload, HttpServletResponse response) {
         log.info("Installing app.  Payload: " + payload);
         response.setStatus(200);
         return "OK";
     }
 
-    @RequestMapping(value="/uninstalled", method = RequestMethod.POST)
+    @RequestMapping(value="/uninstalled2", method = RequestMethod.POST)
     public static String uninstallApp(@RequestBody String payload, HttpServletResponse response) {
         log.info("Uninstalling app.  Payload: " + payload);
         response.setStatus(200);
