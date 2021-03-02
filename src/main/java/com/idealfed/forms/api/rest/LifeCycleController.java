@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 public class LifeCycleController {
     private static final Logger log = LoggerFactory.getLogger(LifeCycleController.class);
 
+    private LifeCycleController() {
+        log.info("I am the LifeCycleController...");
+    }
+
     @RequestMapping(value="/installed2", method = RequestMethod.POST)
     public static String installApp(@AuthenticationPrincipal AtlassianHostUser hostUser, @RequestBody String payload, HttpServletResponse response) {
         log.info("hostUser: " + hostUser+"; Installing app.  Payload: " + payload);
