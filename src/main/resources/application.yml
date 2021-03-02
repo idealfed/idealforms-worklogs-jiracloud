@@ -25,7 +25,7 @@ ijfRoot: /dev20
 
 logging.level.com.atlassian.connect.spring: DEBUG
 
-logging.level.com.idealfed.forms.DataController: DEBUG
+logging.level.com.idealfed.forms: DEBUG
 
 atlassian:
   connect:
