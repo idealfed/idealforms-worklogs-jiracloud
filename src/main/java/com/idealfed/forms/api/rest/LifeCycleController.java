@@ -23,6 +23,13 @@ public class LifeCycleController {
         return "OK";
     }
 
+    @RequestMapping(value="/test", method = RequestMethod.GET)
+    public static String test(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletResponse response) {
+        log.info("hostUser: " + hostUser+"; Test Call...");
+        response.setStatus(200);
+        return "OK";
+    }
+
     @RequestMapping(value="/uninstalled2", method = RequestMethod.POST)
     public static String uninstallApp(@AuthenticationPrincipal AtlassianHostUser hostUser, @RequestBody String payload, HttpServletResponse response) {
         log.info("hostUser: " + hostUser+"; Uninstalling app.  Payload: " + payload);
