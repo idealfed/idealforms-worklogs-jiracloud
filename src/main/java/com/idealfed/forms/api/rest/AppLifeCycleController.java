@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-public class LifeCycleController {
-    private static final Logger log = LoggerFactory.getLogger(LifeCycleController.class);
+public class AppLifeCycleController {
+    private static final Logger log = LoggerFactory.getLogger(AppLifeCycleController.class);
 
-    private LifeCycleController() {
+    private AppLifeCycleController() {
         log.info("I am the LifeCycleController...");
     }
 
-    @RequestMapping(value="/installed2", method = RequestMethod.POST)
+    @RequestMapping(value="/app-installed", method = RequestMethod.POST)
     public static String installApp(@AuthenticationPrincipal AtlassianHostUser hostUser, @RequestBody String payload, HttpServletResponse response) {
         log.info("hostUser: " + hostUser+"; Installing app.  Payload: " + payload);
         response.setStatus(200);
@@ -30,7 +30,7 @@ public class LifeCycleController {
         return "OK";
     }
 
-    @RequestMapping(value="/uninstalled2", method = RequestMethod.POST)
+    @RequestMapping(value="/app-uninstalled", method = RequestMethod.POST)
     public static String uninstallApp(@AuthenticationPrincipal AtlassianHostUser hostUser, @RequestBody String payload, HttpServletResponse response) {
         log.info("hostUser: " + hostUser+"; Uninstalling app.  Payload: " + payload);
         response.setStatus(200);
