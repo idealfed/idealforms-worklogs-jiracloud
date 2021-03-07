@@ -7,7 +7,9 @@
   },
   "lifecycle": {
     "installed": "/app-installed",
-    "uninstalled": "/app-uninstalled"
+    "uninstalled": "/app-uninstalled",
+    "enabled": "/app-enabled",
+    "disabled": "/app-disabled"
   },
   "scopes": [
     "READ",

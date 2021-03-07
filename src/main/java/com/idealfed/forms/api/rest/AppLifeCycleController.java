@@ -36,4 +36,20 @@ public class AppLifeCycleController {
         response.setStatus(200);
         return "OK";
     }
+
+    @RequestMapping(value="/app-enabled", method = RequestMethod.POST)
+    public static String enableApp(@AuthenticationPrincipal AtlassianHostUser hostUser, @RequestBody String payload, HttpServletResponse response) {
+        log.info("hostUser: " + hostUser+"; Enabling app.  Payload: " + payload);
+        response.setStatus(200);
+        return "OK";
+    }
+
+    @RequestMapping(value="/app-disabled", method = RequestMethod.POST)
+    public static String disableApp(@AuthenticationPrincipal AtlassianHostUser hostUser, @RequestBody String payload, HttpServletResponse response) {
+        log.info("hostUser: " + hostUser+"; Disabling app.  Payload: " + payload);
+        response.setStatus(200);
+        return "OK";
+    }
+
+
 }
