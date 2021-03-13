@@ -50,6 +50,7 @@
       },
       {
         "url": "/run?formId=Worklog%20Report",
+        "location": "system.admin/globalsettings",
         "conditions": [
           {
             "condition": "user_is_logged_in"
@@ -57,9 +58,9 @@
         ],
         "weight": 100,
         "name": {
-          "value": "Ideal Work 20"
+          "value": "Ideal Worklogs 20"
         },
-        "key": "ideal-worklogs-general"
+        "key": "ideal-worklogs-20-general"
       }
     ]
   }
