@@ -36,8 +36,8 @@
     ],
     "generalPages": [
       {
-        "key": "ijf-page",
-        "location": "system.top.navigation.bar",
+        "key": "ijf-20-page",
+        "location": "system.admin/globalsettings",
         "name": {
           "value": "Ideal Forms 20"
         },
