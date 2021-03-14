@@ -77,6 +77,8 @@ setup:function (setup)
 			thisfs.name = sf.name;
 			thisfs.id = sf.id;
 			thisfs.projectName = sf.projectName;
+            thisfs.iftFormGroup= sf.iftFormGroup;
+            thisfs.iftFormGroupVersion= sf.iftFormGroupVersion;
 			thisfs.projectId = sf.projectId;
 			thisfs.snippets = sf.snippets;
 			if(sf.hasOwnProperty("settings")) thisfs.rawSettings = JSON.parse(sf.settings);

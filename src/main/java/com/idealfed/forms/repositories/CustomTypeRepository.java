@@ -9,4 +9,6 @@ import java.util.List;
 public interface CustomTypeRepository extends CrudRepository<CustomType, Long> {
 
     CustomType findById(long id);
+
+    List<CustomType> findAllByCustomerKeyOrderByIdDesc(String customerKey);
 }

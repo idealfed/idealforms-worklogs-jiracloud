@@ -1,5 +1,5 @@
 spring.jpa.hibernate.ddl-auto: update
-spring.datasource.url: jdbc:hsqldb:file:ijfdb_10 # Use a file-based backing store for HSQL
+spring.datasource.url: jdbc:hsqldb:file:ijfdb_7 # Use a file-based backing store for HSQL
 spring.datasource.password: dogland
 spring.datasource.username: SA
 
@@ -21,6 +21,9 @@ addon:
 
 ijfRoot: /dev10
 
+atlassian.connect.jwt-expiration-time: 36000
+
+atlassian.connect.self-authentication-expiration-time: 36000
 #atlassian.connect.allow-reinstall-missing-host: true
 
 logging.level.com.atlassian.connect.spring: DEBUG

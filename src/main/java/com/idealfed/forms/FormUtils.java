@@ -1,5 +1,6 @@
 package com.idealfed.forms;
 
+import com.google.gson.JsonObject;
 import com.idealfed.forms.model.CustomType;
 import com.idealfed.forms.model.Form;
 import com.idealfed.forms.model.FormSet;
@@ -16,16 +17,26 @@ public class FormUtils {
     private static final Logger log = LoggerFactory.getLogger(FormUtils.class);
     public static String getAoFormSetJson(FormSet fs)
     {
+
+        JsonObject jo = new JsonObject();
+        jo.addProperty("id",fs.getId());
+        jo.addProperty("name",fs.getName());
+        jo.addProperty("projectName",fs.getProjectName());
+        jo.addProperty("projectId",fs.getProjectId());
+        jo.addProperty("customerKey",fs.getCustomerKey());
+        jo.addProperty("iftFormGroup",fs.getIftFormGroup());
+        jo.addProperty("iftFormGroupVersion",fs.getIftFormGroupVersion());
+
+        String retStr = jo.toString();
+        retStr = retStr.substring(0, retStr.length() - 1);
         StringBuilder sb = new StringBuilder();
-        sb.append("{\"id\":\"" + fs.getId() + "\",");
-        sb.append("\"name\":\"" + fs.getName() + "\",");
-        sb.append("\"projectName\":\"" + fs.getProjectName() + "\",");
-        sb.append("\"projectId\":\"" + fs.getProjectId() + "\",");
+        sb.append(retStr);
+
         String sfSettings = fs.getSettings();
         sfSettings = sfSettings.replaceFirst("(?<=proxyPassword\\\\\",\\\\\"value\\\\\":\\\\\")(.*?)(?=\\\\\",\\\\\"comment)","hidden");
-        sb.append("\"settings\":\"" + sfSettings + "\",");
-        sb.append("\"forms\":[");
+        sb.append(",\"settings\":\"" + sfSettings + "\"");
 
+        sb.append(",\"forms\":[");
         for (Form f : fs.getForms())
         {
             sb.append(FormUtils.getAoFormJson(f));
@@ -39,78 +50,98 @@ public class FormUtils {
         sb.append("{}]},");
 
         return sb.toString();
+
+
     }
 
     public static String getAoFormJson(Form f)
     {
         if(f.getTestIssue().equals("")) f.setTestIssue("~");
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\"id\":\"" + f.getId() + "\",");
-        sb.append("\"name\":\"" + f.getName() + "\",");
-        sb.append("\"testIssue\":\"" + f.getTestIssue() + "\",");
-        sb.append("\"formAnon\":\"" + f.getFormAnon() + "\",");
-        sb.append("\"formProxy\":\"" + f.getFormProxy() + "\",");
-        sb.append("\"issueType\":\"" + f.getIssueType() + "\",");
-        sb.append("\"formType\":\"" + f.getFormType() + "\",");
-        sb.append("\"settings\":\"" + f.getSettings() + "\",");
-        sb.append("\"fields\":\"" + f.getFields() + "\"},");
-        return sb.toString();
+
+        JsonObject jo = new JsonObject();
+        jo.addProperty("id",f.getId());
+        jo.addProperty("name",f.getName());
+        jo.addProperty("testIssue",f.getTestIssue());
+        jo.addProperty("formAnon",f.getFormAnon());
+        jo.addProperty("formProxy",f.getFormProxy());
+        jo.addProperty("issueType",f.getIssueType());
+        jo.addProperty("formType",f.getFormType());
+
+        String retStr = jo.toString();
+        retStr = retStr.substring(0, retStr.length() - 1);
+        retStr=retStr+ ",\"settings\":\"" + f.getSettings() + "\"";
+        retStr=retStr+ ",\"fields\":\"" + f.getFields() + "\"},";
+
+        return retStr;
+
+
     }
     public static String getAoSnippetJson(Snippet s)
     {
             if(s.getName().equals("")) s.setName("~");
             if(s.getSnippet().equals("")) s.setSnippet("~");
-            StringBuilder sb = new StringBuilder();
-            sb.append("{\"id\":\"" + s.getId() + "\",");
-            sb.append("\"name\":\"" + s.getName() + "\",");
-            sb.append("\"snippet\":\"" + s.getSnippet() + "\"},");
-            return sb.toString();
+
+            JsonObject jo = new JsonObject();
+            jo.addProperty("id",s.getId());
+            jo.addProperty("name",s.getName());
+            String retStr = jo.toString();
+            retStr = retStr.substring(0, retStr.length() - 1);
+            retStr=retStr+ ",\"snippet\":\"" + s.getSnippet() + "\"},";
+            return retStr;
     }
 
     public static String getCustomTypeConfig(CustomType ct)
     {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\"id\":\"" + ct.getId() + "\",");
-        sb.append("\"name\":\"" + ct.getName() + "\",");
-        sb.append("\"description\":\"" + ct.getDescription() + "\",");
-        sb.append("\"customType\":\"" + ct.getCustomType() + "\",");
-        sb.append("\"fieldName\":\"" + ct.getFieldName() + "\"");
 
+        JsonObject jo = new JsonObject();
+        jo.addProperty("id",ct.getId());
+        jo.addProperty("name",ct.getName());
+        jo.addProperty("description",ct.getDescription());
+        jo.addProperty("customType",ct.getCustomType());
+        jo.addProperty("fieldName",ct.getFieldName());
+        jo.addProperty("customerKey",ct.getCustomerKey());
+
+        String retStr = jo.toString();
         String cType = ct.getCustomType();
         if(cType.equals("FILE"))
         {
-            sb.append(",\"settings\":\"\"[]\"\"},");
+            retStr = retStr.substring(0, retStr.length() - 1);
+            retStr=retStr+ ",\"settings\":\"\"[]\"\"},";
         }
         else
         {
-            sb.append("},");
+            retStr=retStr+ ",";
         }
 
-        return sb.toString();
+        return retStr; //sb.toString();
     }
 
 
     public static String getCustomTypeJson(CustomType ct)
     {
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\"id\":\"" + ct.getId() + "\",");
-        sb.append("\"name\":\"" + ct.getName() + "\",");
-        sb.append("\"description\":\"" + ct.getDescription() + "\",");
-        sb.append("\"customType\":\"" + ct.getCustomType() + "\",");
-        sb.append("\"fieldName\":\"" + ct.getFieldName() + "\",");
 
+        JsonObject jo = new JsonObject();
+        jo.addProperty("id",ct.getId());
+        jo.addProperty("name",ct.getName());
+        jo.addProperty("description",ct.getDescription());
+        jo.addProperty("customType",ct.getCustomType());
+        jo.addProperty("fieldName",ct.getFieldName());
+        jo.addProperty("customerKey",ct.getCustomerKey());
         String cType = ct.getCustomType();
+        String retStr = jo.toString();
+        retStr = retStr.substring(0, retStr.length() - 1);
         if(cType.equals("FILE"))
         {
-            sb.append("\"settings\":\"\"[]\"\"},");
+            retStr=retStr+ ",\"settings\":\"\"[]\"\"},";
         }
         else
         {
-            sb.append("\"settings\":\"" + ct.getSettings() + "\"},");
+            retStr=retStr+ ",\"settings\":\"" + ct.getSettings() + "\"},";
         }
 
-        return sb.toString();
+        return retStr; //sb.toString();
     }
+
     public static String getBody(HttpServletRequest request) {
 
         String body = null;

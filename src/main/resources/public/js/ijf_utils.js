@@ -442,15 +442,16 @@ var ijfUtils = {
 				}
 			}
 		},
-   jiraApiSync:function(inMethod, inApi, inData){
+   jiraApiSync:function(inMethod, inApi, inData, inContentType){
 
      	var retVal="tbd";
-
+        var contentType = "application/json; charset=utf-8";
+        if(inContentType) contentType = inContentType;
      	jQuery.ajax({
 			     headers: {Accept: "application/json"},
                  async: false,
                  type: inMethod,
-                 contentType:"application/json; charset=utf-8",
+                 contentType:contentType,
                  url: g_root + inApi,
                  data: inData,
                  timeout: 60000,
@@ -1402,17 +1403,24 @@ loadIssueTypeDetails:function(projectKey)
 		//each will be keyed fields by issue type...
 		ijf.jiraAddMeta[projectKey] = [];
 		ijf.jiraAddMetaKeyed[projectKey] = [];
-		var rawMeta = ijfUtils.jiraApiSync("GET",'/rest/api/2/issue/createmeta',"expand=projects.issuetypes.fields&projectKeys="+projectKey);
-		rawMeta.projects[0].issuetypes.forEach(function(it){
+		try
+		{
+			var rawMeta = ijfUtils.jiraApiSync("GET",'/rest/api/2/issue/createmeta',"expand=projects.issuetypes.fields&projectKeys="+projectKey);
+			rawMeta.projects[0].issuetypes.forEach(function(it){
 
-			ijf.jiraAddMeta[projectKey][it.name]=it.fields;
-			var fieldsKeyed = [];
-			Object.keys(it.fields).forEach(function(fk){
-				var f = it.fields[fk];
-				fieldsKeyed[f.name]=f;
+				ijf.jiraAddMeta[projectKey][it.name]=it.fields;
+				var fieldsKeyed = [];
+				Object.keys(it.fields).forEach(function(fk){
+					var f = it.fields[fk];
+					fieldsKeyed[f.name]=f;
+				});
+				ijf.jiraAddMetaKeyed[projectKey][it.name]=fieldsKeyed;
 			});
-			ijf.jiraAddMetaKeyed[projectKey][it.name]=fieldsKeyed;
-		});
+		}
+		catch(e)
+		{
+			ijfUtils.footLog("Failed to get issue type details for project: " + projectKey);
+		}
 	}
 },
 loadJiraFields:function()

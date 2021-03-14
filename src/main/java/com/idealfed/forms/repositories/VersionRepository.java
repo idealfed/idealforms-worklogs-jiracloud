@@ -11,5 +11,6 @@ public interface VersionRepository extends CrudRepository<Version, Long> {
     Version findById(long id);
     List<Version> findAllByOrderByIdDesc();
 
+    List<Version> findAllByCustomerKeyOrderByIdDesc(String customerKey);
 
 }

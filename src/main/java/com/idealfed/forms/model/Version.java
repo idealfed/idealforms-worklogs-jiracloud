@@ -17,15 +17,16 @@ public class Version {
     @Lob
     @Column(length=20971520)
     private String config;
+    private String customerKey;
 
     public Version(){}
 
-    public Version(Date date, String author, String config)
+    public Version(Date date, String author, String config, String customerKey)
     {
         this.date = date;
         this.author = author;
         this.config = config;
-
+        this.customerKey=customerKey;
     }
 
     public Long getId(){
@@ -57,6 +58,12 @@ public class Version {
         this.config=config;
     };
 
-
+    public String getCustomerKey()
+    {
+        return this.customerKey;
+    };
+    public void setCustomerKey(String customerKey){
+        this.customerKey=customerKey;
+    };
 
 }

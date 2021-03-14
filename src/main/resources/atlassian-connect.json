@@ -17,47 +17,53 @@
     "ACT_AS_USER"
   ],
   "modules": {
-    "jiraSearchRequestViews": [
+    "generalPages": [
       {
-        "url": "/run?formId=Worklog%20Report",
-        "conditions": [
-          {
-            "condition": "user_is_logged_in"
-          }
-        ],
-        "weight": 100,
+        "key": "ijf-worklogs-runtime",
+        "location": "system.top.navigation.bar",
         "name": {
           "value": "Ideal Worklogs"
         },
-        "key": "ideal-worklogs-search"
-      }
-    ],
-    "generalPages": [
-      {
-        "key": "ijf-page",
-        "location": "system.top.navigation.bar",
-        "name": {
-          "value": "Ideal Forms"
-        },
-        "url": "/splash",
+        "url": "/run?formId=IFT%20Worklog%20Report",
+        "weight": 5,
         "conditions": [
           {
             "condition": "user_is_logged_in"
           }
         ]
+      }
+    ],
+    "webSections": [
+      {
+        "key": "ift-menu-section",
+        "location": "admin_plugins_menu",
+        "name": {
+          "value": "Ideal Tech"
+        }
+      }
+    ],
+    "webItems": [
+      {
+        "key": "ift-forms-section-link",
+        "location": "admin_plugins_menu/ift-menu-section",
+        "name": {
+          "value": "Ideal Forms"
+        },
+        "url": "/splash",
+        "target": {
+          "type": "page"
+        }
       },
       {
-        "url": "/run?formId=Worklog%20Report",
-        "conditions": [
-          {
-            "condition": "user_is_logged_in"
-          }
-        ],
-        "weight": 100,
+        "key": "ift-worklogs-section-link",
+        "location": "admin_plugins_menu/ift-menu-section",
         "name": {
-          "value": "Ideal Work"
+          "value": "Ideal Worklogs"
         },
-        "key": "ideal-worklogs-general"
+        "url": "/run?formId=IFT%20Product%20View",
+        "target": {
+          "type": "page"
+        }
       }
     ]
   }

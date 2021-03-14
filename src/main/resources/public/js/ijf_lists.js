@@ -1228,6 +1228,12 @@ renderItemList_Borderlayout:function(inContainerId)
 		});
 	});
 
+	//adding sort on the form groups....
+	retJson = retJson.sort(function(a, b)
+		{
+			return a.text<b.text ? -1 : a.text>b.text ? 1 : 0;
+		});
+
     var tree = new Ext.tree.Panel({
         xtype: 'check-tree',
         height: 100,
@@ -4081,7 +4087,6 @@ addEditType:function (inTypeId,isReportView)
 			{
 				xtype: 'combobox',
 				labelAlign: 'left',
-				forceSelection: true,
 				store: typeLookup,
 				forceSelection: true,
 				labelWidth: 100,
@@ -4105,9 +4110,8 @@ addEditType:function (inTypeId,isReportView)
 			{
 				xtype: 'combobox',
 				labelAlign: 'left',
-				forceSelection: true,
+				forceSelection: false,
 				store: fieldLookup,
-				forceSelection: true,
 				labelWidth: 100,
 				margin: '4 0 0 10',
 				fieldLabel: "JIRA Field",

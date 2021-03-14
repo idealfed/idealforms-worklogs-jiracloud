@@ -393,7 +393,41 @@ addEditForm:function (sRow)
 			}
         ],
         buttons:[{
-            text:'OK',
+			text:'Save',
+			handler: function(f,i,n){
+
+				if(sRow.data.name=="") {ijfUtils.modalDialogMessage("Form Error","Sorry, the name cannot be blank."); return;}
+				if(sRow.data.snippet=="") {ijfUtils.modalDialogMessage("Form Error","Sorry, the javascript cannot be blank."); return;}
+
+				var sId = sRow.data.iid;
+				//this guy has not been added yet
+
+				sRow.data.status ='saving';
+				var sendData = {
+					snippetId: sId,
+					formSetId: ijf.admin.cwfAdmin_form.formSet.id,
+					name: sRow.data.name,
+					snippet: JSON.stringify(sRow.data.snippet)
+				};
+				var sJson = JSON.stringify(sendData);
+
+				var sRes =  ijfUtils.saveJiraFormSync(sJson,"saveSnippet");
+
+				if(jQuery.isNumeric(sRes))
+				{
+					sRow.data.status ='saved';
+					sRow.data.iid=sRes;
+					sRow.commit();
+					originalSnippet =sRow.data.snippet;
+				}
+				else
+				{
+					rec.data.status = "Error";
+					ijfUtils.modalDialogMessage("Error","Unable to save the snippet: " + sRes);
+				}
+
+			}},{
+            text:'Save Done',
             handler: function(f,i,n){
 
 				if(sRow.data.name=="") {ijfUtils.modalDialogMessage("Form Error","Sorry, the name cannot be blank."); return;}

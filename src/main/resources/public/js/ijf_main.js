@@ -75,6 +75,7 @@ function init(inConfigVersion)
 	ijf.main.debug = g_debug;
 	//ijf.main.debug = "true";
 	//g_debug="true";
+
 	//var configUrl = '/plugins/servlet/iforms?ijfAction=getFormConfig&formId='+g_formId;
     //if(g_formId=="") configUrl = '/plugins/servlet/iforms?ijfAction=getConfig&version='+inConfigVersion;
 	//if(g_formId=="")  configUrl = '/config?version='+inConfigVersion;
@@ -126,6 +127,14 @@ function init(inConfigVersion)
     	        return;
 			}
 			if(!ijf.fw) return;
+
+			//new logic:  if g_formId is numeric, switch it to the name of the form in the form group...
+			if((!isNaN(window.g_formId)) && (window.g_formId!=""))
+			{
+				var tFName = Object.keys(ijf.fw.forms).reduce(function(inV,fKey){var f=ijf.fw.forms[fKey]; if(f.id/1==window.g_formId) inV=f.name; return inV;},null);
+				window.g_formId=tFName;
+			}
+
 
 			//determine if anonymous....and not craft.....if so establish session
 			if((window.g_formId) && (window.g_craft!="true"))
@@ -255,6 +264,12 @@ function processSetup(inContainerId)
 		}
 	}
 
+    //new concept to allow a form to load even if no item...
+    if(ijf.session["passTwoForInvalidKey"]){
+		ijf.main.itemId='';
+		ijf.session["passTwoForInvalidKey"]=false;
+	}
+
 
 
 
@@ -352,6 +367,9 @@ function loadItem(inContainerId)
 		    }
 		}
 		ijf.currentItem = {};
+				ijf.session["passTwoForInvalidKey"]=true;
+		  	    ijf.main.processSetup(inContainerId);
+		//ijf.currentItem = {};
 	}
 }
 
@@ -603,7 +621,25 @@ function renderForm(inContainerId, inFormId, isNested, item, afterRender)
 
         if(thisForm.settings.hasOwnProperty("tabTitle"))
         {
-            document.title = thisForm.settings["tabTitle"];
+//look for snippet and use if exists...
+			if(ijf.snippets.hasOwnProperty(thisForm.settings["tabTitle"]))
+			{
+				tTitle="IJF";
+				try
+				{
+
+					var tTitle = ijf.snippets[thisForm.settings["tabTitle"]]();
+				}
+				catch(e)
+				{
+					//go quiet
+				}
+	            document.title = tTitle;
+			}
+			else
+			{
+	            document.title = thisForm.settings["tabTitle"];
+			}
         }
 
         ijfUtils.renderHeader(inContainerId,thisForm,formItem);
