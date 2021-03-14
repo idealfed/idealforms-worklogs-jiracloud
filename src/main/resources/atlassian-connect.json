@@ -31,6 +31,33 @@
             "condition": "user_is_logged_in"
           }
         ]
+      },
+      {
+        "key": "ijf-10-page",
+        "location": "system.admin/globalsettings",
+        "name": {
+          "value": "Ideal Forms 10"
+        },
+        "url": "/splash",
+        "conditions": [
+          {
+            "condition": "user_is_logged_in"
+          }
+        ]
+      },
+      {
+        "url": "/run?formId=Worklog%20Report",
+        "location": "system.admin/globalsettings",
+        "conditions": [
+          {
+            "condition": "user_is_logged_in"
+          }
+        ],
+        "weight": 100,
+        "name": {
+          "value": "Ideal Worklogs 10"
+        },
+        "key": "ideal-worklogs-10-general"
       }
     ],
     "webSections": [
