@@ -39,7 +39,6 @@ var updateErrorMessage = "Sorry but an update request failed.  Please refresh yo
 
 var gSaveIncludesFile = false;
 
-
 function init(inConfigVersion)
 {
 	/*
@@ -240,6 +239,10 @@ function processSetup(inContainerId)
 		else if(window.location.search.indexOf("mode=admin")>-1)
 		{
 			ijf.lists.renderGroupList_Borderlayout(inContainerId);
+		}
+		else if(window.location.search.indexOf("mode=versionadmin")>-1)
+		{
+			ijf.versionAdmin.render_Borderlayout(inContainerId);
 		}
 		else if(window.location.search.indexOf("mode=library")>-1)
 		{

@@ -491,7 +491,16 @@ public class DataController {
                 fs.setProjectName(formGroup.get("projectName").getAsString());
                 fs.setSettings(formGroup.get("settings").getAsString());
                 String clientId = hostUser.getHost().getClientKey();
-                fs.setCustomerKey(clientId);
+                if(formGroup.has("iftFormGroup"))
+                {
+                    JsonElement je = formGroup.get("iftFormGroup");
+                    if(!je.isJsonNull()) fs.setIftFormGroup(je.getAsString());
+                }
+                if(formGroup.has("iftFormGroupVersion"))
+                {
+                    JsonElement je = formGroup.get("iftFormGroupVersion");
+                    if(!je.isJsonNull()) fs.setIftFormGroupVersion(je.getAsString());
+                }
 
                 log.debug("Saving");
 
@@ -578,24 +587,38 @@ public class DataController {
             }
             else if(iwfAction.equals("setConfig"))
             {
-                //backup and delete
-                backupConfigToVersion(hostUser);
-                deleteConfig(hostUser);
+
 
                 JsonObject  jo = jelement.getAsJsonObject();
-
+                log.debug("Have config parsed as json element");
                 JsonArray rs = null;
-                if(jelement.isJsonArray()) rs = jo.get("ijfConfig").getAsJsonArray();
+                if(jelement.isJsonArray())
+                {
+                    log.debug("Element is json Array...casting as such");
+                    rs = jo.get("ijfConfig").getAsJsonArray();
+                }
+
 
                 //tests...if not null, this the formSets..
                 JsonArray cts = null;
                 if(rs==null)
                 {
                     //jo is a level down
+                    log.debug("js is null, looking down one level...");
                     JsonObject combinedConfig = jo.get("ijfConfig").getAsJsonObject();
                     rs = combinedConfig.getAsJsonArray("formSets");
+                    if(rs==null) rs = combinedConfig.getAsJsonArray("resultSet");
                     cts = combinedConfig.getAsJsonArray("customTypes");
                 }
+
+                if(rs==null)
+                {
+                    //bail, we don't want to do this because there is an issue with inbound config
+                    throw new Exception("Failed to parse configuration on server.");
+                }
+                //backup and delete
+                backupConfigToVersion(hostUser);
+                deleteConfig(hostUser);
 
                 JsonObject jsonFs;
                 JsonArray jsonForms;
@@ -615,7 +638,19 @@ public class DataController {
                     fs.setProjectId(jsonFs.get("projectId").getAsString());
                     String clientId = hostUser.getHost().getClientKey();
                     fs.setCustomerKey(clientId);
-                    fs.setIftFormGroup(jsonFs.get("iftFormGroup").getAsString());
+
+
+                    if(jsonFs.has("iftFormGroup"))
+                    {
+                        JsonElement je = jsonFs.get("iftFormGroup");
+                        if(!je.isJsonNull()) fs.setIftFormGroup(je.getAsString());
+                    }
+                    if(jsonFs.has("iftFormGroupVersion"))
+                    {
+                        JsonElement je = jsonFs.get("iftFormGroupVersion");
+                        if(!je.isJsonNull()) fs.setIftFormGroupVersion(je.getAsString());
+                    }
+
 
                     fs = formsetRepository.save(fs);
 
@@ -626,13 +661,13 @@ public class DataController {
                         if(!jsonForm.has("name")) break;
                         Form frm = new Form(jsonForm.get("name").getAsString(),fs);
                         frm.setFormSet(fs);
-                        frm.setTestIssue(jsonForm.get("testIssue").getAsString());
-                        if(jsonForm.has("formAnon")) frm.setFormAnon(jsonForm.get("formAnon").getAsString());
-                        if(jsonForm.has("formProxy")) frm.setFormProxy(jsonForm.get("formProxy").getAsString());
-                        frm.setIssueType(jsonForm.get("issueType").getAsString());
-                        frm.setFormType(jsonForm.get("formType").getAsString());
-                        frm.setFields(jsonForm.get("fields").getAsString());
-                        frm.setSettings(jsonForm.get("formSettings").getAsString());
+                        if((jsonForm.has("testIssue")) && (!jsonForm.get("testIssue").isJsonNull())) frm.setTestIssue(jsonForm.get("testIssue").getAsString());
+                        if((jsonForm.has("formAnon")) && (!jsonForm.get("formAnon").isJsonNull())) frm.setFormAnon(jsonForm.get("formAnon").getAsString());
+                        if((jsonForm.has("formProxy")) && (!jsonForm.get("formProxy").isJsonNull())) frm.setFormProxy(jsonForm.get("formProxy").getAsString());
+                        if((jsonForm.has("issueType")) && (!jsonForm.get("issueType").isJsonNull())) frm.setIssueType(jsonForm.get("issueType").getAsString());
+                        if((jsonForm.has("formType")) && (!jsonForm.get("formType").isJsonNull())) frm.setFormType(jsonForm.get("formType").getAsString());
+                        if((jsonForm.has("fields")) && (!jsonForm.get("fields").isJsonNull())) frm.setFields(jsonForm.get("fields").getAsString());
+                        if((jsonForm.has("formSettings")) && (!jsonForm.get("formSettings").isJsonNull())) frm.setSettings(jsonForm.get("formSettings").getAsString());
                         formRepository.save(frm);
                     }
 
@@ -643,7 +678,7 @@ public class DataController {
                         if(!jsonSnippet.has("name")) break;
                         Snippet s = new Snippet(jsonSnippet.get("name").getAsString(),fs);
                         s.setName(jsonSnippet.get("name").getAsString());
-                        s.setSnippet(jsonSnippet.get("snippet").getAsString());
+                        if((jsonSnippet.has("snippet")) && (!jsonSnippet.get("snippet").isJsonNull()))  s.setSnippet(jsonSnippet.get("snippet").getAsString());
                         s=snippetRepository.save(s);
                     }
                 }
@@ -655,10 +690,10 @@ public class DataController {
                         jsonFs = cts.get(i).getAsJsonObject();
                         if(!jsonFs.has("name")) break;
                         CustomType ct  = new CustomType(jsonFs.get("name").getAsString());
-                        ct.setDescription(jsonFs.get("description").getAsString());
-                        ct.setCustomType(jsonFs.get("customType").getAsString());
-                        ct.setFieldName(jsonFs.get("fieldName").getAsString());
-                        ct.setSettings(jsonFs.get("settings").getAsString());
+                        if((jsonFs.has("description")) && (!jsonFs.get("description").isJsonNull())) ct.setDescription(jsonFs.get("description").getAsString());
+                        if((jsonFs.has("customType")) && (!jsonFs.get("customType").isJsonNull())) ct.setCustomType(jsonFs.get("customType").getAsString());
+                        if((jsonFs.has("fieldName")) && (!jsonFs.get("fieldName").isJsonNull())) ct.setFieldName(jsonFs.get("fieldName").getAsString());
+                        if((jsonFs.has("settings")) && (!jsonFs.get("settings").isJsonNull())) ct.setSettings(jsonFs.get("settings").getAsString());
                         String clientId = hostUser.getHost().getClientKey();
                         ct.setCustomerKey(clientId);
                         ct = customTypeRepository.save(ct);
@@ -740,7 +775,17 @@ public class DataController {
                     fs.setProjectId(jsonFs.get("projectId").getAsString());
                     String clientId = hostUser.getHost().getClientKey();
                     fs.setCustomerKey(clientId);
-                    fs.setIftFormGroup(jsonFs.get("iftFormGroup").getAsString());
+
+                    if(jsonFs.has("iftFormGroup"))
+                    {
+                        JsonElement je = jsonFs.get("iftFormGroup");
+                        if(!je.isJsonNull()) fs.setIftFormGroup(je.getAsString());
+                    }
+                    if(jsonFs.has("iftFormGroupVersion"))
+                    {
+                        JsonElement je = jsonFs.get("iftFormGroupVersion");
+                        if(!je.isJsonNull()) fs.setIftFormGroupVersion(je.getAsString());
+                    }
 
                     fs = formsetRepository.save(fs);
 
@@ -1071,6 +1116,10 @@ public class DataController {
             jo.addProperty("projectName",f.getProjectName());
             jo.addProperty("projectId",f.getProjectId());
             jo.addProperty("settings",f.getSettings());
+            jo.addProperty("customerKey",f.getCustomerKey());
+            jo.addProperty("iftFormGroup",f.getIftFormGroup());
+            jo.addProperty("iftFormGroupVersion",f.getIftFormGroupVersion());
+
             ja.add(jo);
             rCnt++;
         }

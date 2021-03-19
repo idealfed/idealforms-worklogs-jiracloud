@@ -46,7 +46,7 @@
         ]
       },
       {
-        "url": "/run?formId=Worklog%20Report",
+        "url": "/productadmin?mode=versionadmin",
         "location": "system.admin/globalsettings",
         "conditions": [
           {
@@ -55,7 +55,7 @@
         ],
         "weight": 100,
         "name": {
-          "value": "Ideal Worklogs 10"
+          "value": "Ideal Worklogs Admin 10"
         },
         "key": "ideal-worklogs-10-general"
       }

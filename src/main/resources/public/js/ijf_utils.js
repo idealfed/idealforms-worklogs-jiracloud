@@ -2097,6 +2097,8 @@ getConfigJson:function(inFormSet)
 			name: fs.name,
 			projectName: fs.projectName,
 			projectId: fs.projectId,
+			iftFormGroup:fs.iftFormGroup,
+			iftFormGroupVersion:fs.iftFormGroupVersion,
 			settings: JSON.stringify(JSON.stringify(settingsOut)),
 			snippets: fs.snippets.map(function(s){
 					return {
@@ -2166,6 +2168,76 @@ getConfigJson:function(inFormSet)
 
 	return outStr;
 },
+	formatConfigJson:function(inConfig)
+	{
+		var outFormSets = [];
+		outFormSets = inConfig.resultSet.reduce(function(outFormSets,fs)
+		{
+			if(!fs.name) return outFormSets;
+
+			if(fs.settings)
+				var settingsOut = JSON.parse(fs.settings);
+			else
+				var settingsOut = [];
+
+			var outForms = [];
+			var fsOut = {
+				id: fs.id,
+				name: fs.name,
+				projectName: fs.projectName,
+				projectId: fs.projectId,
+				iftFormGroup:fs.iftFormGroup,
+				iftFormGroupVersion:fs.iftFormGroupVersion,
+				settings: JSON.stringify(JSON.stringify(settingsOut)),
+				snippets: fs.snippets.map(function(s){
+					return {
+						name: s.name,
+						snippet: JSON.stringify(s.snippet)
+					};
+				}),
+				forms: fs.forms.reduce(function(outForms,thisForm){
+					//process the Form
+					if(!thisForm.name) return outForms;
+					var settingsOut = JSON.parse(thisForm.settings);
+					var fieldsOut = JSON.parse(thisForm.fields);
+					var jOut = {
+						id: thisForm.id,
+						testIssue: thisForm.testIssue,
+						formType: thisForm.formType,
+						issueType: thisForm.issueType,
+						formAnon: thisForm.formAnon,
+						name: thisForm.name,
+						fields: JSON.stringify(JSON.stringify(fieldsOut)),
+						formSettings: JSON.stringify(JSON.stringify(settingsOut))
+					};
+					outForms.push(jOut);
+					return outForms;
+				},outForms)
+			}
+			outFormSets.push(fsOut);
+			return outFormSets;
+		},outFormSets);
+		//look for existance of specific formset, if NOT there, also get the custom types
+		var outCustomTypes = inConfig.customTypes.reduce(function(outCustomTypes,ctype)
+		{
+			if(!ctype.name) return outCustomTypes;
+			var ctOut = {
+				customTypeId: ctype.id,
+				name: ctype.name,
+				description: ctype.description,
+				customType: ctype.customType,
+				fieldName: ctype.fieldName,
+				settings: JSON.stringify(ctype.settings)
+			};
+			outCustomTypes.push(ctOut);
+			return outCustomTypes;
+		},[]);
+
+		var tempOutObj = {formSets:outFormSets,customTypes:outCustomTypes};
+		var outStr = JSON.stringify(tempOutObj);
+
+		return outStr;
+	},
 clearAll:function()
 {
      ijfUtils.clearExt();

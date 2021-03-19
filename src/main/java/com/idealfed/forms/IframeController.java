@@ -56,6 +56,43 @@ public class IframeController {
         return "/splash";
     }
 
+
+    @RequestMapping(value = "/productadmin", method = RequestMethod.GET)
+    public String getProductAdminTemplate(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) //(HttpServletRequest request, HttpServletResponse response)
+    {
+        log.debug("Working produuct admin template");
+
+        Map<String, String[]> parameters = request.getParameterMap();
+        String debug = "";
+        if(parameters.containsKey("debug")) debug = request.getParameter("debug");
+        String craft = "";
+        if(parameters.containsKey("craft")) craft = request.getParameter("craft");
+        String remote = "";
+        if(parameters.containsKey("remote")) remote = request.getParameter("remote");
+
+        //look for request params...populate the context model
+        model.addAttribute("test","Hello from Thyme");
+        model.addAttribute("pathRoot",gRoot);
+        model.addAttribute("ijfHtmlReferences","<!-- Html refs -->");
+        model.addAttribute("ijfSnippetPub","");
+        model.addAttribute("ijfStyle","");
+        Optional<String> userId = hostUser.getUserAccountId();
+        model.addAttribute("ijfUsername",userId.get());
+        model.addAttribute("ijfVersion","");
+        model.addAttribute("firstFormSet","");
+        model.addAttribute("ijfFormId","");
+        model.addAttribute("ijfItemId","");
+        model.addAttribute("ijfDebug",debug);
+        model.addAttribute("ijfRoot",gRoot);
+        model.addAttribute("ijfCraft",craft);
+
+        model.addAttribute("ijfProduct","iftWorklogs");
+
+        log.debug("returning product admin template");
+        return "/productadmin";
+    }
+
+
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String getAdminTemplate(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) //(HttpServletRequest request, HttpServletResponse response)
     {
