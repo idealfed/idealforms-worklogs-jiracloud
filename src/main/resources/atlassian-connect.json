@@ -76,7 +76,7 @@
       {
         "key": "ift-forms-section-link-20",
         "location": "admin_plugins_menu/ift-menu-section-20",
-        "context": "page",
+        "context": "addon",
         "name": {
           "value": "Ideal Forms 20"
         },
