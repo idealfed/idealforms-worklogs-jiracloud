@@ -62,6 +62,15 @@
         },
         "key": "ideal-worklogs-20-general"
       }
+    ],
+    "webSections": [
+      {
+        "key": "ift-menu-section-20",
+        "location": "admin_plugins_menu",
+        "name": {
+          "value": "Ideal Tech 20"
+        }
+      }
     ]
   }
 }
