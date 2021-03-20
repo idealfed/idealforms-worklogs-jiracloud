@@ -71,6 +71,20 @@
           "value": "Ideal Tech 20"
         }
       }
+    ],
+    "webItems": [
+      {
+        "key": "ift-forms-section-link-20",
+        "location": "admin_plugins_menu/ift-menu-section-20",
+        "context": "page",
+        "name": {
+          "value": "Ideal Forms 20"
+        },
+        "url": "/splash",
+        "target": {
+          "type": "page"
+        }
+      }
     ]
   }
 }
