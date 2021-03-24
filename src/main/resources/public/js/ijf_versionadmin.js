@@ -35,9 +35,21 @@ ijf.versionAdmin = {
 			return null;
 		}
 	},
+    getIftConfiguration:function(inId)
+    {
+		try
+		{
+            var thisConfig = ijfUtils.jiraApiSync("GET",'/ift/rest/product/'+g_IftProductId+'/version/'+inId,null);
+
+			return thisConfig.result;
+	    }
+	    catch(e)
+	    {
+			return null;
+		}
+	},
 	applyConfiguration:function(inId)
 	{
-debugger;
 		var thisConfig = this.getConfiguration(inId);
 
 		if(thisConfig)
@@ -48,10 +60,23 @@ debugger;
 		{
 			ijfUtils.modalDialogMessage("Error","Unable to parse the selected configuration, please try a different one.");
 			var sUp = function(){window.scrollTo(0,0);};
-
 			window.setTimeout(sUp,500);
 		}
+	},
+	applyIftVersion:function(inId)
+	{
+		var thisConfig = this.getIftConfiguration(inId);
 
+		if(thisConfig)
+		{
+			ijfUtils.writeFullConfig(thisConfig, true);
+		}
+		else
+		{
+			ijfUtils.modalDialogMessage("Error","Unable to parse the selected version, please contact support.");
+			var sUp = function(){window.scrollTo(0,0);};
+			window.setTimeout(sUp,500);
+		}
 	},
 	onOpenFormDesigner:function()
 	{
@@ -129,23 +154,23 @@ debugger;
 		var saveHistory = ijfUtils.jiraApiSync("GET","/plugins/servlet/iforms","ijfAction=getVersions");
 		var saveData = saveHistory; //JSON.parse(saveHistory);
 		var tblStart = "<table cellspacing=0 cellpadding=2 style='width:100%'><tr><td style='color:white;background-color:black' colspan=3>Local Product Backups</td></tr>";
-		tblStart+="<tr><td style='border-bottom:solid black 1px'>User</td><td style='border-bottom:solid black 1px'>Date</td><td style='border-bottom:solid black 1px'>Click to Apply</td></tr>";
+		tblStart+="<tr><td style='font-weight:bold;border-bottom:solid black 1px'>User</td><td style='font-weight:bold;border-bottom:solid black 1px'>Date</td><td style='border-bottom:solid black 1px'></td></tr>";
 		var outStr = saveData.resultSet.reduce(function(bStr, s){
 			if(!s.author) return bStr;
-			bStr+= "<tr><td>"+s.author +"</td><td>" + s.created + "</td><td><a href=JAVASCRIPT:ijf.versionAdmin.applyConfiguration("+s.id+")>Click to apply</a></td></tr>";
+			bStr+= "<tr><td>"+s.author +"</td><td>" + s.created + "</td><td><a href=JAVASCRIPT:ijf.versionAdmin.applyConfiguration("+s.id+")>Apply</a></td></tr>";
 			return bStr;
 		},tblStart);
 		outStr += "</table>";
 		this.productBackups = outStr;
 
 
-        //get the save history
+        //get the product versions
 		var tblStart = "<table cellspacing=0 cellpadding=2 style='width:100%'><tr><td style='color:white;background-color:black' colspan=3>IFT Product Versions</td></tr>";
-		tblStart+="<tr><td style='border-bottom:solid black 1px'>Version</td><td style='border-bottom:solid black 1px'>Description</td><td style='border-bottom:solid black 1px'>Click to Apply</td></tr>";
+		tblStart+="<tr><td style='font-weight:bold;border-bottom:solid black 1px'>Version</td><td style='font-weight:bold;border-bottom:solid black 1px'>Description</td><td style='border-bottom:solid black 1px'></td></tr>";
         var versions = ijfUtils.jiraApiSync("GET", '/ift/rest/product/' + this.iftProduct.id+ '/versions', null);
         outStr = versions.resultSet.reduce(function(bStr,s) {
 			if(!s.author) return bStr;
-			bStr+= "<tr><td>"+s.version +"</td><td>" + s.description + "</td><td><a href=JAVASCRIPT:ijf.versionAdmin.applyIftVersion("+s.id+")>Click to apply</a></td></tr>";
+			bStr+= "<tr><td>"+s.version +"</td><td>" + s.description + "</td><td><a href=JAVASCRIPT:ijf.versionAdmin.applyIftVersion("+s.id+")>Apply</a></td></tr>";
 			return bStr;
  		},tblStart);
 		outStr += "</table>";

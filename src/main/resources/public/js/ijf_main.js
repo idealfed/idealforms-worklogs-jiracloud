@@ -282,7 +282,7 @@ function processSetup(inContainerId)
     	//will need fields....
 		ijfUtils.loadJiraFields();
         ijf.main.renderForm(inContainerId, window.g_formId, false, null);
-        ijfUtils.renderAdminButtons(inContainerId);
+        //ijfUtils.renderAdminButtons(inContainerId);
     }
     else
     {
@@ -389,6 +389,9 @@ function renderForm(inContainerId, inFormId, isNested, item, afterRender)
 
     	ijf.main.outerForm = ijf.fw.forms[inFormId];
     	//if the ijf.admin.dWin exists, destroy it....
+
+    	if(!ijf.lists) ijf.lists = {};
+
     	if(ijf.lists.dWin) Ext.destroy(ijf.lists.dWin);
 	}
 	else

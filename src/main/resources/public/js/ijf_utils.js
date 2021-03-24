@@ -1672,16 +1672,16 @@ showSaveHistory:function()
 	outStr += "</table>";
 	tDiv.innerHTML = outStr;
 },
-renderAdminButtons:function(inContainerId)
+renderAdminButtons:function(inContainerId, debugOverride)
 {
     //todo if owner manager do this...
     jQuery('#ijfManage').html('');
     jQuery('#ijfJsonUpload').html('');
 
-    if((ijf.main.debug=='true') && (!ijf.main.outerForm))
+    if((debugOverride) || ((ijf.main.debug=='true') && (!ijf.main.outerForm)))
     {
         //Craft section, if debug or if in craft mode...
-		var fileLoad = "View Save History(last 20): <input type='button' value='Save History' onclick='ijfUtils.showSaveHistory()'><br>";
+		var fileLoad = "View Save History(last 50): <input type='button' value='Save History' onclick='ijfUtils.showSaveHistory()'><br>";
 		fileLoad += "Upload Entire Config File: <input type='file' accept='text/plain' onchange='ijfUtils.readConfigFile(event)'><br>";
 		fileLoad += "Download Entire Config to a File: <input type='button' value='Download' onclick='ijfUtils.writeConfigFile()'>";
         var pnl = new Ext.FormPanel({
@@ -1700,8 +1700,10 @@ renderAdminButtons:function(inContainerId)
       // ijf.main.controlSet['jsonUploadForm'] =   new itemControl('jsonUploadForm', null, null, jForm, null);
        ijf.main.controlSet['adminButtons'] =   new itemControl('jsonUploadForm', null, null, pnl, null);
 
+       var targetDiv = document.getElementById("ijfManage");
+       targetDiv.style.marginLeft="50px";
       //  jForm.render(document.getElementById("ijfJsonUpload"));
-        pnl.render(document.getElementById("ijfManage"));
+        pnl.render(targetDiv);
     }
 },
 gridUploadCsvFile: function(event, inGridId, inControlId, dontSetDirty)

@@ -111,7 +111,6 @@ public class IftProductController {
                     IftVersion ifv = iftVersionRepository.findById(versionId);
                     jout.addProperty("status","OK");
                     jout.addProperty("result",ifv.getConfig());
-                    //sb.append(getProductVersionJson(ifv, true));
                 }
                 else
                 {

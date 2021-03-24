@@ -87,6 +87,8 @@ public class IframeController {
         model.addAttribute("ijfCraft",craft);
 
         model.addAttribute("ijfProduct","iftWorklogs");
+        model.addAttribute("ijfProductId","587");
+
 
         log.debug("returning product admin template");
         return "/productadmin";

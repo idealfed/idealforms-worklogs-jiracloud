@@ -1362,6 +1362,13 @@ renderItemList_Borderlayout:function(inContainerId)
 			ijf.lists.deleteForm(ijf.lists.itemId);
             }});
 
+	cButtons.push({
+		text:'Backups',
+		xtype: 'button',
+		margin: '0 3 0 100',
+		handler: function(){
+			ijfUtils.renderAdminButtons('ijfContent',true);
+            }});
 
 
 
