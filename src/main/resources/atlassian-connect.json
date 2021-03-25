@@ -31,66 +31,33 @@
             "condition": "user_is_logged_in"
           }
         ]
-      },
-      {
-        "key": "ijf-10-page",
-        "location": "system.admin/globalsettings",
-        "name": {
-          "value": "Ideal Forms 10"
-        },
-        "url": "/splash",
-        "conditions": [
-          {
-            "condition": "user_is_logged_in"
-          }
-        ]
-      },
-      {
-        "url": "/productadmin?mode=versionadmin",
-        "location": "system.admin/globalsettings",
-        "conditions": [
-          {
-            "condition": "user_is_logged_in"
-          }
-        ],
-        "weight": 100,
-        "name": {
-          "value": "Ideal Worklogs Admin 10"
-        },
-        "key": "ideal-worklogs-10-general"
       }
     ],
     "webSections": [
       {
-        "key": "ift-menu-section",
+        "key": "ift-menu-section-10",
         "location": "admin_plugins_menu",
         "name": {
-          "value": "Ideal Tech"
+          "value": "Ideal Tech 10"
         }
       }
     ],
-    "webItems": [
+    "adminPages": [
       {
         "key": "ift-forms-section-link",
-        "location": "admin_plugins_menu/ift-menu-section",
+        "location": "admin_plugins_menu/ift-menu-section-10",
         "name": {
-          "value": "Ideal Forms"
+          "value": "Ideal Forms 10"
         },
-        "url": "/splash",
-        "target": {
-          "type": "page"
-        }
+        "url": "/splash"
       },
       {
         "key": "ift-worklogs-section-link",
-        "location": "admin_plugins_menu/ift-menu-section",
+        "location": "admin_plugins_menu/ift-menu-section-10",
         "name": {
-          "value": "Ideal Worklogs"
+          "value": "Ideal Worklogs 10"
         },
-        "url": "/run?formId=IFT%20Product%20View",
-        "target": {
-          "type": "page"
-        }
+        "url": "/productadmin?mode=versionadmin"
       }
     ]
   }

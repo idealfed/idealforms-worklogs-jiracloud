@@ -1979,7 +1979,7 @@ readConfigFile:function(event)
 	    };
   		reader.readAsText(input.files[0]);
 },
-writeFullConfig:function(inConfig, doReset)
+writeFullConfig:function(inConfig, doReset,inFinalPopupMessage)
 {
 		var outJsonConfig = inConfig.replace(/\%/g,"~pct~");
 
@@ -2012,6 +2012,11 @@ writeFullConfig:function(inConfig, doReset)
 						{
 							ijfUtils.clearExt();
 							ijf.main.init(0);
+							if(inFinalPopupMessage)
+							{
+								//show message
+								ijfUtils.modalDialogMessage("Info",inFinalPopupMessage);
+							}
 						}
 					}
 				},
@@ -2200,6 +2205,7 @@ getConfigJson:function(inFormSet)
 				forms: fs.forms.reduce(function(outForms,thisForm){
 					//process the Form
 					if(!thisForm.name) return outForms;
+					if(!thisForm.settings) thisForm.settings=thisForm.formSettings;
 					var settingsOut = JSON.parse(thisForm.settings);
 					var fieldsOut = JSON.parse(thisForm.fields);
 					var jOut = {

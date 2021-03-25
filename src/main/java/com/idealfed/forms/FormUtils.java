@@ -116,6 +116,17 @@ public class FormUtils {
         return retStr; //sb.toString();
     }
 
+    public static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+        } catch(NumberFormatException e) {
+            return false;
+        } catch(NullPointerException e) {
+            return false;
+        }
+        //ugly..but will work
+        return true;
+    }
 
     public static String getCustomTypeJson(CustomType ct)
     {

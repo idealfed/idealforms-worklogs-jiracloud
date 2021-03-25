@@ -11,5 +11,6 @@ public interface IftVersionRepository extends CrudRepository<IftVersion, Long> {
 
     IftVersion findById(long id);
     List<IftVersion> findByIftFormSet(IftFormSet fs);
-
+    List<IftVersion> findAll();
+    //List<IftVersion> findAllByIftFormSetANDversionId(IftFormSet fs, String versionId);
 }

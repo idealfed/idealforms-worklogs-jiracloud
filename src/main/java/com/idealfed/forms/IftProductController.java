@@ -24,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -93,8 +94,24 @@ public class IftProductController {
                 String subAction  = pathArray[5];
                 log.debug("Path param 3 is: " + subAction);
 
-                int productId = new Integer(productIdStr).intValue();
-                IftFormSet ifs = iftFormSetRepository.findById(productId);
+
+                //The product can come in as an ID or as a string of the name...
+                IftFormSet ifs= null;
+                if(FormUtils.isInteger(productIdStr))
+                {
+                    ifs = iftFormSetRepository.findById(Integer.parseInt(productIdStr));
+                }
+                else
+                {
+                    List <IftFormSet> iftFsList = iftFormSetRepository.findAll();
+                    if((iftFsList==null) || (iftFsList.size()<1)) throw new Exception("All products is empty for: " + productIdStr);
+                    for(int i =0; i<iftFsList.size();i++)
+                    {
+                        if(iftFsList.get(i).getProductId().equals(productIdStr)) ifs = iftFsList.get(i);
+                    }
+                }
+                if(ifs==null) throw new Exception("Unable to find product by name " + productIdStr);
+
                 if(subAction.equals("versions")) {
                     StringBuilder sb = new StringBuilder("{\"status\":\"OK\",\"resultSet\":[");
                     int rCnt = 0;
@@ -107,8 +124,24 @@ public class IftProductController {
                 else if(subAction.equals("version")) {
                     String versionIdStr  = pathArray[6];
                     log.debug("Path param 4 is: " + versionIdStr);
-                    int versionId = new Integer(versionIdStr).intValue();
-                    IftVersion ifv = iftVersionRepository.findById(versionId);
+
+                    //version can come in as a string or ID...
+                    IftVersion ifv= null;
+                    if(FormUtils.isInteger(versionIdStr))
+                    {
+                        ifv = iftVersionRepository.findById(Integer.parseInt(versionIdStr));
+                    }
+                    else
+                    {
+                        List <IftVersion> iftVerList = iftVersionRepository.findByIftFormSet(ifs);
+                        if((iftVerList==null) || (iftVerList.size()<1)) throw new Exception("Version list is empty...");
+                        for(int i =0; i<iftVerList.size();i++)
+                        {
+                            if(iftVerList.get(i).getVersionId().equals(versionIdStr)) ifv = iftVerList.get(i);
+                        }
+                    }
+                    if(ifv==null) throw new Exception("Unable to find product version by name " + versionIdStr);
+
                     jout.addProperty("status","OK");
                     jout.addProperty("result",ifv.getConfig());
                 }

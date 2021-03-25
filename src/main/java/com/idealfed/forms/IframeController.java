@@ -32,6 +32,7 @@ public class IframeController {
     private static final Logger log = LoggerFactory.getLogger(DataController.class);
 
     private static final String gRoot = AddonApplication.appRoot;
+    private static final String gProductName = AddonApplication.productName;
 
     @Autowired
     ServletContext servletContext;
@@ -86,9 +87,7 @@ public class IframeController {
         model.addAttribute("ijfRoot",gRoot);
         model.addAttribute("ijfCraft",craft);
 
-        model.addAttribute("ijfProduct","iftWorklogs");
-        model.addAttribute("ijfProductId","587");
-
+        model.addAttribute("ijfProduct",gProductName);
 
         log.debug("returning product admin template");
         return "/productadmin";
@@ -238,6 +237,7 @@ public class IframeController {
         model.addAttribute("ijfDebug",debug);
         model.addAttribute("ijfRoot",gRoot);
         model.addAttribute("ijfCraft",craft);
+        model.addAttribute("ijfProduct",gProductName);
         return "/runtime";
     }
     private String getVelocityInjections(JsonParser jsonParser, AtlassianHostUser hostUser)

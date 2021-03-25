@@ -39,7 +39,7 @@ ijf.versionAdmin = {
     {
 		try
 		{
-            var thisConfig = ijfUtils.jiraApiSync("GET",'/ift/rest/product/'+g_IftProductId+'/version/'+inId,null);
+            var thisConfig = ijfUtils.jiraApiSync("GET",'/ift/rest/product/'+g_IftProduct+'/version/'+inId,null);
 
 			return thisConfig.result;
 	    }
@@ -54,7 +54,10 @@ ijf.versionAdmin = {
 
 		if(thisConfig)
 		{
-			ijfUtils.writeFullConfig(thisConfig, true);
+			var applyConfig = function(){
+				ijfUtils.writeFullConfig(thisConfig, true, "You have reverted to a prior configuration version to your product, please open or refresh the application to see changes.");
+			}
+			ijfUtils.modalDialog("Warning","You are about to revert to this saved configuration, are you sure?",applyConfig);
 		}
 		else
 		{
@@ -69,7 +72,11 @@ ijf.versionAdmin = {
 
 		if(thisConfig)
 		{
-			ijfUtils.writeFullConfig(thisConfig, true);
+			var applyConfig = function(){
+				ijfUtils.writeFullConfig(thisConfig, true,"You have applied an IFT configuration version for your product, please open or refresh the application to see changes.");
+			}
+			ijfUtils.modalDialog("Warning","You are about to apply to this IFT configuration, are you sure?",applyConfig);
+
 		}
 		else
 		{
@@ -85,13 +92,11 @@ ijf.versionAdmin = {
 			var productForms = ["IFT My Worklogs","IFT Worklog Report"]
 
 
-			var outHtml = "<br>"
-
-			outHtml = "The IFT Worklogs product is built and configured using Ideal Forms for JIRA.  This product includes a portion of Ideal Forms that allows you to edit and modify your version of Worklogs.  The links below will open the forms designer for your two forms.  When you save, the system will continually backup your current version and it will keep the last 50 versions you save which you can revert to at any time.  The designer is complex so please reach out with questions.  Adding columns to a display is pretty easy, altering behavoir will requires some javascript coding.<br>";
+			var outHtml = "<br>The IFT Worklogs product is built and configured using Ideal Forms for JIRA.  This product includes a portion of Ideal Forms that allows you to edit and modify your version of Worklogs.  The links below will open the forms designer for your two forms.  When you save, the system will continually backup your current version and it will keep the last 50 versions you save which you can revert to at any time.  The designer is complex so please reach out with questions.  Adding columns to a display is pretty easy, altering behavoir will requires some javascript coding.<br>";
 
 			outHtml += ijf.versionAdmin.localProduct.forms.reduce(function(inV, f){
 				if(productForms.indexOf(f.name)>-1)
-					inV += "<br><a target='_blank' href='"+getIjfRoot()+"/run?debug=true&craft=true&itemId=&formId="+f.name+"&jwt="+getJwtToken()+"'>Click here to edit "+f.name+"</a>";
+					inV += "<br><a target='_blank' href='"+getIjfRoot()+"/run?debug=true&craft=true&itemId=&formId="+f.name+"&jwt="+getJwtToken()+"'>Click here to design "+f.name+"</a>";
 				return inV;
 				},"");
 
@@ -135,7 +140,7 @@ ijf.versionAdmin = {
             pActionHtml+="<li style='margin-top:15px'>Modify your own Worklogs forms... <a id='formListLinkId' href='javascript:ijf.versionAdmin.onOpenFormDesigner()'>more</a>.<div style='display:none' id='iftProductForms_id'></div></li>";
             pActionHtml+="<li style='margin-top:15px'>Change your working version to one of your backups (below left).</li>";
             pActionHtml+="<li style='margin-top:15px'>Change your working version to one of IFT versions (below right).</li>";
-            pActionHtml+="<li style='margin-top:15px'>Open our feedback and comments page and provide IFT feedback on this product.</li>";
+            pActionHtml+="<li style='margin-top:15px'>Open our <a href='https://www.idealfed.com/products/"+g_IftProduct+"' target='_blank'>feedback and comments page</a> and provide IFT feedback on this product.</li>";
             pActionHtml+="</ul>";
 
             outHtml3 = "<div style='margin-top:5px;margin-bottom:0px;font-weight:bold;font-size:20pt'>What you can do:</div><br>" +pActionHtml;
@@ -149,6 +154,12 @@ ijf.versionAdmin = {
             var outHtml2="We are unable to identify your currently installed product for this plugin.  Can you please contact IFT support here (add link)";
 
         }
+        var customerBaseUrl = document.location.ancestorOrigins[0];
+        if(customerBaseUrl.indexOf("idealfed")>-1)
+        {
+			//add admin link for idealfed utils
+			outHtml4 = "<br><a href='"+g_root+"/admin?mode=forms&jwt="+getJwtToken() + "' target='_blank'> Idealfed Adminstration</a><br><hr>";
+		}
 
         //get the save history
 		var saveHistory = ijfUtils.jiraApiSync("GET","/plugins/servlet/iforms","ijfAction=getVersions");
@@ -157,7 +168,7 @@ ijf.versionAdmin = {
 		tblStart+="<tr><td style='font-weight:bold;border-bottom:solid black 1px'>User</td><td style='font-weight:bold;border-bottom:solid black 1px'>Date</td><td style='border-bottom:solid black 1px'></td></tr>";
 		var outStr = saveData.resultSet.reduce(function(bStr, s){
 			if(!s.author) return bStr;
-			bStr+= "<tr><td>"+s.author +"</td><td>" + s.created + "</td><td><a href=JAVASCRIPT:ijf.versionAdmin.applyConfiguration("+s.id+")>Apply</a></td></tr>";
+			bStr+= "<tr><td>Backup ID: "+s.id +"</td><td>" + s.created + "</td><td><a href=JAVASCRIPT:ijf.versionAdmin.applyConfiguration("+s.id+")>Apply</a></td></tr>";
 			return bStr;
 		},tblStart);
 		outStr += "</table>";
@@ -227,7 +238,7 @@ ijf.versionAdmin = {
                     border: false,
                     flex: 1,
                     width: "80%",
-                    height: 10,
+                    height: "auto",
                     style: "background:transparent",
                     bodyStyle:  "background:transparent"},
                 {

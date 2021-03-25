@@ -464,8 +464,8 @@ public class DataController {
             JsonElement jelement = new JsonParser().parse(inJson);
             if(iwfAction.equals("saveFormSet"))
             {
+                backupConfigToVersion(hostUser);
                 JsonObject  formGroup = jelement.getAsJsonObject();
-
 /*
                 formSetId: thisFormSet.id,
                         name: thisFormSet.name,
@@ -511,6 +511,7 @@ public class DataController {
             }
             else if(iwfAction.equals("saveFormBasic"))
             {
+                backupConfigToVersion(hostUser);
                 JsonObject  inForm = jelement.getAsJsonObject();
                 int fsId = new Integer(inForm.get("formSetId").getAsString()).intValue();
                 FormSet fs = formsetRepository.findById(fsId);
@@ -546,14 +547,13 @@ public class DataController {
             }
             else if(iwfAction.equals("saveFormConfig"))
             {
+                backupConfigToVersion(hostUser);
                 JsonObject  inForm = jelement.getAsJsonObject();
                 //int fsId = new Integer(inForm.get("formSetId").getAsString()).intValue();
                 //FormSet fs = formsetRepository.findById(fsId);
                 Form f = null;
                 int formId = inForm.get("formId").getAsInt();
                 log.debug("Saving Form ID is: " + formId);
-
-                backupConfigToVersion(hostUser);
 
                 if(formId==0)
                 {
@@ -587,8 +587,6 @@ public class DataController {
             }
             else if(iwfAction.equals("setConfig"))
             {
-
-
                 JsonObject  jo = jelement.getAsJsonObject();
                 log.debug("Have config parsed as json element");
                 JsonArray rs = null;
@@ -597,7 +595,6 @@ public class DataController {
                     log.debug("Element is json Array...casting as such");
                     rs = jo.get("ijfConfig").getAsJsonArray();
                 }
-
 
                 //tests...if not null, this the formSets..
                 JsonArray cts = null;
@@ -824,6 +821,8 @@ public class DataController {
             }
             else if(iwfAction.equals("saveSnippet"))
             {
+                backupConfigToVersion(hostUser);
+
                 JsonObject  inSippet = jelement.getAsJsonObject();
                 int fsId = new Integer(inSippet.get("formSetId").getAsString()).intValue();
                 FormSet fs = formsetRepository.findById(fsId);
@@ -853,6 +852,7 @@ public class DataController {
             }
             else if(iwfAction.equals("deleteSnippet"))
             {
+                backupConfigToVersion(hostUser);
                 JsonObject  inSippet = jelement.getAsJsonObject();
 
                 Snippet s;
