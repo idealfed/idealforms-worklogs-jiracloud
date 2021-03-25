@@ -63,26 +63,22 @@
         "key": "ideal-worklogs-20-general"
       }
     ],
+    "adminPages": [
+      {
+        "url": "/splash",
+        "name": {
+          "value": "Ideal Forms 20"
+        },
+        "key": "ift-menu-splash",
+        "location": "admin_plugins_menu/ift-menu-section-20"
+      }
+    ],
     "webSections": [
       {
         "key": "ift-menu-section-20",
         "location": "admin_plugins_menu",
         "name": {
           "value": "Ideal Tech 20"
-        }
-      }
-    ],
-    "webItems": [
-      {
-        "key": "ift-forms-section-link-20",
-        "location": "admin_plugins_menu/ift-menu-section-20",
-        "context": "page",
-        "name": {
-          "value": "Ideal Forms 20"
-        },
-        "url": "/splash",
-        "target": {
-          "type": "page"
         }
       }
     ]
