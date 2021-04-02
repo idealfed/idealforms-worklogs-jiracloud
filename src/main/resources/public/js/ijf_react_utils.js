@@ -588,6 +588,11 @@ ijf.reactUtils = {
 		} catch (e) {
 			var fieldStyle = {};
 		}
+		try {
+			var labelStyle = JSON.parse(inField.labelStyle);
+		} catch (e) {
+			var labelStyle = {};
+		}
 
 		if (style.hidden) {
 			hideLabel = true;
@@ -783,6 +788,12 @@ ijf.reactUtils = {
 								);
 							}
 						}
+
+						//
+						var tProps = JSON.parse(JSON.stringify(fieldStyle.inputProps));
+						tProps.endAdornment = retProps.endAdornment;
+						tProps.startAdornment = retProps.startAdornment;
+						retProps = tProps;
 					}
 					return retProps;
 				}
@@ -790,16 +801,20 @@ ijf.reactUtils = {
 				key: 'getInputLabelProps',
 				value: function getInputLabelProps() {
 					var retProps = null;
-					if (fieldStyle.inputLabelProps) {
-						if (fieldStyle.inputLabelProps.shrink) {
-							if (!retProps) retProps = {};
-							retProps.shrink = fieldStyle.inputLabelProps.shrink;
-						}
-
-						if (fieldStyle.inputLabelProps.disableAnimation) {
-							if (!retProps) retProps = {};
-							retProps.disableAnimation = fieldStyle.inputLabelProps.disableAnimation;
-						}
+					if (labelStyle) {
+						/*
+      if(fieldStyle.inputLabelProps.shrink)
+      {
+      	if(!retProps) retProps={};
+      	retProps.shrink = fieldStyle.inputLabelProps.shrink;
+      }
+      		if(fieldStyle.inputLabelProps.disableAnimation)
+      {
+      	if(!retProps) retProps={};
+      	retProps.disableAnimation = fieldStyle.inputLabelProps.disableAnimation;
+      }
+      */
+						retProps = labelStyle;
 					}
 					return retProps;
 				}
@@ -2662,6 +2677,11 @@ ijf.reactUtils = {
 		} catch (e) {
 			var fieldStyle = {};
 		}
+		try {
+			var labelStyle = JSON.parse(inField.labelStyle);
+		} catch (e) {
+			var labelStyle = {};
+		}
 
 		var hideField = ijfUtils.renderIfShowField(data, inField);
 		var hideLabel = false;
@@ -2875,7 +2895,7 @@ ijf.reactUtils = {
 					//<MuiInputLabel htmlFor={"value-helper"+inField.formCell}>{lCaption}</MuiInputLabel>
 					if (lCaption) return React.createElement(
 						MuiInputLabel,
-						null,
+						{ style: labelStyle },
 						lCaption
 					);
 					return;
@@ -3151,7 +3171,7 @@ ijf.reactUtils = {
 				value: function getMenu() {
 					if (!this.state.lookup) return;
 					return this.state.lookup.map(function (r) {
-						return React.createElement(MuiFormControlLabel, { value: r[0], control: React.createElement(MuiRadio, { style: panelStyle, color: 'primary' }), label: r[1] });
+						return React.createElement(MuiFormControlLabel, { value: r[0], classes: labelStyle, control: React.createElement(MuiRadio, { style: panelStyle, color: 'primary' }), label: r[1] });
 					});
 				}
 			}, {

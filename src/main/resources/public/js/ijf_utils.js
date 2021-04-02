@@ -442,15 +442,16 @@ var ijfUtils = {
 				}
 			}
 		},
-   jiraApiSync:function(inMethod, inApi, inData){
+   jiraApiSync:function(inMethod, inApi, inData, inContentType){
 
      	var retVal="tbd";
-
+        var contentType = "application/json; charset=utf-8";
+        if(inContentType) contentType = inContentType;
      	jQuery.ajax({
 			     headers: {Accept: "application/json"},
                  async: false,
                  type: inMethod,
-                 contentType:"application/json; charset=utf-8",
+                 contentType:contentType,
                  url: g_root + inApi,
                  data: inData,
                  timeout: 60000,
@@ -1402,17 +1403,24 @@ loadIssueTypeDetails:function(projectKey)
 		//each will be keyed fields by issue type...
 		ijf.jiraAddMeta[projectKey] = [];
 		ijf.jiraAddMetaKeyed[projectKey] = [];
-		var rawMeta = ijfUtils.jiraApiSync("GET",'/rest/api/2/issue/createmeta',"expand=projects.issuetypes.fields&projectKeys="+projectKey);
-		rawMeta.projects[0].issuetypes.forEach(function(it){
+		try
+		{
+			var rawMeta = ijfUtils.jiraApiSync("GET",'/rest/api/2/issue/createmeta',"expand=projects.issuetypes.fields&projectKeys="+projectKey);
+			rawMeta.projects[0].issuetypes.forEach(function(it){
 
-			ijf.jiraAddMeta[projectKey][it.name]=it.fields;
-			var fieldsKeyed = [];
-			Object.keys(it.fields).forEach(function(fk){
-				var f = it.fields[fk];
-				fieldsKeyed[f.name]=f;
+				ijf.jiraAddMeta[projectKey][it.name]=it.fields;
+				var fieldsKeyed = [];
+				Object.keys(it.fields).forEach(function(fk){
+					var f = it.fields[fk];
+					fieldsKeyed[f.name]=f;
+				});
+				ijf.jiraAddMetaKeyed[projectKey][it.name]=fieldsKeyed;
 			});
-			ijf.jiraAddMetaKeyed[projectKey][it.name]=fieldsKeyed;
-		});
+		}
+		catch(e)
+		{
+			ijfUtils.footLog("Failed to get issue type details for project: " + projectKey);
+		}
 	}
 },
 loadJiraFields:function()
@@ -1664,16 +1672,16 @@ showSaveHistory:function()
 	outStr += "</table>";
 	tDiv.innerHTML = outStr;
 },
-renderAdminButtons:function(inContainerId)
+renderAdminButtons:function(inContainerId, debugOverride)
 {
     //todo if owner manager do this...
     jQuery('#ijfManage').html('');
     jQuery('#ijfJsonUpload').html('');
 
-    if((ijf.main.debug=='true') && (!ijf.main.outerForm))
+    if((debugOverride) || ((ijf.main.debug=='true') && (!ijf.main.outerForm)))
     {
         //Craft section, if debug or if in craft mode...
-		var fileLoad = "View Save History(last 20): <input type='button' value='Save History' onclick='ijfUtils.showSaveHistory()'><br>";
+		var fileLoad = "View Save History(last 50): <input type='button' value='Save History' onclick='ijfUtils.showSaveHistory()'><br>";
 		fileLoad += "Upload Entire Config File: <input type='file' accept='text/plain' onchange='ijfUtils.readConfigFile(event)'><br>";
 		fileLoad += "Download Entire Config to a File: <input type='button' value='Download' onclick='ijfUtils.writeConfigFile()'>";
         var pnl = new Ext.FormPanel({
@@ -1692,8 +1700,10 @@ renderAdminButtons:function(inContainerId)
       // ijf.main.controlSet['jsonUploadForm'] =   new itemControl('jsonUploadForm', null, null, jForm, null);
        ijf.main.controlSet['adminButtons'] =   new itemControl('jsonUploadForm', null, null, pnl, null);
 
+       var targetDiv = document.getElementById("ijfManage");
+       targetDiv.style.marginLeft="50px";
       //  jForm.render(document.getElementById("ijfJsonUpload"));
-        pnl.render(document.getElementById("ijfManage"));
+        pnl.render(targetDiv);
     }
 },
 gridUploadCsvFile: function(event, inGridId, inControlId, dontSetDirty)
@@ -1969,7 +1979,7 @@ readConfigFile:function(event)
 	    };
   		reader.readAsText(input.files[0]);
 },
-writeFullConfig:function(inConfig, doReset)
+writeFullConfig:function(inConfig, doReset,inFinalPopupMessage)
 {
 		var outJsonConfig = inConfig.replace(/\%/g,"~pct~");
 
@@ -2002,6 +2012,11 @@ writeFullConfig:function(inConfig, doReset)
 						{
 							ijfUtils.clearExt();
 							ijf.main.init(0);
+							if(inFinalPopupMessage)
+							{
+								//show message
+								ijfUtils.modalDialogMessage("Info",inFinalPopupMessage);
+							}
 						}
 					}
 				},
@@ -2089,6 +2104,8 @@ getConfigJson:function(inFormSet)
 			name: fs.name,
 			projectName: fs.projectName,
 			projectId: fs.projectId,
+			iftFormGroup:fs.iftFormGroup,
+			iftFormGroupVersion:fs.iftFormGroupVersion,
 			settings: JSON.stringify(JSON.stringify(settingsOut)),
 			snippets: fs.snippets.map(function(s){
 					return {
@@ -2158,6 +2175,77 @@ getConfigJson:function(inFormSet)
 
 	return outStr;
 },
+	formatConfigJson:function(inConfig)
+	{
+		var outFormSets = [];
+		outFormSets = inConfig.resultSet.reduce(function(outFormSets,fs)
+		{
+			if(!fs.name) return outFormSets;
+
+			if(fs.settings)
+				var settingsOut = JSON.parse(fs.settings);
+			else
+				var settingsOut = [];
+
+			var outForms = [];
+			var fsOut = {
+				id: fs.id,
+				name: fs.name,
+				projectName: fs.projectName,
+				projectId: fs.projectId,
+				iftFormGroup:fs.iftFormGroup,
+				iftFormGroupVersion:fs.iftFormGroupVersion,
+				settings: JSON.stringify(JSON.stringify(settingsOut)),
+				snippets: fs.snippets.map(function(s){
+					return {
+						name: s.name,
+						snippet: JSON.stringify(s.snippet)
+					};
+				}),
+				forms: fs.forms.reduce(function(outForms,thisForm){
+					//process the Form
+					if(!thisForm.name) return outForms;
+					if(!thisForm.settings) thisForm.settings=thisForm.formSettings;
+					var settingsOut = JSON.parse(thisForm.settings);
+					var fieldsOut = JSON.parse(thisForm.fields);
+					var jOut = {
+						id: thisForm.id,
+						testIssue: thisForm.testIssue,
+						formType: thisForm.formType,
+						issueType: thisForm.issueType,
+						formAnon: thisForm.formAnon,
+						name: thisForm.name,
+						fields: JSON.stringify(JSON.stringify(fieldsOut)),
+						formSettings: JSON.stringify(JSON.stringify(settingsOut))
+					};
+					outForms.push(jOut);
+					return outForms;
+				},outForms)
+			}
+			outFormSets.push(fsOut);
+			return outFormSets;
+		},outFormSets);
+		//look for existance of specific formset, if NOT there, also get the custom types
+		var outCustomTypes = inConfig.customTypes.reduce(function(outCustomTypes,ctype)
+		{
+			if(!ctype.name) return outCustomTypes;
+			var ctOut = {
+				customTypeId: ctype.id,
+				name: ctype.name,
+				description: ctype.description,
+				customType: ctype.customType,
+				fieldName: ctype.fieldName,
+				settings: JSON.stringify(ctype.settings)
+			};
+			outCustomTypes.push(ctOut);
+			return outCustomTypes;
+		},[]);
+
+		var tempOutObj = {formSets:outFormSets,customTypes:outCustomTypes};
+		var outStr = JSON.stringify(tempOutObj);
+
+		return outStr;
+	},
 clearAll:function()
 {
      ijfUtils.clearExt();

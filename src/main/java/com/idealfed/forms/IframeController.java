@@ -32,6 +32,7 @@ public class IframeController {
     private static final Logger log = LoggerFactory.getLogger(IframeController.class);
 
     private static final String gRoot = AddonApplication.appRoot;
+    private static final String gProductName = AddonApplication.productName;
 
     @Autowired
     ServletContext servletContext;
@@ -55,6 +56,43 @@ public class IframeController {
         model.addAttribute("ijfRoot",gRoot);
         return "/splash";
     }
+
+
+    @RequestMapping(value = "/productadmin", method = RequestMethod.GET)
+    public String getProductAdminTemplate(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) //(HttpServletRequest request, HttpServletResponse response)
+    {
+        log.debug("Working produuct admin template");
+
+        Map<String, String[]> parameters = request.getParameterMap();
+        String debug = "";
+        if(parameters.containsKey("debug")) debug = request.getParameter("debug");
+        String craft = "";
+        if(parameters.containsKey("craft")) craft = request.getParameter("craft");
+        String remote = "";
+        if(parameters.containsKey("remote")) remote = request.getParameter("remote");
+
+        //look for request params...populate the context model
+        model.addAttribute("test","Hello from Thyme");
+        model.addAttribute("pathRoot",gRoot);
+        model.addAttribute("ijfHtmlReferences","<!-- Html refs -->");
+        model.addAttribute("ijfSnippetPub","");
+        model.addAttribute("ijfStyle","");
+        Optional<String> userId = hostUser.getUserAccountId();
+        model.addAttribute("ijfUsername",userId.get());
+        model.addAttribute("ijfVersion","");
+        model.addAttribute("firstFormSet","");
+        model.addAttribute("ijfFormId","");
+        model.addAttribute("ijfItemId","");
+        model.addAttribute("ijfDebug",debug);
+        model.addAttribute("ijfRoot",gRoot);
+        model.addAttribute("ijfCraft",craft);
+
+        model.addAttribute("ijfProduct",gProductName);
+
+        log.debug("returning product admin template");
+        return "/productadmin";
+    }
+
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String getAdminTemplate(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) //(HttpServletRequest request, HttpServletResponse response)
@@ -106,20 +144,42 @@ public class IframeController {
         String snippetPub = "";
         String vInj = "";
 
+        //updating to allow formId to be numeric
+
+
         if((!formId.equals("")) && (craft.equals("")))
         {
             //primary runtime ...
             FormSet fs = null;
-            for (Form f : formRepository.findAll())
-            {
-                if(f.getName().equals(formId)) fs = f.getFormSet();
+
+            int tempFormId =0;
+            try {
+                log.debug("Getting FormSet using Form Id: " + formId);
+                tempFormId = new Integer(formId).intValue();
+                Form f = formRepository.findById(tempFormId);
+                log.debug("Form constructed: " + f);
+                fs = f.getFormSet();
             }
+            catch(Exception e)
+            {
+                String clientId = hostUser.getHost().getClientKey();
+                log.debug("Getting FormSet using Form by Name: " + formId);
+                tempFormId=0;
+                //need to rip through Forms for customer and get the one formId
+                for (FormSet thisFs : formsetRepository.findAllByCustomerKeyOrderByIdDesc(clientId)) {
+                    for (Form f : formRepository.findByFormSet(thisFs)) {
+                        if(f.getName().equals(formId)) fs = thisFs;
+                        //result is if there are forms of same name, last one wins...
+                    }
+                }
+            }
+
             if(fs != null)
             {
                 try
                 {
                     JsonParser jsonParser = new JsonParser();
-                    vInj = getVelocityInjections(jsonParser);
+                    vInj = getVelocityInjections(jsonParser, hostUser);
                     JsonObject sObject;
                     StringBuilder snips = new StringBuilder();
                     StringBuilder styls = new StringBuilder();
@@ -129,7 +189,6 @@ public class IframeController {
                         if(s.getName().equals("style"))
                         {
                             String outStyle = "{\"snippet\":" + s.getSnippet() + "}";
-
                             sObject = (JsonObject) jsonParser.parse(outStyle);
                             outStyle = sObject.get("snippet").getAsString();
                             outStyle=outStyle.replace("~pct~", "%");
@@ -138,7 +197,6 @@ public class IframeController {
                         else
                         {
                             sOut.append("," + s.getName() + ":" + s.getName());
-
                             String outSnip = "{\"snippet\":" + s.getSnippet() + "}";
                             sObject = (JsonObject) jsonParser.parse(outSnip);
                             outSnip = sObject.get("snippet").getAsString();
@@ -179,16 +237,18 @@ public class IframeController {
         model.addAttribute("ijfDebug",debug);
         model.addAttribute("ijfRoot",gRoot);
         model.addAttribute("ijfCraft",craft);
+        model.addAttribute("ijfProduct",gProductName);
         return "/runtime";
     }
-    private String getVelocityInjections(JsonParser jsonParser)
+    private String getVelocityInjections(JsonParser jsonParser, AtlassianHostUser hostUser)
     {
         try
         {
             //lookup custom type, verify URL is in the list....
             CustomType ct = null;
             String retStr = "";
-            for (CustomType t : customTypeRepository.findAll())
+            String clientId = hostUser.getHost().getClientKey();
+            for (CustomType t : customTypeRepository.findAllByCustomerKeyOrderByIdDesc(clientId))
             {
                 if(t.getName().equals("HTML References")) ct = t;
             }

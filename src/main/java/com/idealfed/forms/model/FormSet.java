@@ -15,15 +15,21 @@ public class FormSet {
     private String projectId;
     private String projectName;
     private String settings;
+    private String customerKey;
+    private String iftFormGroup;
+    private String iftFormGroupVersion;
 
     protected FormSet(){}
 
-    public FormSet(String name, String projectId, String projectName, String settings)
+    public FormSet(String name, String projectId, String projectName, String settings, String customerKey, String iftFormGroup, String iftFormGroupVersion)
     {
         this.name = name;
         this.projectId = projectId;
         this.projectName = projectName;
         this.settings = settings;
+        this.customerKey=customerKey;
+        this.iftFormGroup=iftFormGroup;
+        this.iftFormGroupVersion=iftFormGroupVersion;
     }
     public FormSet(String name)
     {
@@ -39,6 +45,30 @@ public class FormSet {
     };
     public void setName(String name){
         this.name=name;
+    };
+
+    public String getIftFormGroup()
+    {
+        return this.iftFormGroup;
+    };
+    public void setIftFormGroup(String iftFormGroup){
+        this.iftFormGroup=iftFormGroup;
+    };
+
+    public String getIftFormGroupVersion()
+    {
+        return this.iftFormGroupVersion;
+    };
+    public void setIftFormGroupVersion(String iftFormGroup){
+        this.iftFormGroupVersion=iftFormGroupVersion;
+    };
+
+    public String getCustomerKey()
+    {
+        return this.customerKey;
+    };
+    public void setCustomerKey(String customerKey){
+        this.customerKey=customerKey;
     };
 
     public String getProjectId()

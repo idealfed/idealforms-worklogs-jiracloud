@@ -1,0 +1,26 @@
+Release Notes:
+
+Alterations:
+
+managedAttachment - now allows an unnamed file by using a jirafield to store the name of the first upload
+
+managedAttachment - list switched from html to grid
+
+managedAttachment - added "delete:true" to allow deleting of versions
+
+Scaling:  grid, itemlist, itemtree, attachmentlisttree:  columns support % in combination px. PX is the default for a number, when % is used the total % is
+the area of the thing NOT fixed.  So your total % should add to 100.
+
+
+
+Additions:
+
+attachmentlisttree - probably the best interface for files.  Shows distinct files as first layer of tree with versions as children.  
+Also added the concept of File Attributes.  Patterned after the GRID, you bind a FILE ATTRUBUTE custom type to this control (data source)
+and it will render and collect the additional attributes for each file version.
+
+itemlistHTML - renders an itemlist as pure HTML
+
+itemlistGRID - renders a GRID as pure HTML
+
+Reference Editor - provides a mechanism for editing ijf reference data

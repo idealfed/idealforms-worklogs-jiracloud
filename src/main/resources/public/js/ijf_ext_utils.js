@@ -941,7 +941,16 @@ renderAttchmentListGrid:function(inFormKey,item, inField, inContainer)
 	}
 	else
 	{
-    	l_Width = l_Width.replace("px","")/1;
+		//adding concept of % in the width setting....
+		if(l_Width.indexOf("%")<0)
+		{
+			//treat as number...
+			l_Width = l_Width.replace("px","");
+
+			if(isNaN(l_Width)) l_Width=600;  //hard code to 600
+			else l_Width = l_Width/1;
+
+		}
 	}
 
     var listColumns = [];
@@ -1248,7 +1257,16 @@ renderAttachmentListTree:function(inFormKey,item, inField, inContainer)
 	}
 	else
 	{
-    	l_Width = l_Width.replace("px","")/1;
+//adding concept of % in the width setting....
+			if(l_Width.indexOf("%")<0)
+			{
+				//treat as number...
+				l_Width = l_Width.replace("px","");
+
+				if(isNaN(l_Width)) l_Width=600;  //hard code to 600
+				else l_Width = l_Width/1;
+
+			}
 	}
 
     var colWidths=[];
@@ -2049,7 +2067,16 @@ renderAttachmentSPTree:function(inFormKey,item, inField, inContainer)
 	}
 	else
 	{
-    	l_Width = l_Width.replace("px","")/1;
+//adding concept of % in the width setting....
+			if(l_Width.indexOf("%")<0)
+			{
+				//treat as number...
+				l_Width = l_Width.replace("px","");
+
+				if(isNaN(l_Width)) l_Width=600;  //hard code to 600
+				else l_Width = l_Width/1;
+
+			}
 	}
 
     var colWidths=[];
@@ -3075,7 +3102,16 @@ renderAttachmentManaged:function(inFormKey,item, inField, inContainer)
 	}
 	else
 	{
-		if(l_Width.indexOf("px")>-1) l_Width = l_Width.replace("px","")/1;
+		//adding concept of % in the width setting....
+					if(l_Width.indexOf("%")<0)
+					{
+						//treat as number...
+						l_Width = l_Width.replace("px","");
+
+						if(isNaN(l_Width)) l_Width=600;  //hard code to 600
+						else l_Width = l_Width/1;
+
+			}
 	}
 
 
@@ -3552,7 +3588,16 @@ renderAttachmentSPManaged:function(inFormKey,item, inField, inContainer)
 	}
 	else
 	{
-		if(l_Width.indexOf("px")>-1) l_Width = l_Width.replace("px","")/1;
+		//adding concept of % in the width setting....
+					if(l_Width.indexOf("%")<0)
+					{
+						//treat as number...
+						l_Width = l_Width.replace("px","");
+
+						if(isNaN(l_Width)) l_Width=600;  //hard code to 600
+						else l_Width = l_Width/1;
+
+			}
 	}
 
 
@@ -8219,7 +8264,16 @@ renderCheckbox:function(inFormKey,item, inField, inContainer)
 		}
 		else
 		{
-			l_Width = l_Width.replace("px","")/1;
+			//adding concept of % in the width setting....
+			if(l_Width.indexOf("%")<0)
+			{
+				//treat as number...
+				l_Width = l_Width.replace("px","");
+
+				if(isNaN(l_Width)) l_Width=600;  //hard code to 600
+				else l_Width = l_Width/1;
+
+			}
 		}
 
 
@@ -11179,7 +11233,16 @@ renderItemFolders:function(inFormKey,item, inField, inContainer)
 	}
 	else
 	{
-		l_Width = l_Width.replace("px","")/1;
+		//adding concept of % in the width setting....
+					if(l_Width.indexOf("%")<0)
+					{
+						//treat as number...
+						l_Width = l_Width.replace("px","");
+
+						if(isNaN(l_Width)) l_Width=600;  //hard code to 600
+						else l_Width = l_Width/1;
+
+			}
 	}
 
 
@@ -12930,21 +12993,30 @@ renderGridHtml:function(inFormKey,item, inField, inContainer)
 renderGridPanel:function(inFormKey,item, inField, inContainer)
 {
 	//get type definition
+
+    inContainer.title = inField.toolTip;
+
 	var thisT = {};
     for(var tF in ijf.fw.CustomTypes){
 		if(!ijf.fw.CustomTypes.hasOwnProperty(tF)) return;
   		if(ijf.fw.CustomTypes[tF].name==inField.dataSource) thisT=ijf.fw.CustomTypes[tF];
 	}
-
 	if(!thisT)	throw("Invalid type name: " + inField.dataSource);
 
-    inContainer.title = inField.toolTip;
 
-	var jfFieldMeta = ijf.jiraMetaKeyed[thisT.fieldName];
-	var jfFieldDef = ijf.jiraFieldsKeyed[thisT.fieldName];
-	var jf=item.fields[jfFieldDef.id];
+    if(thisT.fieldName=="session")
+    {
+		var data = ijf.session[inFormKey+'_fld_'+inField.formCell];
+		if(!data) data = null;
+	}
+	else
+	{
+		var jfFieldMeta = ijf.jiraMetaKeyed[thisT.fieldName];
+		var jfFieldDef = ijf.jiraFieldsKeyed[thisT.fieldName];
+		var jf=item.fields[jfFieldDef.id];
+		var data = ijfUtils.handleJiraFieldType(jfFieldDef,jf);
+	}
 
-	var data = ijfUtils.handleJiraFieldType(jfFieldDef,jf);
 
     if (ijfUtils.getNameValueFromStyleString(inField.fieldStyle,'required')=="true") lAllowBlank=false;
 
@@ -13111,7 +13183,16 @@ renderGridPanel:function(inFormKey,item, inField, inContainer)
 	}
 	else
 	{
-    	l_Width = l_Width.replace("px","")/1;
+		//adding concept of % in the width setting....
+		if(l_Width.indexOf("%")<0)
+		{
+			//treat as number...
+			l_Width = l_Width.replace("px","");
+
+			if(isNaN(l_Width)) l_Width=600;  //hard code to 600
+			else l_Width = l_Width/1;
+
+		}
 	}
 
 	var colWidths=[];
@@ -13246,7 +13327,14 @@ renderGridPanel:function(inFormKey,item, inField, inContainer)
 									listeners: {
 										change: function(n,o,f)
 										{
-											ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+											if(thisT.fieldName=="session")
+											{
+												updateSessionValues(n.up().up());
+											}
+											else
+											{
+												ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+											}
 										}
 									}
 								}
@@ -13278,7 +13366,14 @@ renderGridPanel:function(inFormKey,item, inField, inContainer)
 									listeners: {
 										change: function(n,o,f)
 										{
-											ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+											if(thisT.fieldName=="session")
+											{
+												updateSessionValues(n.up().up());
+											}
+											else
+											{
+												ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+											}
 										}
 									}
 								}
@@ -13301,7 +13396,14 @@ renderGridPanel:function(inFormKey,item, inField, inContainer)
 						listeners: {
 							checkchange: function(n,o,f)
 							{
-								ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+								if(thisT.fieldName=="session")
+								{
+									updateSessionValues(n.up().up());
+								}
+								else
+								{
+									ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+								}
 							}
 						}
 			};
@@ -13313,7 +13415,14 @@ renderGridPanel:function(inFormKey,item, inField, inContainer)
 					var cListener = {
 										change: function(n,o,f)
 										{
-											ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+											if(thisT.fieldName=="session")
+											{
+												updateSessionValues(n.up().up());
+											}
+											else
+											{
+												ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+											}
 										},
 										focus: function(){
 											this.validate();
@@ -13363,7 +13472,14 @@ renderGridPanel:function(inFormKey,item, inField, inContainer)
 										childFields.forEach(function(f){
 											cContainer.grid.getSelectionModel().getSelected().items[0].set(f,null);
 										});
-										ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+										if(thisT.fieldName=="session")
+										{
+											updateSessionValues(n.up().up());
+										}
+										else
+										{
+											ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+										}
 								};
 							}
 
@@ -13413,7 +13529,14 @@ renderGridPanel:function(inFormKey,item, inField, inContainer)
 					var cListener = {
 										change: function(n,o,f)
 										{
-											ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+											if(thisT.fieldName=="session")
+											{
+												updateSessionValues(n.up().up());
+											}
+											else
+											{
+												ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+											}
 										},
 										focus: function(){
 											this.validate();
@@ -13468,13 +13591,13 @@ renderGridPanel:function(inFormKey,item, inField, inContainer)
 									forceSelection: true,
 									store: shows,
 									lookupDef: cLookupDef,
-            valueField: 'id',
-			displayField: 'show',
-			value: [],
-			queryMode: 'local',
-			triggerAction: 'all',
-			emptyText:'Please select...',
-			selectOnFocus:true,
+									valueField: 'id',
+									displayField: 'show',
+									value: [],
+									queryMode: 'local',
+									triggerAction: 'all',
+									emptyText:'Please select...',
+									selectOnFocus:true,
 									listeners: cListener
 								}
 							}
@@ -13503,7 +13626,14 @@ renderGridPanel:function(inFormKey,item, inField, inContainer)
 									listeners: {
 										change: function(n,o,f)
 										{
-											ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+										    if(thisT.fieldName=="session")
+											{
+												updateSessionValues(n.up().up());
+											}
+											else
+											{
+												ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+											}
 										},
 										focus: function(){
 											this.validate();
@@ -13517,6 +13647,43 @@ renderGridPanel:function(inFormKey,item, inField, inContainer)
 		listColumns.push(colObj);
 		cIndex++;
 	});
+
+
+    var currentSessionGridCallRunning=false;
+    var currentSessionGridCall = null;
+    var updateSessionValues=function(inG)
+    {
+		var thisG = inG;
+		var delayIt = function()
+		{
+			if(currentSessionGridCallRunning) return;
+			if(currentSessionGridCall) window.clearTimeout(currentSessionGridCall);
+
+			currentSessionGridCallRunning=true;
+
+			if((currentSessionGridCall) && (!currentSessionGridCallRunning))  window.clearTimeout(currentSessionGridCall);
+			currentSessionGridCall = null;
+
+			var myG = thisG;
+			var str = myG.getStore();
+			var gridData = str.getData();
+			if(str.isFiltered())
+			{
+				var allData = gridData.getSource();
+				gridData=allData;
+			}
+			var dataArray = gridData.items.map(function(r)
+			{
+				r.commit();
+				return r.data;
+			});
+			var rawGrid = JSON.stringify(dataArray);
+			ijf.session[inFormKey+'_fld_'+inField.formCell] = rawGrid;
+			currentSessionGridCall=null;
+			currentSessionGridCallRunning=false;
+		}
+		if((!currentSessionGridCall) && (!currentSessionGridCallRunning)) currentSessionGridCall=window.setTimeout(delayIt,3000);
+	}
 
     if(!Ext.ClassManager.isCreated(inFormKey+'_mdl_'+inField.formCell.replace(/,/g,"_")))
     {
@@ -13546,6 +13713,8 @@ renderGridPanel:function(inFormKey,item, inField, inContainer)
 		}
 	}
 	var headerButtons =[];
+	if(thisT.fieldName!="session")
+	{
 		headerButtons.push({
 						xtype:'button',
 						text: 'Save',
@@ -13586,6 +13755,7 @@ renderGridPanel:function(inFormKey,item, inField, inContainer)
 							window.setTimeout(saveIt,50);
 						}
 					});
+	}
 		headerButtons.push({
 						xtype:'button',
 						text: 'Add Row',
@@ -13601,7 +13771,8 @@ renderGridPanel:function(inFormKey,item, inField, inContainer)
 							 var position = gridStore.getCount();
 							 gridStore.insert(position, newRecord);
 
-							ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+							if(thisT.fieldName!="session") ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+							else updateSessionValues(gridStore.parentGridPanel);
 
 							//force new record into edit mode
 							gridStore.parentGridPanel.editingPlugin.startEdit(newRecord, 0);
@@ -13619,7 +13790,8 @@ renderGridPanel:function(inFormKey,item, inField, inContainer)
 									gridStore.remove(r);
 								});
 							}
-							ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+							if(thisT.fieldName!="session") ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+							else updateSessionValues(gridStore.parentGridPanel);
 						}
 					});
 		headerButtons.push({
@@ -13632,7 +13804,8 @@ renderGridPanel:function(inFormKey,item, inField, inContainer)
 							gridStore.getData().each(function(r){
 									gridStore.remove(r);
 							});
-							ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+							if(thisT.fieldName!="session") ijf.main.controlChanged(inFormKey+'_fld_'+inField.formCell);
+							else updateSessionValues(gridStore.parentGridPanel);
 					   };
 					   ijfUtils.modalDialog("Warning","You are about to remove all rows, are you sure?",clearGridRows);
 					}
@@ -13663,7 +13836,7 @@ renderGridPanel:function(inFormKey,item, inField, inContainer)
 											outStr+=r.data[c.columnName] + ","
 										break;
 										default:
-										    if(r.data[c.columnName])
+										    if((r.data[c.columnName]) && (c.controlType!='checkbox'))
 												outStr+="\"" + r.data[c.columnName].replace(/"/g,"\"\"") + "\",";
 											else
 												outStr+="\"" + r.data[c.columnName] + "\",";
@@ -13681,8 +13854,10 @@ renderGridPanel:function(inFormKey,item, inField, inContainer)
 						saveAs(blob,inField.dataSource+".csv");
 					}
 				});
+			var isSessionCtl = false;
+			if(thisT.fieldName=="session") isSessionCtl=true;
 			headerButtons.push({
-				html:  "<form enctype='multipart/form-data' id='"+inFormKey+'_upGrdFrm_'+inField.formCell.replace(/,/g,"_")+"'><input id='"+inFormKey+'_upGrd_'+inField.formCell.replace(/,/g,"_")+"' type='file' name='file' onchange='ijfUtils.gridUploadCsvFile(event,\""+inFormKey+'_ctr_'+inField.formCell.replace(/,/g,"_")+"\",\""+inFormKey+'_fld_'+inField.formCell+"\");'></form>",
+				html:  "<form enctype='multipart/form-data' id='"+inFormKey+'_upGrdFrm_'+inField.formCell.replace(/,/g,"_")+"'><input id='"+inFormKey+'_upGrd_'+inField.formCell.replace(/,/g,"_")+"' type='file' name='file' onchange='ijfUtils.gridUploadCsvFile(event,\""+inFormKey+'_ctr_'+inField.formCell.replace(/,/g,"_")+"\",\""+inFormKey+'_fld_'+inField.formCell+"\","+isSessionCtl+");'></form>",
 				frame: false,
 				hidden: true,
 				border: false,
@@ -13941,7 +14116,16 @@ renderGridRefEditor:function(inFormKey,item, inField, inContainer)
 	}
 	else
 	{
-    	l_Width = l_Width.replace("px","")/1;
+    	//adding concept of % in the width setting....
+					if(l_Width.indexOf("%")<0)
+					{
+						//treat as number...
+						l_Width = l_Width.replace("px","");
+
+						if(isNaN(l_Width)) l_Width=600;  //hard code to 600
+						else l_Width = l_Width/1;
+
+			}
 	}
 
 	var colWidths=[];
@@ -14244,7 +14428,7 @@ renderGridRefEditor:function(inFormKey,item, inField, inContainer)
 			} //end of handler function
 		  });
 		}
-
+    if(rOnly) headerButtons =[];
     var gridPanel = new Ext.grid.GridPanel({
 		 title: lCaption,
 		 style: l_Style,

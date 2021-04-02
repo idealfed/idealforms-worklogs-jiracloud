@@ -21,15 +21,15 @@ addon:
 
 ijfRoot: /dev20
 
+atlassian.connect.jwt-expiration-time: 36000
+
+atlassian.connect.self-authentication-expiration-time: 36000
 #atlassian.connect.allow-reinstall-missing-host: true
 
 logging.level.com.atlassian.connect.spring: DEBUG
 
 logging.level.com.idealfed.forms: DEBUG
 
-atlassian:
-  connect:
-    jwt-expiration-time: 86400
 
 
 

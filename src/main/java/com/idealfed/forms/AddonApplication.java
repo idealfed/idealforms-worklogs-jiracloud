@@ -12,6 +12,7 @@ public class AddonApplication {
 
     //@Value("${ijfRoot}")
     public static final String appRoot = "/dev20";
+    public static final String productName = "iftWorklogs";
 
     public static void main(String[] args) throws Exception {
         new SpringApplication(AddonApplication.class).run(args);

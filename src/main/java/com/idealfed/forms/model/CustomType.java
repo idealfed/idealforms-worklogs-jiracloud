@@ -18,16 +18,16 @@ public class CustomType {
     @Lob
     @Column(length=20971520)
     private String settings;
-
+    private String customerKey;
 
     protected CustomType(){}
-    public CustomType(String name, String deescription, String fieldName, String customType, String settings) {
+    public CustomType(String name, String deescription, String fieldName, String customType, String settings, String customerKey) {
 
         this.name=name;
         this.description=description;
         this.fieldName=fieldName;
         this.customType=customType;
-
+        this.customerKey=customerKey;
         this.settings=settings;
     }
     public CustomType(String name){
@@ -38,6 +38,13 @@ public class CustomType {
         return this.id;
     }
 
+    public String getCustomerKey()
+    {
+        return this.customerKey;
+    };
+    public void setCustomerKey(String customerKey){
+        this.customerKey=customerKey;
+    };
 
     public String getName(){
         return this.name;
