@@ -25,8 +25,8 @@ public class AddonApplication {
     @Autowired
     private Environment environment;
 
-    @Value("${addon.base-url}")
-    public static String appRoot;
+    @Value("${ijfRoot}")
+    public static String appRoot = "/dev20";
 
     private static Logger log = LoggerFactory.getLogger(AddonApplication.class);
     public static final String productName = "iftWorklogs";
