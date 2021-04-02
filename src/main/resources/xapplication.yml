@@ -4,7 +4,7 @@ spring.datasource.password: dogland
 spring.datasource.username: SA
 
 server:
-  port : 8080
+  port: 8080
 
 #logging:
 #  path: /var/log
