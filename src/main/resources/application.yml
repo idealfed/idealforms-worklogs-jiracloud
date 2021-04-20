@@ -16,7 +16,7 @@ spring:
     prefix: classpath:/templates
 
 addon:
-  key: com-idealfed-forms10
+  key: com-idealfed-forms-worklogs
   base-url: https://www.idealfed.com/dev10
 
 ijfRoot: /dev10
@@ -26,9 +26,9 @@ atlassian.connect.jwt-expiration-time: 36000
 atlassian.connect.self-authentication-expiration-time: 36000
 #atlassian.connect.allow-reinstall-missing-host: true
 
-logging.level.com.atlassian.connect.spring: DEBUG
+logging.level.com.atlassian.connect.spring: WARN
 
-logging.level.com.idealfed.forms.DataController: DEBUG
+logging.level.com.idealfed.forms.DataController: WARN
 
 
 

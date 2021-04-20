@@ -119,13 +119,46 @@ function init(inConfigVersion)
 			}
 			catch(e)
 			{
-    	        ijfUtils.footLog("Config failed to parsee: " + e.message);
+				//before messaging look for product....
+				if((window.g_IftProduct) && (window.g_IftProduct!="") && (ijf.fw.formSets.length<2))
+				{
+					//this is a product install but there is not config...bootstrap with default product and
+					//refresh
+					try {
+						var versions = ijfUtils.jiraApiSync("GET", '/ift/rest/product/' + g_IftProduct + '/versions', null);
+						var version = versions.resultSet.reduce(function(inV,v){if(v.version=="default") inV=v;return inV},null);
+						var versionConfig = ijf.versionAdmin.getIftConfiguration(version.id);
+						ijfUtils.writeFullConfig(versionConfig, true,"Your IFT product has been configured.  Please contact us if you have any questions.");
+						return;
+					}
+					catch(e){}
+				}
+
+    	        ijfUtils.footLog("Config failed to parse: " + e.message);
     	        ijfUtils.hideProgress();
-    	        ijfUtils.modalDialogMessage("Fatal","Unable to get the configuration.  Don't panic, the system maintains 20 prior snapshots from which to recover.  Click the 'History' button, apply a config and download and upload.");
-				ijfUtils.renderAdminButtons('ijfContent');
+				ijfUtils.modalDialogMessage("Fatal","Unable to get the configuration.  Don't panic, the system maintains 50 prior snapshots from which to recover.  Contact your system administrator to restore the configuration.");
+				//ijfUtils.renderAdminButtons('ijfContent',true);
     	        return;
 			}
 			if(!ijf.fw) return;
+
+			//iftProduct check and load....
+			if((window.g_IftProduct) && (window.g_IftProduct!="") && (ijf.fw.formSets.length<2))
+			{
+				//this is a product install but there is not config...bootstrap with default product and
+				//refresh
+				try {
+					var versions = ijfUtils.jiraApiSync("GET", '/ift/rest/product/' + g_IftProduct + '/versions', null);
+					var version = versions.resultSet.reduce(function(inV,v){if(v.version=="default") inV=v;return inV},null);
+					var versionConfig = ijf.versionAdmin.getIftConfiguration(version.id);
+					ijfUtils.writeFullConfig(versionConfig, true,"Your IFT product has been configured.  Please contact us if you have any questions.");
+					return;
+				}
+				catch(e)
+				{
+					ijfUtils.modalDialogMessage("Error","Sorry, unable to install default configuration, please contact support.");
+				}
+			}
 
 			//new logic:  if g_formId is numeric, switch it to the name of the form in the form group...
 			if((!isNaN(window.g_formId)) && (window.g_formId!=""))

@@ -177,13 +177,16 @@ ijf.versionAdmin = {
 
         //get the product versions
 		var tblStart = "<table cellspacing=0 cellpadding=2 style='width:100%'><tr><td style='color:white;background-color:black' colspan=3>IFT Product Versions</td></tr>";
-		tblStart+="<tr><td style='font-weight:bold;border-bottom:solid black 1px'>Version</td><td style='font-weight:bold;border-bottom:solid black 1px'>Description</td><td style='border-bottom:solid black 1px'></td></tr>";
-        var versions = ijfUtils.jiraApiSync("GET", '/ift/rest/product/' + this.iftProduct.id+ '/versions', null);
-        outStr = versions.resultSet.reduce(function(bStr,s) {
-			if(!s.author) return bStr;
-			bStr+= "<tr><td>"+s.version +"</td><td>" + s.description + "</td><td><a href=JAVASCRIPT:ijf.versionAdmin.applyIftVersion("+s.id+")>Apply</a></td></tr>";
-			return bStr;
- 		},tblStart);
+		tblStart+="<tr><td style='font-weight:bold;border-bottom:solid black 1px'>Version</td><td style='font-weight:bold;border-bottom:solid #000000 1px'>Description</td><td style='border-bottom:solid black 1px'></td></tr>";
+		if(this.iftProduct)
+		{
+			var versions = ijfUtils.jiraApiSync("GET", '/ift/rest/product/' + this.iftProduct.id+ '/versions', null);
+			outStr = versions.resultSet.reduce(function(bStr,s) {
+				if(!s.author) return bStr;
+				bStr+= "<tr><td>"+s.version +"</td><td>" + s.description + "</td><td><a href=JAVASCRIPT:ijf.versionAdmin.applyIftVersion("+s.id+")>Apply</a></td></tr>";
+				return bStr;
+			},tblStart);
+		}
 		outStr += "</table>";
 		this.productVersions = outStr;
 
