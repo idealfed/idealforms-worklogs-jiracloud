@@ -1,5 +1,5 @@
 spring.jpa.hibernate.ddl-auto: update
-spring.datasource.url: jdbc:hsqldb:file:ijfdb_20 # Use a file-based backing store for HSQL
+spring.datasource.url: jdbc:hsqldb:file:ijfdb_10 # Use a file-based backing store for HSQL
 spring.datasource.password: dogland
 spring.datasource.username: SA
 
@@ -16,10 +16,10 @@ spring:
     prefix: classpath:/templates
 
 addon:
-  key: com-idealfed-forms20
-  base-url: https://www.idealfed.com/dev20
+  key: com-idealfed-forms10
+  base-url: https://www.idealfed.com/dev10
 
-ijfRoot: /dev20
+ijfRoot: /dev10
 
 atlassian.connect.jwt-expiration-time: 36000
 
