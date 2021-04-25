@@ -16,7 +16,7 @@ spring:
     prefix: classpath:/templates
 
 addon:
-  key: com-idealfed-forms-worklogs
+  key: com-idealfed-forms-worklogs10
   base-url: https://www.idealfed.com/dev10
 
 ijfRoot: /dev10
