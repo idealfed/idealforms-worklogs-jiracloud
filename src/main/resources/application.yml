@@ -1,10 +1,10 @@
 spring.jpa.hibernate.ddl-auto: update
-spring.datasource.url: jdbc:hsqldb:file:ijfdb_7 # Use a file-based backing store for HSQL
-spring.datasource.password: dogland
-spring.datasource.username: SA
+spring.datasource.url: ${dbconnectionstring}
+spring.datasource.password: ${dbpassword}
+spring.datasource.username: ${dbusername}
 
 server:
-  port : 8080
+  port : ${listeningport}
 
 #logging:
 #  path: /var/log
@@ -17,18 +17,18 @@ spring:
 
 addon:
   key: com-idealfed-forms-worklogs
-  base-url: https://www.idealfed.com/dev10
+  base-url: ${baseurl}
 
-ijfRoot: /dev10
+ijfRoot: /
 
-atlassian.connect.jwt-expiration-time: 36000
+atlassian.connect.jwt-expiration-time: ${jwtexpirationtime}
 
-atlassian.connect.self-authentication-expiration-time: 36000
+atlassian.connect.self-authentication-expiration-time: ${selfauthexpirationtime}
 #atlassian.connect.allow-reinstall-missing-host: true
 
-logging.level.com.atlassian.connect.spring: WARN
+logging.level.com.atlassian.connect.spring: ${springloglevel}
 
-logging.level.com.idealfed.forms.DataController: WARN
+logging.level.com.idealfed.forms.DataController: ${ifdataloglevel}
 
 
 
