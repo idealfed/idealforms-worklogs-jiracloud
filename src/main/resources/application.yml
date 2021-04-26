@@ -4,7 +4,7 @@ spring.datasource.password: ${dbpassword}
 spring.datasource.username: ${dbusername}
 
 server:
-  port : ${listeningport}
+  port : ${sb_listeningport}
 
 #logging:
 #  path: /var/log
