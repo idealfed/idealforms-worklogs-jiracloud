@@ -189,7 +189,7 @@ public class IframeController {
                     {
                         if(s.getName().equals("style"))
                         {
-                            String outStyle = "{\"snippet\":" + s.getSnippet() + "}";
+                            String outStyle = "{\"snippet\":" + new String(s.getSnippet(), StandardCharsets.UTF_8) + "}";
                             sObject = (JsonObject) jsonParser.parse(outStyle);
                             outStyle = sObject.get("snippet").getAsString();
                             outStyle=outStyle.replace("~pct~", "%");
@@ -198,7 +198,7 @@ public class IframeController {
                         else
                         {
                             sOut.append("," + s.getName() + ":" + s.getName());
-                            String outSnip = "{\"snippet\":" + s.getSnippet() + "}";
+                            String outSnip = "{\"snippet\":" + new String(s.getSnippet(), StandardCharsets.UTF_8) + "}";
                             sObject = (JsonObject) jsonParser.parse(outSnip);
                             outSnip = sObject.get("snippet").getAsString();
                             outSnip=outSnip.replace("~pct~", "%");
