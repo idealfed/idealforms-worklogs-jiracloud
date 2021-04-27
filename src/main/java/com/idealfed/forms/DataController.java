@@ -408,7 +408,7 @@ public class DataController {
                 sb.append("\"description\":\"" + ct.getDescription() + "\",");
                 sb.append("\"customType\":\"" + ct.getCustomType() + "\",");
                 sb.append("\"fieldName\":\"" + ct.getFieldName() + "\",");
-                sb.append("\"settings\":\"" + ct.getSettings() + "\"}");
+                sb.append("\"settings\":\"" + new String(ct.getSettings(), StandardCharsets.UTF_8) + "\"}");
 
                 log.debug("Sending configuration Done");
                 response.setContentType("text/plain");
