@@ -29,6 +29,7 @@ atlassian.connect.self-authentication-expiration-time: ${selfauthexpirationtime}
 logging.level.com.atlassian.connect.spring: ${springloglevel}
 
 logging.level.com.idealfed.forms.DataController: ${ifdataloglevel}
+logging.level.com.idealfed: ${ifdataloglevel}
 
 
 
