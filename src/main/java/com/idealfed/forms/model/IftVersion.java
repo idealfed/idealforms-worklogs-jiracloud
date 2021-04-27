@@ -1,4 +1,6 @@
 package com.idealfed.forms.model;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,8 +18,10 @@ public class IftVersion {
     private String author;
     private String versionId;
 
+    @Type(type="org.hibernate.type.BinaryType")
     @Column(length=20971520)
     private byte[] config;
+
     @Column(length = 3500)
     private String description;
     @ManyToOne

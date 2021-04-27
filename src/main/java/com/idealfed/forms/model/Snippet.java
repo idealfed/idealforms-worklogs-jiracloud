@@ -1,8 +1,10 @@
 package com.idealfed.forms.model;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.nio.charset.StandardCharsets;
 
 @Entity
 public class Snippet {
@@ -13,9 +15,11 @@ public class Snippet {
 
     private String name;
 
+    @Type(type="org.hibernate.type.BinaryType")
     @Column(length=20971520)
     private byte[] settings;
 
+    @Type(type="org.hibernate.type.BinaryType")
     @Column(length=20971520)
     private byte[] snippet;
     private String comment;

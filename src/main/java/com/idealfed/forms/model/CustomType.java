@@ -1,6 +1,7 @@
 package com.idealfed.forms.model;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -16,6 +17,7 @@ public class CustomType {
     private String fieldName;
     private String customType;
 
+    @Type(type="org.hibernate.type.BinaryType")
     @Column(length=20971520)
     private byte[] settings;
     private String customerKey;

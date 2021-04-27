@@ -1,6 +1,7 @@
 package com.idealfed.forms.model;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -25,9 +26,11 @@ public class Form {
     @Column(length = 255)
     private String formType;
 
+    @Type(type="org.hibernate.type.BinaryType")
     @Column(length=20971520)
     private byte[] fields;
 
+    @Type(type="org.hibernate.type.BinaryType")
     @Column(length=20971520)
     private byte[] settings;
     @ManyToOne
