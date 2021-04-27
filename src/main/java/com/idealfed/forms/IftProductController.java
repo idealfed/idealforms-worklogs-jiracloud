@@ -38,6 +38,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import com.idealfed.forms.FormUtils;
 
@@ -143,7 +144,7 @@ public class IftProductController {
                     if(ifv==null) throw new Exception("Unable to find product version by name " + versionIdStr);
 
                     jout.addProperty("status","OK");
-                    jout.addProperty("result",ifv.getConfig());
+                    jout.addProperty("result",new String(ifv.getConfig(), StandardCharsets.UTF_8));
                 }
                 else
                 {
@@ -235,7 +236,7 @@ public class IftProductController {
                 version.setDescription(inConfigObj.get("description").getAsString());
                 version.setDate(new Date());
                 version.setAuthor(inConfigObj.get("author").getAsString());
-                if(inConfigObj.has("config"))  version.setConfig(inConfigObj.get("config").getAsString());
+                if(inConfigObj.has("config"))  version.setConfig(inConfigObj.get("config").getAsString().getBytes(StandardCharsets.UTF_8));
 
 
                 version = iftVersionRepository.save(version);
@@ -344,7 +345,7 @@ public class IftProductController {
         jo.addProperty("version",ifv.getVersionId());
         jo.addProperty("description",ifv.getDescription());
         jo.addProperty("author",ifv.getAuthor() );
-        if(withConfig)  jo.addProperty("config",ifv.getConfig() );  //this will not work due to existing escaping
+        if(withConfig)  jo.addProperty("config", new String(ifv.getConfig(), StandardCharsets.UTF_8));  //this will not work due to existing escaping
         jo.addProperty("date",ifv.getDate().toString());
 
         return jo.toString() + ",";

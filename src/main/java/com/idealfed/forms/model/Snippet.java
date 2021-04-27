@@ -12,19 +12,19 @@ public class Snippet {
     private Long id;
 
     private String name;
-    @Lob
+
     @Column(length=20971520)
-    private String settings;
-    @Lob
+    private byte[] settings;
+
     @Column(length=20971520)
-    private String snippet;
+    private byte[] snippet;
     private String comment;
 
     @ManyToOne
     private FormSet formSet;
 
     protected Snippet(){}
-    public Snippet(String name, String snippet, String comment, FormSet formSet) {
+    public Snippet(String name, byte[] snippet, String comment, FormSet formSet) {
 
         this.name=name;
         this.snippet=snippet;
@@ -57,10 +57,10 @@ public class Snippet {
     };
 
     //@StringLength(value=StringLength.UNLIMITED)
-    public String getSnippet(){
+    public byte[] getSnippet(){
         return this.snippet;
     };
-    public void setSnippet(String snippet){
+    public void setSnippet(byte[] snippet){
         this.snippet=snippet;
     };
 

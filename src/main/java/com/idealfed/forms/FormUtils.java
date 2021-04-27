@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class FormUtils {
     private static final Logger log = LoggerFactory.getLogger(FormUtils.class);
@@ -79,7 +80,7 @@ public class FormUtils {
     public static String getAoSnippetJson(Snippet s)
     {
             if(s.getName().equals("")) s.setName("~");
-            if(s.getSnippet().equals("")) s.setSnippet("~");
+            if(s.getSnippet().equals("")) s.setSnippet("~".getBytes(StandardCharsets.UTF_8));
 
             JsonObject jo = new JsonObject();
             jo.addProperty("id",s.getId());

@@ -15,13 +15,13 @@ public class CustomType {
     private String description;
     private String fieldName;
     private String customType;
-    @Lob
+
     @Column(length=20971520)
-    private String settings;
+    private byte[] settings;
     private String customerKey;
 
     protected CustomType(){}
-    public CustomType(String name, String deescription, String fieldName, String customType, String settings, String customerKey) {
+    public CustomType(String name, String deescription, String fieldName, String customType, byte[] settings, String customerKey) {
 
         this.name=name;
         this.description=description;
@@ -74,10 +74,10 @@ public class CustomType {
         this.customType=customType;
     };
 
-    public String getSettings(){
+    public byte[] getSettings(){
         return this.settings;
     };
-    public void setSettings(String settings){
+    public void setSettings(byte[] settings){
         this.settings=settings;
     };
 }

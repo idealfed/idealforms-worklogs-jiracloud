@@ -14,14 +14,14 @@ public class Version {
 
     private Date date;
     private String author;
-    @Lob
+
     @Column(length=20971520)
-    private String config;
+    private byte[] config;
     private String customerKey;
 
     public Version(){}
 
-    public Version(Date date, String author, String config, String customerKey)
+    public Version(Date date, String author, byte[] config, String customerKey)
     {
         this.date = date;
         this.author = author;
@@ -50,11 +50,11 @@ public class Version {
         this.author=author;
     };
 
-    public String getConfig()
+    public byte[] getConfig()
     {
         return this.config;
     };
-    public void setConfig(String config){
+    public void setConfig(byte[] config){
         this.config=config;
     };
 
