@@ -14,6 +14,10 @@ server:
 spring:
   thymeleaf:
     prefix: classpath:/templates
+  datasource:
+    hikari:
+      minimum-idle: ${dbminidle}
+      maximum-pool-size: ${dbmaxpoolsize}
 
 addon:
   key: com-idealfed-forms-worklogs
