@@ -36,6 +36,9 @@ logging.level.com.atlassian.connect.spring: ${springloglevel}
 logging.level.com.idealfed.forms.DataController: ${ifdataloglevel}
 logging.level.com.idealfed: ${ifdataloglevel}
 
-
+atlassian:
+  connect:
+    redirect-root-to-descriptor: false
+    require-auth-exclude-paths: /ac
 
 

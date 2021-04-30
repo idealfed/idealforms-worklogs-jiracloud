@@ -1,0 +1,72 @@
+{
+  "key": "com-ideal-fed-50",
+  "baseUrl": "http://localhost:8082",
+  "name": "Ideal Forms",
+  "authentication": {
+    "type": "jwt"
+  },
+  "lifecycle": {
+    "installed": "/installed",
+    "uninstalled": "/uninstalled"
+  },
+  "scopes": [
+    "READ",
+    "WRITE",
+    "DELETE",
+    "ADMIN",
+    "ACT_AS_USER"
+  ],
+  "modules": {
+    "generalPages": [
+      {
+        "key": "ift-worklogs-runtime-50",
+        "location": "system.top.navigation.bar",
+        "name": {
+          "value": "Ideal Worklogs-50"
+        },
+        "url": "/run?formId=IFT%20Worklog%20Report",
+        "weight": 50,
+        "conditions": [
+          {
+            "condition": "user_is_logged_in"
+          }
+        ]
+      },
+      {
+        "key": "ift-myworklogs-runtime-50",
+        "location": "system.top.navigation.bar",
+        "name": {
+          "value": "Ideal My Worklogs-50"
+        },
+        "url": "/run?formId=IFT%20My%20Worklogs",
+        "weight": 50,
+        "conditions": [
+          {
+            "condition": "user_is_logged_in"
+          }
+        ]
+      }
+    ],
+    "webSections": [
+      {
+        "key": "ift-menu-section-50",
+        "location": "admin_plugins_menu",
+        "name": {
+          "value": "Ideal Tech"
+        }
+      }
+    ],
+    "adminPages": [
+      {
+        "key": "ift-worklogs-admin-section-link-50",
+        "location": "admin_plugins_menu/ift-menu-section-50",
+        "name": {
+          "value": "Ideal Worklogs-50"
+        },
+        "url": "/productadmin?mode=versionadmin"
+      }
+    ]
+  }
+}
+
+
