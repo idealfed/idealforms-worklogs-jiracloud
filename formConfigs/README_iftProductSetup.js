@@ -53,7 +53,7 @@ In middle of page should be a link for "Idealfed Administration", and click:
     Idealfed forms admin will open.  In lower left of forms menu, click button "Backups", click
 		a. three buttons will show at bottom, click "Choose File"
 			-load a 'full' forms config of the product - file "iftFormsConfig_WL_final_v1.json"
-		b. click "upload group", select "product admin" and load - file "IFTProductManager.json"
+		b. click "upload group", select and load - file "IFTProductManager.json"
 		c. import custom types:
 		    -IFT Product Versions  - file IFTProducts.json
 			-IFT Products  - file IFTProductVersions

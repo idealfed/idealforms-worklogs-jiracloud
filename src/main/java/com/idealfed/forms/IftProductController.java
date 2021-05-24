@@ -25,10 +25,7 @@ import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -56,6 +53,7 @@ public class IftProductController {
     @Autowired
     private IftFormSetRepository iftFormSetRepository;
 
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/ift/rest/**", method = GET, produces = "application/json")
     public String iftGetCall(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request,
                 HttpServletResponse response) {

@@ -50,6 +50,8 @@ function init(inConfigVersion)
     //DEPRICATING jQuery.receiveMessage(ijfUtils.messageHandler);
 
     console.log("Initializing IJF version: " + window.g_version);
+	console.log("IJF license: " + window.g_IFtLicense);
+
     //prevent double initializing....
     //if(ijf.initialized)
     //{

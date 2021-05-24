@@ -136,7 +136,7 @@ ijf.versionAdmin = {
             outHtml2 = "<div style='margin-top:5px;margin-bottom:5px;font-weight:bold;font-size:20pt'>About "+this.iftProduct.name+":</div><br>" +this.iftProduct.description;
 
             var pActionHtml = "<ul>";
-            pActionHtml+="<li style='margin-top:0px'>Open the Worklogs application using the menu item inside \"Apps\" in the JIRA header above. Or click <a href='"+baseSys+"/plugins/servlet/ac/com-idealfed-forms10/ijf-worklogs-runtime' target='_blank'>here</a> to open in a new tab.</li>";
+            pActionHtml+="<li style='margin-top:0px'>Open the Worklogs application using the menu item inside \"Apps\" in the JIRA header above. You may need to refesh for the buttons to appear.</li>";
             pActionHtml+="<li style='margin-top:15px'>Modify your own Worklogs forms... <a id='formListLinkId' href='javascript:ijf.versionAdmin.onOpenFormDesigner()'>more</a>.<div style='display:none' id='iftProductForms_id'></div></li>";
             pActionHtml+="<li style='margin-top:15px'>Change your working version to one of your backups (below left).</li>";
             pActionHtml+="<li style='margin-top:15px'>Change your working version to one of IFT versions (below right).</li>";

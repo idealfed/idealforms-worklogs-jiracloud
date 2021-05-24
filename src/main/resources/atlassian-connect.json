@@ -2,6 +2,7 @@
   "key": "${addon.key}",
   "baseUrl": "${addon.base-url}",
   "name": "Ideal Forms - worklogs",
+  "enableLicensing": true,
   "authentication": {
     "type": "jwt"
   },
@@ -26,6 +27,11 @@
         },
         "url": "/run?formId=IFT%20Worklog%20Report",
         "weight": 50,
+        "icon": {
+          "url": "https://idealfed.com${ijfRoot}/images/IDFIconBlack2.svg",
+          "width": 20,
+          "height": 20
+        },
         "conditions": [
           {
             "condition": "user_is_logged_in"
@@ -39,6 +45,11 @@
           "value": "Ideal My Worklogs10"
         },
         "url": "/run?formId=IFT%20My%20Worklogs",
+        "icon": {
+          "url": "https://idealfed.com${ijfRoot}/images/IDFIconBlack2.svg",
+          "width": 20,
+          "height": 20
+        },
         "weight": 50,
         "conditions": [
           {

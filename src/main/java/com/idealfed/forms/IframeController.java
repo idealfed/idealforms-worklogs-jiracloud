@@ -1,6 +1,9 @@
 package com.idealfed.forms;
 
 import com.atlassian.connect.spring.AtlassianHostUser;
+import com.atlassian.connect.spring.AtlassianHost;
+import com.atlassian.connect.spring.AtlassianHostRestClients;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.idealfed.forms.model.CustomType;
@@ -34,6 +37,8 @@ public class IframeController {
     private static final String gRoot = AddonApplication.appRoot;
     private static final String gProductName = AddonApplication.productName;
 
+    private static String applicationKey = AddonApplication.addonKey;
+
     @Autowired
     ServletContext servletContext;
     @Autowired
@@ -42,7 +47,8 @@ public class IframeController {
     private FormRepository formRepository;
     @Autowired
     private CustomTypeRepository customTypeRepository;
-
+    @Autowired
+    private AtlassianHostRestClients atlassianHostRestClients;
 
     @RequestMapping(value = "/iframe", method = RequestMethod.GET)
     public String getIframe(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -70,6 +76,10 @@ public class IframeController {
         if(parameters.containsKey("craft")) craft = request.getParameter("craft");
         String remote = "";
         if(parameters.containsKey("remote")) remote = request.getParameter("remote");
+        //Begin license
+        String urlLicense = "";
+        if(parameters.containsKey("lic")) urlLicense = request.getParameter("lic");
+        log.debug("URL License is: " + urlLicense);
 
         //look for request params...populate the context model
         model.addAttribute("test","Hello from Thyme");
@@ -86,8 +96,8 @@ public class IframeController {
         model.addAttribute("ijfDebug",debug);
         model.addAttribute("ijfRoot",gRoot);
         model.addAttribute("ijfCraft",craft);
-
         model.addAttribute("ijfProduct",gProductName);
+        model.addAttribute("ijfLicense",urlLicense);
 
         log.debug("returning product admin template");
         return "/productadmin";
@@ -106,6 +116,10 @@ public class IframeController {
         if(parameters.containsKey("craft")) craft = request.getParameter("craft");
         String remote = "";
         if(parameters.containsKey("remote")) remote = request.getParameter("remote");
+        //Begin license
+        String urlLicense = "";
+        if(parameters.containsKey("lic")) urlLicense = request.getParameter("lic");
+        log.debug("URL License is: " + urlLicense);
 
         //look for request params...populate the context model
         model.addAttribute("test","Hello from Thyme");
@@ -122,6 +136,7 @@ public class IframeController {
         model.addAttribute("ijfDebug",debug);
         model.addAttribute("ijfRoot",gRoot);
         model.addAttribute("ijfCraft",craft);
+        model.addAttribute("ijfLicense",urlLicense);
         return "/admin";
     }
     @RequestMapping(value = "/run", method = RequestMethod.GET)
@@ -138,6 +153,14 @@ public class IframeController {
         String formId = "";
         if(parameters.containsKey("formId")) formId = request.getParameter("formId");
 
+
+        //Begin license
+        String urlLicense = "";
+        if(parameters.containsKey("lic")) urlLicense = request.getParameter("lic");
+        log.debug("URL License is: " + urlLicense);
+        //get license....
+        //String upmLicense = this.getLicenseInfo();
+        //end licenes
 
         String snippets = "";
         String styles = "";
@@ -238,6 +261,7 @@ public class IframeController {
         model.addAttribute("ijfRoot",gRoot);
         model.addAttribute("ijfCraft",craft);
         model.addAttribute("ijfProduct",gProductName);
+        model.addAttribute("ijfLicense",urlLicense);
         return "/runtime";
     }
     private String getVelocityInjections(JsonParser jsonParser, AtlassianHostUser hostUser)
@@ -275,5 +299,20 @@ public class IframeController {
             log.error("Error getting Proxy Whitelist",e);
             return "";
         }
+    }
+
+    private String getLicenseInfo()
+    {
+        //"Api get license info: /rest/atlassian-connect/1/addons/{appKey}"
+
+        log.debug("Calling get license for: " + applicationKey);
+
+        String json = atlassianHostRestClients
+                .authenticatedAsHostActor()
+                .getForObject("/rest/atlassian-connect/1/addons/"+applicationKey, String.class);
+
+        log.debug("Lic Results: " + json);
+
+        return json;
     }
 }

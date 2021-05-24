@@ -14,6 +14,10 @@ public class AddonApplication {
     public static final String appRoot = "/dev10";
     public static final String productName = "iftWorklogs";
 
+    public static final String addonKey="com-idealfed-forms-worklogs10"; // = "iftWorklogs";
+
+
+
     public static void main(String[] args) throws Exception {
         new SpringApplication(AddonApplication.class).run(args);
     }

@@ -1452,97 +1452,7 @@ messageHandler:function(event)
         newName: string
         }
      */
-        ijfUtils.footLog("Received message from: " + event.origin);
-
-        /*
-        //post ack
-        event.source.postMessage("received",event.origin);
-
-        //set attention
-        var i = 0;
-        var show = ['******************',document.title];
-        function stop(){
-            clearInterval(focusTimer);
-            document.title = show[1];
-        }
-        onfocus = function() {
-            stop();
-            onfocus=null;
-        }
-        var focusTimer = setInterval(function(){
-            document.title = show[i++ % 2];
-            window.focus();
-        },500);
-
-
-        if(!event.data.action)
-        {
-            ijfUtils.footLog("No action provided");
-            return;
-        }
-        switch(event.data.action) {
-            case 'showItemForm':
-
-                var thisForm = ijf.fw.forms[event.data.formId];
-                if(thisForm==null)
-                {
-                    ijfUtils.footLog("messageHandler: Unable to find form " +event.data.formId) ;
-                    return;
-                }
-                ijfUtils.footLog("messageHandler: navigating to form item");
-                if(window.onbeforeunload==null)
-                {
-                    g_formId=event.data.formId;
-                    ijf.main.itemId = event.data.itemId;
-                    ijfUtils.clearAll();
-                    if(!ijf.currentItem)
-                    {
-                        ijf.main.processSetup("ijfContent");
-                    }
-                    else
-                    {
-                        if(ijf.currentItem.key == event.data.itemId)
-                        {
-                            ijf.main.renderForm("ijfContent", g_formId, false, ijf.currentItem);
-                        }
-                        else
-                        {
-                            ijf.currentItem=null;
-                            ijf.main.processSetup("ijfContent");
-                        }
-                    }
-                }
-                else
-                {
-                    var dFunc = function(){
-                        window.onbeforeunload= null;
-						g_formId=event.data.formId;
-						ijf.main.itemId = event.data.itemId;
-						ijfUtils.clearAll();
-						if(!ijf.currentItem)
-						{
-							ijf.main.processSetup("ijfContent");
-						}
-						else
-						{
-							if(ijf.currentItem.key == event.data.itemId)
-							{
-								ijf.main.renderForm("ijfContent", g_formId, false, ijf.currentItem);
-							}
-							else
-							{
-								ijf.currentItem=null;
-								ijf.main.processSetup("ijfContent");
-							}
-						}
-                    };
-                    ijfUtils.modalDialog("Warning",ijf.main.gNavigateOnChange,dFunc);
-                }
-                break;
-            default:
-                ijfUtils.footLog("no message action for: " + event.data.action);
-        }
-        */
+     ijfUtils.footLog("Received message from: " + event.origin);
 
 },
 simpleSave:function()
@@ -2303,9 +2213,6 @@ renderHeader:function(inContainerId, thisForm,item)
         "<div style='text-align:center;display:table-cell;width:66%'>"  + headerCenter + "</div>" +
         "<div style='text-align:right;display:table-cell;width:17%'>" + headerRight + "</div></div>");
 
-    //ijfUtils.setHead("<table  role='presentation' width='100%' borders=0><tr><td width='33%' align='left'>" + headerLeft + "</td>" +
-    //    "<td  width='33%' align ='center'>"  + headerCenter + "</td>" +
-    //    "<td  width='33%' align='right'>" + headerRight + "</td></tr></table>");
 },
 
 setHead:function(inMsg)
@@ -2674,25 +2581,6 @@ replaceWordChars:function(text) {
 		});
 	},
 
-	getNextSequence:function(inName, inBase)
-	{
-		ijfUtils.footLog("Calling get seq for " + inName);
-		var retval= "seq failed";
-		$.ajax({
-			async: false,
-			type: 'GET',
-			url: g_root + '/getNextSequence?exerciseId='+g_exerciseId+ '&name=' + inName + '&base=' +inBase,
-			timeout: 60000,
-			success: function(data) {
-				retval=data.value
-			},
-			error: function() {
-				ijfUtils.footLog("Failed cache data get!");
-
-			}
-		});
-		return retval;
-	},
 
 	getCacheValue:function(inKey)
 	{
