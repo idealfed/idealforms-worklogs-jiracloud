@@ -27,6 +27,7 @@ import org.thymeleaf.context.WebContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Optional;
 
@@ -211,7 +212,7 @@ public class IframeController {
                     {
                         if(s.getName().equals("style"))
                         {
-                            String outStyle = "{\"snippet\":" + s.getSnippet() + "}";
+                            String outStyle = "{\"snippet\":" + new String(s.getSnippet(), StandardCharsets.UTF_8) + "}";
                             sObject = (JsonObject) jsonParser.parse(outStyle);
                             outStyle = sObject.get("snippet").getAsString();
                             outStyle=outStyle.replace("~pct~", "%");
@@ -220,7 +221,7 @@ public class IframeController {
                         else
                         {
                             sOut.append("," + s.getName() + ":" + s.getName());
-                            String outSnip = "{\"snippet\":" + s.getSnippet() + "}";
+                            String outSnip = "{\"snippet\":" + new String(s.getSnippet(), StandardCharsets.UTF_8) + "}";
                             sObject = (JsonObject) jsonParser.parse(outSnip);
                             outSnip = sObject.get("snippet").getAsString();
                             outSnip=outSnip.replace("~pct~", "%");
@@ -280,7 +281,7 @@ public class IframeController {
             {
                 return "";
             }
-            String proxyList = ct.getSettings();
+            String proxyList = new String(ct.getSettings(), StandardCharsets.UTF_8);
             String tempRefs = "{\"references\":" + proxyList + "}";
             JsonObject sObject;
             sObject = (JsonObject) jsonParser.parse(tempRefs);

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class FormUtils {
     private static final Logger log = LoggerFactory.getLogger(FormUtils.class);
@@ -33,7 +34,11 @@ public class FormUtils {
         sb.append(retStr);
 
         String sfSettings = fs.getSettings();
+        log.debug("sfSettings 1: "+sfSettings);
+
         sfSettings = sfSettings.replaceFirst("(?<=proxyPassword\\\\\",\\\\\"value\\\\\":\\\\\")(.*?)(?=\\\\\",\\\\\"comment)","hidden");
+        log.debug("sfSettings 2: "+sfSettings);
+
         sb.append(",\"settings\":\"" + sfSettings + "\"");
 
         sb.append(",\"forms\":[");
@@ -69,8 +74,8 @@ public class FormUtils {
 
         String retStr = jo.toString();
         retStr = retStr.substring(0, retStr.length() - 1);
-        retStr=retStr+ ",\"settings\":\"" + f.getSettings() + "\"";
-        retStr=retStr+ ",\"fields\":\"" + f.getFields() + "\"},";
+        retStr=retStr+ ",\"settings\":\"" + new String(f.getSettings(), StandardCharsets.UTF_8) + "\"";
+        retStr=retStr+ ",\"fields\":\"" + new String(f.getFields(), StandardCharsets.UTF_8) + "\"},";
 
         return retStr;
 
@@ -79,14 +84,14 @@ public class FormUtils {
     public static String getAoSnippetJson(Snippet s)
     {
             if(s.getName().equals("")) s.setName("~");
-            if(s.getSnippet().equals("")) s.setSnippet("~");
+            if(s.getSnippet().equals("")) s.setSnippet("~".getBytes(StandardCharsets.UTF_8));
 
             JsonObject jo = new JsonObject();
             jo.addProperty("id",s.getId());
             jo.addProperty("name",s.getName());
             String retStr = jo.toString();
             retStr = retStr.substring(0, retStr.length() - 1);
-            retStr=retStr+ ",\"snippet\":\"" + s.getSnippet() + "\"},";
+            retStr=retStr+ ",\"snippet\":\"" + new String(s.getSnippet(), StandardCharsets.UTF_8) + "\"},";
             return retStr;
     }
 
@@ -147,7 +152,7 @@ public class FormUtils {
         }
         else
         {
-            retStr=retStr+ ",\"settings\":\"" + ct.getSettings() + "\"},";
+            retStr=retStr+ ",\"settings\":\"" + new String(ct.getSettings(), StandardCharsets.UTF_8) + "\"},";
         }
 
         return retStr; //sb.toString();

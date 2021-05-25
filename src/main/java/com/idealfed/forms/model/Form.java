@@ -1,6 +1,7 @@
 package com.idealfed.forms.model;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -24,17 +25,19 @@ public class Form {
     private String formProxy;
     @Column(length = 255)
     private String formType;
-    @Lob
+
+    @Type(type="org.hibernate.type.BinaryType")
     @Column(length=20971520)
-    private String fields;
-    @Lob
+    private byte[] fields;
+
+    @Type(type="org.hibernate.type.BinaryType")
     @Column(length=20971520)
-    private String settings;
+    private byte[] settings;
     @ManyToOne
     private FormSet formSet;
 
     protected Form(){}
-    public Form(String name, String testIssue, String issueType, String formAnon, String formProxy, String formType, String fields,FormSet formSet) {
+    public Form(String name, String testIssue, String issueType, String formAnon, String formProxy, String formType, byte[] fields,FormSet formSet) {
         this.name=name;
         this.testIssue=testIssue;
         this.formAnon=formAnon;
@@ -103,17 +106,17 @@ public class Form {
         this.formType=formType;
     };
 
-    public String getFields(){
+    public byte[] getFields(){
         return this.fields;
     };
-    public void setFields(String fields){
+    public void setFields(byte[] fields){
         this.fields=fields;
     };
 
-    public String getSettings(){
+    public byte[] getSettings(){
         return this.settings;
     };
-    public void setSettings(String settings){
+    public void setSettings(byte[] settings){
         this.settings=settings;
     };
 }

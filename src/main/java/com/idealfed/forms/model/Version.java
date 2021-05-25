@@ -1,4 +1,6 @@
 package com.idealfed.forms.model;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,14 +16,15 @@ public class Version {
 
     private Date date;
     private String author;
-    @Lob
+
+    @Type(type="org.hibernate.type.BinaryType")
     @Column(length=20971520)
-    private String config;
+    private byte[] config;
     private String customerKey;
 
     public Version(){}
 
-    public Version(Date date, String author, String config, String customerKey)
+    public Version(Date date, String author, byte[] config, String customerKey)
     {
         this.date = date;
         this.author = author;
@@ -50,11 +53,11 @@ public class Version {
         this.author=author;
     };
 
-    public String getConfig()
+    public byte[] getConfig()
     {
         return this.config;
     };
-    public void setConfig(String config){
+    public void setConfig(byte[] config){
         this.config=config;
     };
 

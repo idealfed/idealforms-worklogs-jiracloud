@@ -11,10 +11,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class AddonApplication {
 
     //@Value("${ijfRoot}")
-    public static final String appRoot = "/dev10";
+    public static final String appRoot = "";
     public static final String productName = "iftWorklogs";
 
-    public static final String addonKey="com-idealfed-forms-worklogs10"; // = "iftWorklogs";
+    public static final String addonKey="com-idealfed-forms-worklogs"; // = "iftWorklogs";
 
 
 

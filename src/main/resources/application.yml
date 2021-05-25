@@ -1,10 +1,10 @@
 spring.jpa.hibernate.ddl-auto: update
-spring.datasource.url: jdbc:hsqldb:file:ijfdb_2 # Use a file-based backing store for HSQL
-spring.datasource.password: dogland
-spring.datasource.username: SA
+spring.datasource.url: ${dbconnectionstring}
+spring.datasource.password: ${dbpassword}
+spring.datasource.username: ${dbusername}
 
 server:
-  port : 80
+  port : ${sb_listeningport}
 
 #logging:
 #  path: /var/log
@@ -14,22 +14,30 @@ server:
 spring:
   thymeleaf:
     prefix: classpath:/templates
+  datasource:
+    hikari:
+      minimum-idle: ${dbminidle}
+      maximum-pool-size: ${dbmaxpoolsize}
+      connection-timeout: ${dbconnectiontimeout}
 
 addon:
-  key: com-idealfed-forms-worklogs10
-  base-url: https://www.idealfed.com/dev10
+  key: com-idealfed-forms-worklogs
+  base-url: ${baseurl}
 
-ijfRoot: /dev10
+ijfRoot: /
 
-atlassian.connect.jwt-expiration-time: 36000
+atlassian.connect.jwt-expiration-time: ${jwtexpirationtime}
 
-atlassian.connect.self-authentication-expiration-time: 36000
+atlassian.connect.self-authentication-expiration-time: ${selfauthexpirationtime}
 #atlassian.connect.allow-reinstall-missing-host: true
 
-logging.level.com.atlassian.connect.spring: DEBUG
+logging.level.com.atlassian.connect.spring: ${springloglevel}
 
-logging.level.com.idealfed.forms.DataController: DEBUG
+logging.level.com.idealfed.forms.DataController: ${ifdataloglevel}
+logging.level.com.idealfed: ${ifdataloglevel}
 
-
+atlassian:
+  connect:
+    redirect-root-to-descriptor: false
 
 

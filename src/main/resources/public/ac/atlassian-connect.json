@@ -1,8 +1,7 @@
 {
   "key": "${addon.key}",
   "baseUrl": "${addon.base-url}",
-  "name": "Ideal Forms - Worklogs",
-  "enableLicensing": true,
+  "name": "Ideal Forms - worklogs-20",
   "authentication": {
     "type": "jwt"
   },
@@ -20,18 +19,13 @@
   "modules": {
     "generalPages": [
       {
-        "key": "ift-worklogs-runtime",
+        "key": "ift-worklogs-runtime-20",
         "location": "system.top.navigation.bar",
         "name": {
-          "value": "Ideal Worklogs"
+          "value": "Ideal Worklogs - 20"
         },
         "url": "/run?formId=IFT%20Worklog%20Report",
         "weight": 50,
-        "icon": {
-          "url": "https://idealfed.com${ijfRoot}/images/IDFIconBlack2.svg",
-          "width": 20,
-          "height": 20
-        },
         "conditions": [
           {
             "condition": "user_is_logged_in"
@@ -39,17 +33,12 @@
         ]
       },
       {
-        "key": "ift-myworklogs-runtime",
+        "key": "ift-myworklogs-runtime-20",
         "location": "system.top.navigation.bar",
         "name": {
-          "value": "Ideal My Worklogs"
+          "value": "Ideal My Worklogs - 20"
         },
         "url": "/run?formId=IFT%20My%20Worklogs",
-        "icon": {
-          "url": "https://idealfed.com${ijfRoot}/images/IDFIconBlack2.svg",
-          "width": 20,
-          "height": 20
-        },
         "weight": 50,
         "conditions": [
           {
@@ -60,19 +49,19 @@
     ],
     "webSections": [
       {
-        "key": "ift-menu-section",
+        "key": "ift-menu-section-20",
         "location": "admin_plugins_menu",
         "name": {
-          "value": "Ideal Tech"
+          "value": "Ideal Tech - 20"
         }
       }
     ],
     "adminPages": [
       {
-        "key": "ift-worklogs-admin-section-link",
-        "location": "admin_plugins_menu/ift-menu-section",
+        "key": "ift-worklogs-admin-section-link-20",
+        "location": "admin_plugins_menu/ift-menu-section-20",
         "name": {
-          "value": "Ideal Worklogs"
+          "value": "Ideal Worklogs - 20"
         },
         "url": "/productadmin?mode=versionadmin"
       }

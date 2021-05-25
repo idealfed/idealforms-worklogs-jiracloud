@@ -37,6 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 
@@ -324,7 +325,7 @@ public class DataController {
                     int vId = new Integer(paramVersion).intValue();
                     log.debug("Getting version: " + vId);
                     Version v = versionRepository.findById(vId);
-                    return v.getConfig();
+                    return new String(v.getConfig(), StandardCharsets.UTF_8);
 
                 }
                 String clientId = hostUser.getHost().getClientKey();
@@ -407,7 +408,7 @@ public class DataController {
                 sb.append("\"description\":\"" + ct.getDescription() + "\",");
                 sb.append("\"customType\":\"" + ct.getCustomType() + "\",");
                 sb.append("\"fieldName\":\"" + ct.getFieldName() + "\",");
-                sb.append("\"settings\":\"" + ct.getSettings() + "\"}");
+                sb.append("\"settings\":\"" + new String(ct.getSettings(), StandardCharsets.UTF_8) + "\"}");
 
                 log.debug("Sending configuration Done");
                 response.setContentType("text/plain");
@@ -576,8 +577,8 @@ public class DataController {
                 if(inForm.has("formAnon")) f.setFormAnon(inForm.get("formAnon").getAsString());
                 if(inForm.has("formProxy")) f.setFormProxy(inForm.get("formProxy").getAsString());
                 f.setFormType(inForm.get("formType").getAsString());
-                f.setSettings(inForm.get("formSettings").getAsString());
-                f.setFields(inForm.get("fields").getAsString());
+                f.setSettings(inForm.get("formSettings").getAsString().getBytes(StandardCharsets.UTF_8));
+                f.setFields(inForm.get("fields").getAsString().getBytes(StandardCharsets.UTF_8));
 
                 f = formRepository.save(f);
                 log.debug("Form is saved: " + formId);
@@ -658,13 +659,20 @@ public class DataController {
                         if(!jsonForm.has("name")) break;
                         Form frm = new Form(jsonForm.get("name").getAsString(),fs);
                         frm.setFormSet(fs);
+
+                        String fieldsString = jsonForm.get("fields").getAsString();
+                        log.debug("Fields: "+fieldsString);
+
+                        String formSettings = jsonForm.get("formSettings").getAsString();
+                        log.debug("Form Settings: "+formSettings);
+
                         if((jsonForm.has("testIssue")) && (!jsonForm.get("testIssue").isJsonNull())) frm.setTestIssue(jsonForm.get("testIssue").getAsString());
                         if((jsonForm.has("formAnon")) && (!jsonForm.get("formAnon").isJsonNull())) frm.setFormAnon(jsonForm.get("formAnon").getAsString());
                         if((jsonForm.has("formProxy")) && (!jsonForm.get("formProxy").isJsonNull())) frm.setFormProxy(jsonForm.get("formProxy").getAsString());
                         if((jsonForm.has("issueType")) && (!jsonForm.get("issueType").isJsonNull())) frm.setIssueType(jsonForm.get("issueType").getAsString());
                         if((jsonForm.has("formType")) && (!jsonForm.get("formType").isJsonNull())) frm.setFormType(jsonForm.get("formType").getAsString());
-                        if((jsonForm.has("fields")) && (!jsonForm.get("fields").isJsonNull())) frm.setFields(jsonForm.get("fields").getAsString());
-                        if((jsonForm.has("formSettings")) && (!jsonForm.get("formSettings").isJsonNull())) frm.setSettings(jsonForm.get("formSettings").getAsString());
+                        if((jsonForm.has("fields")) && (!jsonForm.get("fields").isJsonNull())) frm.setFields(fieldsString.getBytes(StandardCharsets.UTF_8));
+                        if((jsonForm.has("formSettings")) && (!jsonForm.get("formSettings").isJsonNull())) frm.setSettings(formSettings.getBytes(StandardCharsets.UTF_8));
                         formRepository.save(frm);
                     }
 
@@ -675,7 +683,7 @@ public class DataController {
                         if(!jsonSnippet.has("name")) break;
                         Snippet s = new Snippet(jsonSnippet.get("name").getAsString(),fs);
                         s.setName(jsonSnippet.get("name").getAsString());
-                        if((jsonSnippet.has("snippet")) && (!jsonSnippet.get("snippet").isJsonNull()))  s.setSnippet(jsonSnippet.get("snippet").getAsString());
+                        if((jsonSnippet.has("snippet")) && (!jsonSnippet.get("snippet").isJsonNull()))  s.setSnippet(jsonSnippet.get("snippet").getAsString().getBytes(StandardCharsets.UTF_8));
                         s=snippetRepository.save(s);
                     }
                 }
@@ -690,7 +698,7 @@ public class DataController {
                         if((jsonFs.has("description")) && (!jsonFs.get("description").isJsonNull())) ct.setDescription(jsonFs.get("description").getAsString());
                         if((jsonFs.has("customType")) && (!jsonFs.get("customType").isJsonNull())) ct.setCustomType(jsonFs.get("customType").getAsString());
                         if((jsonFs.has("fieldName")) && (!jsonFs.get("fieldName").isJsonNull())) ct.setFieldName(jsonFs.get("fieldName").getAsString());
-                        if((jsonFs.has("settings")) && (!jsonFs.get("settings").isJsonNull())) ct.setSettings(jsonFs.get("settings").getAsString());
+                        if((jsonFs.has("settings")) && (!jsonFs.get("settings").isJsonNull())) ct.setSettings(jsonFs.get("settings").getAsString().getBytes(StandardCharsets.UTF_8));
                         String clientId = hostUser.getHost().getClientKey();
                         ct.setCustomerKey(clientId);
                         ct = customTypeRepository.save(ct);
@@ -798,8 +806,8 @@ public class DataController {
                         if(jsonForm.has("formProxy")) frm.setFormProxy(jsonForm.get("formProxy").getAsString());
                         frm.setIssueType(jsonForm.get("issueType").getAsString());
                         frm.setFormType(jsonForm.get("formType").getAsString());
-                        frm.setFields(jsonForm.get("fields").getAsString());
-                        frm.setSettings(jsonForm.get("formSettings").getAsString());
+                        frm.setFields(jsonForm.get("fields").getAsString().getBytes(StandardCharsets.UTF_8));
+                        frm.setSettings(jsonForm.get("formSettings").getAsString().getBytes(StandardCharsets.UTF_8));
                         formRepository.save(frm);
                     }
 
@@ -810,7 +818,7 @@ public class DataController {
                         if(!jsonSnippet.has("name")) break;
                         Snippet s = new Snippet(jsonSnippet.get("name").getAsString(),fs);
                         s.setName(jsonSnippet.get("name").getAsString());
-                        s.setSnippet(jsonSnippet.get("snippet").getAsString());
+                        s.setSnippet(jsonSnippet.get("snippet").getAsString().getBytes(StandardCharsets.UTF_8));
                         s=snippetRepository.save(s);
                     }
                 }
@@ -840,7 +848,7 @@ public class DataController {
                 log.debug("Have form");
 
                 s.setName(inSippet.get("name").getAsString());
-                s.setSnippet(inSippet.get("snippet").getAsString());
+                s.setSnippet(inSippet.get("snippet").getAsString().getBytes(StandardCharsets.UTF_8));
 
                 log.debug("Saved Snippet");
 
@@ -925,7 +933,7 @@ public class DataController {
                 ct.setName(customType.get("name").getAsString());
                 ct.setDescription(customType.get("description").getAsString());
                 ct.setCustomType(customType.get("customType").getAsString());
-                ct.setSettings(customType.get("settings").getAsString());
+                ct.setSettings(customType.get("settings").getAsString().getBytes(StandardCharsets.UTF_8));
                 ct.setFieldName(customType.get("fieldName").getAsString());
 
                 String clientId = hostUser.getHost().getClientKey();
@@ -991,7 +999,7 @@ public class DataController {
         v.setDate(new Date());
         Optional<String> uId = hostUser.getUserAccountId();
         v.setAuthor(uId.get());
-        v.setConfig(sb.toString());
+        v.setConfig(sb.toString().getBytes(StandardCharsets.UTF_8));
         v.setCustomerKey(clientId);
 
         v = versionRepository.save(v);

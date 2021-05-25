@@ -1,4 +1,6 @@
 package com.idealfed.forms.model;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,9 +17,11 @@ public class IftVersion {
     private Date date;
     private String author;
     private String versionId;
-    @Lob
+
+    @Type(type="org.hibernate.type.BinaryType")
     @Column(length=20971520)
-    private String config;
+    private byte[] config;
+
     @Column(length = 3500)
     private String description;
     @ManyToOne
@@ -25,7 +29,7 @@ public class IftVersion {
 
     public IftVersion(){}
 
-    public IftVersion(Date date, String author, String config, String description, IftFormSet iftFormSet, String versionId)
+    public IftVersion(Date date, String author, byte[] config, String description, IftFormSet iftFormSet, String versionId)
     {
         this.date = date;
         this.author = author;
@@ -75,11 +79,11 @@ public class IftVersion {
         this.versionId=versionId;
     };
 
-    public String getConfig()
+    public byte[] getConfig()
     {
         return this.config;
     };
-    public void setConfig(String config){
+    public void setConfig(byte[] config){
         this.config=config;
     };
 
