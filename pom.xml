@@ -9,8 +9,8 @@
     </parent>
 
 
-    <groupId>com.idealfed.forms.worklogs10</groupId>
-    <artifactId>com-idealfed-forms-worklogs10</artifactId>
+    <groupId>com.idealfed</groupId>
+    <artifactId>com-idealfed-forms-worklogs</artifactId>
     <version>1.0-STABLE</version>
 
     <properties>
