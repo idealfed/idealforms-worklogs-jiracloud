@@ -62,6 +62,7 @@
       {
         "key": "ift-menu-section10",
         "location": "admin_plugins_menu",
+        "weight": 150,
         "name": {
           "value": "Ideal Tech10"
         }
@@ -74,6 +75,7 @@
         "name": {
           "value": "Ideal Worklogs10"
         },
+        "weight": 50,
         "url": "/productadmin?mode=versionadmin"
       }
     ]
