@@ -140,7 +140,7 @@ ijf.versionAdmin = {
             pActionHtml+="<li style='margin-top:15px'>Modify your own Worklogs forms... <a id='formListLinkId' href='javascript:ijf.versionAdmin.onOpenFormDesigner()'>more</a>.<div style='display:none' id='iftProductForms_id'></div></li>";
             pActionHtml+="<li style='margin-top:15px'>Change your working version to one of your backups (below left).</li>";
             pActionHtml+="<li style='margin-top:15px'>Change your working version to one of IFT versions (below right).</li>";
-            pActionHtml+="<li style='margin-top:15px'>Open our <a href='https://www.idealfed.com/products/"+g_IftProduct+"' target='_blank'>feedback and comments page</a> and provide IFT feedback on this product.</li>";
+            pActionHtml+="<li style='margin-top:15px'>Open our <a href='https://www.idealfed.com/support.html' target='_blank'>feedback and comments page</a> and provide IFT feedback on this product.</li>";
             pActionHtml+="</ul>";
 
             outHtml3 = "<div style='margin-top:5px;margin-bottom:0px;font-weight:bold;font-size:20pt'>What you can do:</div><br>" +pActionHtml;
