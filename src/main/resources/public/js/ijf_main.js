@@ -62,6 +62,32 @@ function init(inConfigVersion)
 	ijf.initialized=true;
 
 
+    //license check
+	if(window.g_IFtLicense == "none")
+	{
+		var customerBaseUrl = "tbd";
+		var mainUrl = window.location.href;
+		try
+		{
+			var customerBaseUrl = document.location.ancestorOrigins[0];
+		}
+		catch(e){
+			customerBaseUrl = "tbd";
+		}
+		if(customerBaseUrl.indexOf("idealfed")<-1)
+		{
+			if(mainUrl.indexOf("idealfed")<-1)
+			{
+				//actual licensse issue.  Present message.
+var outMessage = "<div><h3>Ideal Federal Technologies</h3><br>Greetings.  You  are seeing this message because you are accessing an IFT product and your product license has expired or is invalid.  Please contact your JIRA administrator.</div><br><br>Thank you";
+				var tElement = document.getElementById("ijfContent");
+				tElement.innerHTML=outMessage;
+				return;
+			}
+		}
+	}
+
+
     ijfUtils.showProgress();
 
     if(g_iwfFormSetId==null)
