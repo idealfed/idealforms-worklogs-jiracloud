@@ -154,7 +154,7 @@ ijf.versionAdmin = {
             var outHtml2="We are unable to identify your currently installed product for this plugin.  Can you please contact IFT support here (add link)";
 
         }
-        var customerBaseUrl = document.location.ancestorOrigins[0];
+        var customerBaseUrl =  window.location.href; //document.location.ancestorOrigins[0];
         if(customerBaseUrl.indexOf("idealfed")>-1)
         {
 			//add admin link for idealfed utils
