@@ -74,8 +74,8 @@ function init(inConfigVersion)
 		catch(e){
 			customerBaseUrl = "tbd";
 		}
-		if(customerBaseUrl.indexOf("idealfed")<-1)
-		{
+		//if(customerBaseUrl.indexOf("idealfed")<-1)
+		//{
 			if(mainUrl.indexOf("idealfed")<-1)
 			{
 				//actual licensse issue.  Present message.
@@ -84,7 +84,7 @@ var outMessage = "<div><h3>Ideal Federal Technologies</h3><br>Greetings.  You  a
 				tElement.innerHTML=outMessage;
 				return;
 			}
-		}
+		//}
 	}
 
 
