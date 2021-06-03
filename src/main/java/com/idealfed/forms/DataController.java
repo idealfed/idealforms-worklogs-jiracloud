@@ -1054,7 +1054,7 @@ public class DataController {
             }
             formsetRepository.delete(fs);
         }
-        for(CustomType ct: customTypeRepository.findAll()){
+        for(CustomType ct: customTypeRepository.findAllByCustomerKeyOrderByIdDesc(clientId)){
             customTypeRepository.delete(ct);
         }
         log.debug("Deleted full config");
