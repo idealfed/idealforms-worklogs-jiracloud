@@ -66,6 +66,7 @@ public class DataController {
     @Autowired
     private SnippetRepository snippetRepository;
 
+    @ContextJwt
     @RequestMapping(value = "/rest/**", method = GET, produces = "application/json")
     public String runJiraApiCall(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request,
                 HttpServletResponse response) {
@@ -108,6 +109,7 @@ public class DataController {
         return jout.toString();
     }
 
+    @ContextJwt
     @RequestMapping(value = "/rest/**", method = PUT, produces = "application/json")
     public String runJiraPutApiCall(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request,
                                  HttpServletResponse response) {
@@ -166,6 +168,8 @@ public class DataController {
 
         return jout.toString();
     }
+
+    @ContextJwt
     @RequestMapping(value = "/rest/**", method = POST, produces = "application/json")
     public String runJiraPostApiCall(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request,
                                     HttpServletResponse response) {
@@ -247,6 +251,8 @@ public class DataController {
             return jout.toString();
         }
     }
+
+    @ContextJwt
     @RequestMapping(value = "/rest/**", method = DELETE, produces = "application/json")
     public String runJiraDeleteApiCall(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request,
                                     HttpServletResponse response) {
