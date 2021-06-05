@@ -4,6 +4,7 @@ import com.atlassian.connect.spring.AtlassianHost;
 import com.atlassian.connect.spring.AtlassianHostRestClients;
 import com.atlassian.connect.spring.AtlassianHostUser;
 
+import com.atlassian.connect.spring.ContextJwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.idealfed.forms.model.*;
 
@@ -297,6 +298,7 @@ public class DataController {
         return jout.toString();
     }
 
+    @ContextJwt
     @RequestMapping(value = "/plugins/servlet/iforms", method = GET) //, produces = "application/json")
     public String runFormsGetApiCall(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request,
                                   HttpServletResponse response) {
@@ -447,6 +449,7 @@ public class DataController {
         return jout.toString();
     }
 
+    @ContextJwt
     @RequestMapping(value = "/plugins/servlet/iforms", method = POST) //, produces = "application/json")
     public String runFormsPostApiCall(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request,
                                  HttpServletResponse response) {
@@ -1083,6 +1086,7 @@ public class DataController {
        return ah;
     }
 
+    @ContextJwt
     @RequestMapping(value = "/add", method = GET, produces = "application/json")
     @ResponseBody
     public String getServerInfo(@AuthenticationPrincipal AtlassianHostUser hostUser) {
@@ -1102,6 +1106,8 @@ public class DataController {
         return jout.toString();
 
     }
+
+    @ContextJwt
     @RequestMapping(value = "/list", method = GET, produces = "application/json")
     @ResponseBody
     public String getFormSetList(@AuthenticationPrincipal AtlassianHostUser hostUser) {
