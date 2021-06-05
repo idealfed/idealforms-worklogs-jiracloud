@@ -52,7 +52,7 @@ public class IframeController {
     @Autowired
     private AtlassianHostRestClients atlassianHostRestClients;
 
-    @ContextJwt
+
     @RequestMapping(value = "/iframe", method = RequestMethod.GET)
     public String getIframe(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) {
         model.addAttribute("ijfRoot",gRoot);
@@ -68,7 +68,6 @@ public class IframeController {
     }
 
 
-    @ContextJwt
     @RequestMapping(value = "/productadmin", method = RequestMethod.GET)
     public String getProductAdminTemplate(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) //(HttpServletRequest request, HttpServletResponse response)
     {
@@ -107,7 +106,7 @@ public class IframeController {
         log.debug("returning product admin template");
         return "/productadmin";
     }
-    @ContextJwt
+
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String getAdminTemplate(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) //(HttpServletRequest request, HttpServletResponse response)
     {
@@ -144,7 +143,6 @@ public class IframeController {
         return "/admin";
     }
 
-    @ContextJwt
     @RequestMapping(value = "/run", method = RequestMethod.GET)
     public String getRuntimeTemplate(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) //(HttpServletRequest request, HttpServletResponse response)
     {
