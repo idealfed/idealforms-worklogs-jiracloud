@@ -3,6 +3,7 @@ package com.idealfed.forms;
 import com.atlassian.connect.spring.AtlassianHost;
 import com.atlassian.connect.spring.AtlassianHostRestClients;
 import com.atlassian.connect.spring.AtlassianHostUser;
+import com.atlassian.connect.spring.ContextJwt;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -54,6 +55,7 @@ public class IftProductController {
     @Autowired
     private IftFormSetRepository iftFormSetRepository;
 
+    @ContextJwt
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/ift/rest/**", method = GET, produces = "application/json")
     public String iftGetCall(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request,
@@ -168,6 +170,7 @@ public class IftProductController {
             return jout.toString();
         }
     }
+    @ContextJwt
     @RequestMapping(value = "/ift/rest/**", method = POST, produces = "application/json")
     public String iftPostCall(HttpServletRequest request, HttpServletResponse response) {
 
@@ -260,6 +263,7 @@ public class IftProductController {
             return jout.toString();
         }
     }
+    @ContextJwt
     @RequestMapping(value = "/ift/rest/**", method = DELETE, produces = "application/json")
     public String iftDeleteCall(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request,
                                     HttpServletResponse response) {

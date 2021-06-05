@@ -4,6 +4,7 @@ import com.atlassian.connect.spring.AtlassianHostUser;
 import com.atlassian.connect.spring.AtlassianHost;
 import com.atlassian.connect.spring.AtlassianHostRestClients;
 
+import com.atlassian.connect.spring.ContextJwt;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.idealfed.forms.model.CustomType;
@@ -51,12 +52,14 @@ public class IframeController {
     @Autowired
     private AtlassianHostRestClients atlassianHostRestClients;
 
+    @ContextJwt
     @RequestMapping(value = "/iframe", method = RequestMethod.GET)
     public String getIframe(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) {
         model.addAttribute("ijfRoot",gRoot);
         return "/adminIframe";
     }  //adminIframe
 
+    @ContextJwt
     @RequestMapping(value = "/splash", method = RequestMethod.GET)
     public String getSplashTemplate(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) {
 
@@ -65,6 +68,7 @@ public class IframeController {
     }
 
 
+    @ContextJwt
     @RequestMapping(value = "/productadmin", method = RequestMethod.GET)
     public String getProductAdminTemplate(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) //(HttpServletRequest request, HttpServletResponse response)
     {
@@ -103,8 +107,7 @@ public class IframeController {
         log.debug("returning product admin template");
         return "/productadmin";
     }
-
-
+    @ContextJwt
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String getAdminTemplate(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) //(HttpServletRequest request, HttpServletResponse response)
     {
@@ -140,6 +143,8 @@ public class IframeController {
         model.addAttribute("ijfLicense",urlLicense);
         return "/admin";
     }
+
+    @ContextJwt
     @RequestMapping(value = "/run", method = RequestMethod.GET)
     public String getRuntimeTemplate(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) //(HttpServletRequest request, HttpServletResponse response)
     {
