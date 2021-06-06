@@ -107,6 +107,7 @@ public class IframeController {
         return "/productadmin";
     }
 
+    @ContextJwt
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String getAdminTemplate(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) //(HttpServletRequest request, HttpServletResponse response)
     {
