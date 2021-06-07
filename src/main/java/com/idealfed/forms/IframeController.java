@@ -144,6 +144,12 @@ public class IframeController {
         return "/admin";
     }
 
+    @RequestMapping(value = "/runFrame", method = RequestMethod.GET)
+    public String getRuntimeTemplateInFrame(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) //(HttpServletRequest request, HttpServletResponse response)
+    {
+        return getRuntimeTemplate(hostUser, request, response, model);
+    }
+
     @ContextJwt
     @RequestMapping(value = "/run", method = RequestMethod.GET)
     public String getRuntimeTemplate(@AuthenticationPrincipal AtlassianHostUser hostUser, HttpServletRequest request, HttpServletResponse response, Model model) //(HttpServletRequest request, HttpServletResponse response)

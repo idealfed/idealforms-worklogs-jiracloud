@@ -28,7 +28,7 @@
         "name": {
           "value": "Ideal Worklogs 20"
         },
-        "url": "/run?formId=IFT%20Worklog%20Report",
+        "url": "/runFrame?formId=IFT%20Worklog%20Report",
         "weight": 50,
         "icon": {
           "url": "https://www.idealfed.com/images/IDFIconBlack2.svg",
@@ -47,7 +47,7 @@
         "name": {
           "value": "Ideal My Worklogs 20"
         },
-        "url": "/run?formId=IFT%20My%20Worklogs",
+        "url": "/runFrame?formId=IFT%20My%20Worklogs",
         "icon": {
           "url": "https://www.idealfed.com/images/IDFIconBlack2.svg",
           "width": 20,
