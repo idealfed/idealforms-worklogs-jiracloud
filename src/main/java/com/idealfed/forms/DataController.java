@@ -425,7 +425,7 @@ public class DataController {
                 }
                 else
                 {
-                    sb.append("\"settings\":\"\"}");
+                    sb.append("\"settings\":\"\"[]\"\"}");
                 }
 
                 log.debug("Sending configuration Done");

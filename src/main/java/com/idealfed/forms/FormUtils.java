@@ -81,7 +81,7 @@ public class FormUtils {
         }
         else
         {
-            retStr = retStr + ",\"settings\":\"\"";
+            retStr = retStr + ",\"settings\":\"null\"";
         }
 
         tempByteStr = f.getFields();
@@ -90,7 +90,7 @@ public class FormUtils {
         }
         else
         {
-            retStr = retStr + ",\"fields\":\"\"";
+            retStr = retStr + ",\"fields\":\"null\"},";
         }
 
 
@@ -116,7 +116,7 @@ public class FormUtils {
             }
             else
             {
-                retStr = retStr + ",\"snippet\":\"\"";
+                retStr = retStr + ",\"snippet\":[{}]},";
             }
 
 
@@ -187,7 +187,7 @@ public class FormUtils {
             }
             else
             {
-                retStr = retStr + ",\"settings\":\"\"";
+                retStr = retStr + ",\"settings\":\"\"[]\"\"},";
             }
 
         }
