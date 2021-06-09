@@ -148,6 +148,8 @@ var outMessage = "<div><h3>Ideal Federal Technologies</h3><br>Greetings.  You  a
 			catch(e)
 			{
 				//before messaging look for product....
+				if(!ijf.fw.formSets) ijf.fw.formSets = [];
+
 				if((window.g_IftProduct) && (window.g_IftProduct!="") && (ijf.fw.formSets.length<2))
 				{
 					//this is a product install but there is not config...bootstrap with default product and

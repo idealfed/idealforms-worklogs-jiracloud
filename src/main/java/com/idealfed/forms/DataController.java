@@ -552,7 +552,21 @@ public class DataController {
                 f.setIssueType(inForm.get("issueType").getAsString());
                 f.setTestIssue(inForm.get("testIssue").getAsString());
                 if(inForm.has("formAnon")) f.setFormAnon(inForm.get("formAnon").getAsString());
-                if(inForm.has("formProxy")) f.setFormProxy(inForm.get("formProxy").getAsString());
+
+                if(inForm.has("formProxy"))
+                {
+                    JsonElement tempObj = inForm.get("formProxy");
+                    if(tempObj.isJsonNull())
+                    {
+                        f.setFormProxy("false");
+                    }
+                    else
+                    {
+                        f.setFormProxy(inForm.get("formProxy").getAsString());
+                    }
+                }
+
+
                 f.setFormType(inForm.get("formType").getAsString());
                 f.setFormSet(fs);
 
