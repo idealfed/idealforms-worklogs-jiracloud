@@ -339,6 +339,7 @@ public class DataController {
                 String clientId = hostUser.getHost().getClientKey();
                 //active config
                 for (FormSet fs : formsetRepository.findAllByCustomerKeyOrderByIdDesc(clientId)) {
+                    log.debug("Adding Formset to config: " + fs.getName());
                     sb.append(FormUtils.getAoFormSetJson(fs));
                 }
                 sb.append("{}],\"customTypes\":[");
@@ -510,6 +511,7 @@ public class DataController {
                 fs.setProjectName(formGroup.get("projectName").getAsString());
                 fs.setSettings(formGroup.get("settings").getAsString());
                 String clientId = hostUser.getHost().getClientKey();
+                fs.setCustomerKey(clientId);
                 if(formGroup.has("iftFormGroup"))
                 {
                     JsonElement je = formGroup.get("iftFormGroup");
@@ -525,7 +527,7 @@ public class DataController {
 
                 fs = formsetRepository.save(fs);
                 log.debug("Saved: " + fs.getName());
-                
+
                 jout.addProperty("status","OK");
                 jout.addProperty("message","form group saved, id: " + fs.getId());
             }
