@@ -524,7 +524,8 @@ public class DataController {
                 log.debug("Saving");
 
                 fs = formsetRepository.save(fs);
-
+                log.debug("Saved: " + fs.getName());
+                
                 jout.addProperty("status","OK");
                 jout.addProperty("message","form group saved, id: " + fs.getId());
             }
