@@ -74,8 +74,25 @@ public class FormUtils {
 
         String retStr = jo.toString();
         retStr = retStr.substring(0, retStr.length() - 1);
-        retStr=retStr+ ",\"settings\":\"" + new String(f.getSettings(), StandardCharsets.UTF_8) + "\"";
-        retStr=retStr+ ",\"fields\":\"" + new String(f.getFields(), StandardCharsets.UTF_8) + "\"},";
+
+        byte[] tempByteStr = f.getSettings();
+        if(tempByteStr.length>0) {
+            retStr = retStr + ",\"settings\":\"" + new String(f.getSettings(), StandardCharsets.UTF_8) + "\"";
+        }
+        else
+        {
+            retStr = retStr + ",\"settings\":\"\"";
+        }
+
+        tempByteStr = f.getFields();
+        if(tempByteStr.length>0) {
+            retStr=retStr+ ",\"fields\":\"" + new String(f.getFields(), StandardCharsets.UTF_8) + "\"},";
+        }
+        else
+        {
+            retStr = retStr + ",\"fields\":\"\"";
+        }
+
 
         return retStr;
 
@@ -91,7 +108,18 @@ public class FormUtils {
             jo.addProperty("name",s.getName());
             String retStr = jo.toString();
             retStr = retStr.substring(0, retStr.length() - 1);
-            retStr=retStr+ ",\"snippet\":\"" + new String(s.getSnippet(), StandardCharsets.UTF_8) + "\"},";
+
+
+            byte[] tempByteStr = s.getSnippet();
+            if(tempByteStr.length>0) {
+                retStr = retStr + ",\"snippet\":\"" + new String(s.getSnippet(), StandardCharsets.UTF_8) + "\"},";
+            }
+            else
+            {
+                retStr = retStr + ",\"snippet\":\"\"";
+            }
+
+
             return retStr;
     }
 
@@ -152,7 +180,16 @@ public class FormUtils {
         }
         else
         {
-            retStr=retStr+ ",\"settings\":\"" + new String(ct.getSettings(), StandardCharsets.UTF_8) + "\"},";
+
+            byte[] tempByteStr = ct.getSettings();
+            if(tempByteStr.length>0) {
+                retStr=retStr+ ",\"settings\":\"" + new String(ct.getSettings(), StandardCharsets.UTF_8) + "\"},";
+            }
+            else
+            {
+                retStr = retStr + ",\"settings\":\"\"";
+            }
+
         }
 
         return retStr; //sb.toString();
