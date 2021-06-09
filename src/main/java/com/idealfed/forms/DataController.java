@@ -416,7 +416,16 @@ public class DataController {
                 sb.append("\"description\":\"" + ct.getDescription() + "\",");
                 sb.append("\"customType\":\"" + ct.getCustomType() + "\",");
                 sb.append("\"fieldName\":\"" + ct.getFieldName() + "\",");
-                sb.append("\"settings\":\"" + new String(ct.getSettings(), StandardCharsets.UTF_8) + "\"}");
+
+
+                byte[] tempByteStr = ct.getSettings();
+                if(tempByteStr!=null) {
+                    sb.append("\"settings\":\"" + new String(ct.getSettings(), StandardCharsets.UTF_8) + "\"}");
+                }
+                else
+                {
+                    sb.append("\"settings\":\"\"}");
+                }
 
                 log.debug("Sending configuration Done");
                 response.setContentType("text/plain");

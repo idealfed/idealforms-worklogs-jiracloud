@@ -76,7 +76,7 @@ public class FormUtils {
         retStr = retStr.substring(0, retStr.length() - 1);
 
         byte[] tempByteStr = f.getSettings();
-        if(tempByteStr.length>0) {
+        if(tempByteStr!=null) {
             retStr = retStr + ",\"settings\":\"" + new String(f.getSettings(), StandardCharsets.UTF_8) + "\"";
         }
         else
@@ -85,7 +85,7 @@ public class FormUtils {
         }
 
         tempByteStr = f.getFields();
-        if(tempByteStr.length>0) {
+        if(tempByteStr!=null) {
             retStr=retStr+ ",\"fields\":\"" + new String(f.getFields(), StandardCharsets.UTF_8) + "\"},";
         }
         else
@@ -111,7 +111,7 @@ public class FormUtils {
 
 
             byte[] tempByteStr = s.getSnippet();
-            if(tempByteStr.length>0) {
+            if(tempByteStr!=null) {
                 retStr = retStr + ",\"snippet\":\"" + new String(s.getSnippet(), StandardCharsets.UTF_8) + "\"},";
             }
             else
@@ -182,7 +182,7 @@ public class FormUtils {
         {
 
             byte[] tempByteStr = ct.getSettings();
-            if(tempByteStr.length>0) {
+            if(tempByteStr!=null) {
                 retStr=retStr+ ",\"settings\":\"" + new String(ct.getSettings(), StandardCharsets.UTF_8) + "\"},";
             }
             else
