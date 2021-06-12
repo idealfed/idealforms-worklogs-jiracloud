@@ -1,7 +1,7 @@
 {
-  "key": "${addon.key}-dev20",
+  "key": "${addon.key}",
   "baseUrl": "${addon.base-url}",
-  "name": "Ideal Forms - Worklogs Dev20",
+  "name": "Ideal Forms - Worklogs",
   "enableLicensing": true,
   "authentication": {
     "type": "jwt"
@@ -23,10 +23,10 @@
   "modules": {
     "generalPages": [
       {
-        "key": "ift-worklogs-runtime-20",
+        "key": "ift-worklogs-runtime",
         "location": "system.top.navigation.bar",
         "name": {
-          "value": "Ideal Worklogs 20"
+          "value": "Ideal Worklogs"
         },
         "url": "/runFrame?formId=IFT%20Worklog%20Report",
         "weight": 50,
@@ -42,10 +42,10 @@
         ]
       },
       {
-        "key": "ift-myworklogs-runtime-20",
+        "key": "ift-myworklogs-runtime",
         "location": "system.top.navigation.bar",
         "name": {
-          "value": "Ideal My Worklogs 20"
+          "value": "Ideal My Worklogs"
         },
         "url": "/runFrame?formId=IFT%20My%20Worklogs",
         "icon": {
@@ -63,20 +63,20 @@
     ],
     "webSections": [
       {
-        "key": "ift-menu-section-20",
+        "key": "ift-menu-section",
         "location": "admin_plugins_menu",
         "weight": 150,
         "name": {
-          "value": "Ideal Tech 20"
+          "value": "Ideal Tech"
         }
       }
     ],
     "adminPages": [
       {
-        "key": "ift-worklogs-admin-section-link-20",
-        "location": "admin_plugins_menu/ift-menu-section-20",
+        "key": "ift-worklogs-admin-section-link",
+        "location": "admin_plugins_menu/ift-menu-section",
         "name": {
-          "value": "Ideal Worklogs 20"
+          "value": "Ideal Worklogs"
         },
         "weight": 50,
         "url": "/productadmin?mode=versionadmin"
