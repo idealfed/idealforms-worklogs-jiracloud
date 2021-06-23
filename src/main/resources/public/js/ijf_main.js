@@ -310,7 +310,7 @@ function processSetup(inContainerId)
 		else if(window.location.search.indexOf("mode=library")>-1)
 		{
 		   var tElement = document.getElementById("ijfContent");
-		   tElement.innerHTML='<iframe src="https://www.idealfed.com/formsLibrary/" style="margin-left:-5px;width: 1010px; height: 600px; border: 0"></iframe>';
+		   tElement.innerHTML='<iframe src="https://www.idealfed.com/formsLibrary/library.html" style="margin-left:-5px;width: 1010px; height: 600px; border: 0"></iframe>';
 		}
 		else
 		{
