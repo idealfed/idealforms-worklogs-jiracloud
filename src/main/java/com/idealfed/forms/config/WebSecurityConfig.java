@@ -20,7 +20,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .maxAgeInSeconds(31536000)
                 .requestMatcher(r -> true);
         http.headers().contentTypeOptions();
-        http.headers().frameOptions().disable();
         http.headers().referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.NO_REFERRER);
     }
 }
