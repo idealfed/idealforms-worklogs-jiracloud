@@ -11,7 +11,7 @@
 
     <groupId>com.idealfed</groupId>
     <artifactId>com-idealfed-forms-worklogs</artifactId>
-    <version>1.2-STABLE</version>
+    <version>1.5-STABLE</version>
 
     <properties>
         <java.version>1.8</java.version>
