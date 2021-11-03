@@ -7,7 +7,8 @@
     "type": "jwt"
   },
   "apiMigrations": {
-     "context-qsh": true
+     "context-qsh": true,
+     "signed-install": true
   },
   "lifecycle": {
     "installed": "/installed",
